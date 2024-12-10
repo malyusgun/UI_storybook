@@ -1,39 +1,39 @@
-export const convert200ThemeToColor = (theme: string | undefined) => {
+export const convert300ThemeToColor = (theme: string | undefined) => {
   switch (theme) {
     case 'white':
-      return '#ffffff';
+      return '#cbd5e1';
     case 'slate':
-      return '#64748b';
+      return '#cbd5e1';
     case 'blue':
-      return '#3b82f6';
+      return '#93c5fd';
     case 'sky':
       return '#7dd3fc';
     case 'teal':
-      return '#14b8a6';
+      return '#5eead4';
     case 'lime':
-      return '#84cc16';
+      return '#bef264';
     case 'green':
-      return '#22c55e';
+      return '#86efac';
     case 'yellow':
-      return '#eab308';
+      return '#fde047';
     case 'amber':
-      return '#f59e0b';
+      return '#fcd34d';
     case 'orange':
-      return '#f97316';
+      return '#fdba74';
     case 'pink':
       return '#ec4899';
     case 'fuchsia':
-      return '#d946ef';
+      return '#f0abfc';
     case 'purple':
-      return '#a855f7';
+      return '#d8b4fe';
     case 'indigo':
-      return '#6366f1';
+      return '#a5b4fc';
     case 'rose':
-      return '#f43f5e';
+      return '#fda4af';
     case 'red':
       return '#fca5a5';
     case 'black':
-      return '#000000';
+      return '#334155';
   }
 };
 
@@ -77,7 +77,6 @@ export const convert500ThemeToColor = (theme: string | undefined) => {
 };
 
 export const convert800ThemeToColor = (theme: string | undefined) => {
-  if (!theme) return '#9294a1';
   switch (theme) {
     case 'white':
       return '#ffffff';

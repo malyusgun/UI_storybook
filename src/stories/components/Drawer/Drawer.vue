@@ -1,24 +1,27 @@
 <script setup lang="ts">
-import { convert500ThemeToColor, convert200ThemeToColor } from '@helpers/colors';
+import { convert500ThemeToColor, convert300ThemeToColor } from '@helpers/colors';
 import type { TThemeColor } from '@interfaces/common';
 import { computed } from 'vue';
+import { iconsSet } from '@helpers/icons';
 
 const props = withDefaults(
   defineProps<{
     width?: string | number;
     theme?: TThemeColor;
+    closeIcon?: string;
   }>(),
   {
     visible: false,
     width: 400,
     theme: 'white',
+    closeIcon: 'CrossCircleIcon',
   },
 );
 const emit = defineEmits(['onClose']);
-const visible = defineModel('visible');
+const visible = defineModel<boolean>('visible');
 
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
-const scrollColor = computed(() => convert200ThemeToColor(props.theme));
+const scrollColor = computed(() => convert300ThemeToColor(props.theme));
 const textColor = computed(() => {
   if (!props.theme || props.theme === 'white') return 'black';
   return 'white';
@@ -60,28 +63,18 @@ const drawerWidth = computed(() => {
             }
           "
         >
-          <svg
-            width="40px"
-            height="40px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z"
-              :fill="textColor ?? '#1C274C'"
-            />
-          </svg>
+          <component :is="iconsSet[closeIcon]" :color="textColor" />
         </button>
       </header>
       <div class="main">
         <slot />
       </div>
-      <footer class="drawerFooter">
-        <slot name="footer" />
-      </footer>
+      <div v-if="$slots.footer">
+        <div class="divider"></div>
+        <footer class="drawerFooter">
+          <slot name="footer" />
+        </footer>
+      </div>
     </section>
   </article>
 </template>
@@ -122,18 +115,24 @@ const drawerWidth = computed(() => {
 }
 .drawerHeader {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-right: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   min-height: 1rem;
   overflow: auto;
 }
 .main {
   flex: 1 1 auto;
   overflow: auto;
+  padding: 10px;
 }
 .drawerFooter {
   overflow: auto;
+  padding: 10px 10px 0 10px;
+}
+.divider {
+  height: 2px;
+  background-color: v-bind(scrollColor);
 }
 .buttonClose {
   position: absolute;
@@ -142,11 +141,8 @@ const drawerWidth = computed(() => {
   width: 30px;
 }
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: v-bind(textColor);
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;

@@ -208,15 +208,34 @@ const gentleIcons = [
   TrashIcon,
   UserIcon,
 ];
-const visibleDrawer = ref(false);
+const visibleDrawer = ref(true);
 </script>
 
 <template>
-  <Drawer v-model:visible="visibleDrawer"
-    ><p>pizdwertyukilokl,kmjhgfwewesrdtyukilo,kmjngeartyukikdhgfgjhklj.,kga</p>
-    <template #footer
-      ><div style="height: 1px; background-color: black"></div>
-      pizdwertyukilokl,kmjhgfwewesrdtyukilo,kmjngeartyukikdhgfgjhklj.,kga</template
+  <Drawer v-model:visible="visibleDrawer" theme="sky" closeIcon="CropIcon">
+    <template #header>Это - Drawer</template>
+    <p>
+      pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit
+      amet, consectetur adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore
+      voluptas. Aperiam dignissimos enim, fuga fugit, modi, nam necessitatibus numquam obcaecati
+      omnis recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
+      blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio optio
+      reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit
+      amet, consectetur adipisicing elit. Ducimus expedita laboriosam nesciunt voluptatum! Ab animi
+      illum impedit iusto libero magni maxime molestias nisi nobis possimus provident quia repellat,
+      rerum suscipit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem modi ratione
+      reiciendis. Cupiditate deserunt eaque eum labore qui rem? Consequatur corporis, dolorem
+      doloremque eveniet facilis obcaecati quasi repellat vel velit. pizdwertyuki
+      lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet,
+      consectetur adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas.
+      Aperiam dignissimos enim, fuga fugit, modi, nam necessitatibus numquam obcaecati omnis
+      recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
+      blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio optio
+      reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit
+      amet, consectetur adipisicing elit.
+    </p>
+    <template #footer>
+      pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template
     ></Drawer
   >
   <main class="main">

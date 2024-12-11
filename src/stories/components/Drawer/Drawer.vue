@@ -9,22 +9,22 @@ const props = withDefaults(
     position: 'left' | 'right' | 'top' | 'bottom';
     width?: string | number;
     theme?: TThemeColor;
-    isModal?: boolean;
-    isDismissible?: boolean;
+    modal?: boolean;
+    dismissible?: boolean;
     closeIcon?: TIcons;
-    isHeaderDivider?: boolean;
-    isFooterDivider?: boolean;
+    headerDivider?: boolean;
+    footerDivider?: boolean;
   }>(),
   {
     visible: false,
     position: 'left',
     width: 400,
-    isModal: true,
-    isDismissible: true,
+    modal: true,
+    dismissible: true,
     theme: 'white',
     closeIcon: 'CrossIcon',
-    isHeaderDivider: false,
-    isFooterDivider: false,
+    headerDivider: false,
+    footerDivider: false,
   },
 );
 const emit = defineEmits(['onClose']);
@@ -44,14 +44,14 @@ const drawerWidth = computed(() => {
 <template>
   <article>
     <section
-      v-if="isModal"
+      v-if="modal"
       :class="[
         'drawerBackground',
         {
           drawerBackgroundOpened: visible,
         },
       ]"
-      @click.prevent="isDismissible ? (visible = false) : false"
+      @click.prevent="dismissible ? (visible = false) : false"
     ></section>
     <section
       :style="`color: ${textColor}; background-color: ${themeColor}`"
@@ -81,12 +81,12 @@ const drawerWidth = computed(() => {
           <component :is="iconsSet[closeIcon]" :color="textColor" />
         </button>
       </header>
-      <div v-if="isHeaderDivider" class="divider divider-header"></div>
+      <div v-if="headerDivider" class="divider divider-header"></div>
       <div class="main">
         <slot />
       </div>
       <div v-if="$slots.footer">
-        <div v-if="isFooterDivider" class="divider"></div>
+        <div v-if="footerDivider" class="divider"></div>
         <footer class="drawerFooter">
           <slot name="footer" />
         </footer>

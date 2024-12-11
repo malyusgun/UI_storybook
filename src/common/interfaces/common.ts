@@ -17,4 +17,6 @@ export type TThemeColor =
   | 'red'
   | 'black';
 
+export type TThemeColorNoWhite = Exclude<TThemeColor, 'white'>;
+
 export type TIcons = keyof typeof iconsSet;

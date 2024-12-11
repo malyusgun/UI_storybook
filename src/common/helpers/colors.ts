@@ -113,5 +113,4 @@ export const convert800ThemeToColor = (theme: string | undefined) => {
     case 'black':
       return '#000000';
   }
-  return '#9294a1';
 };

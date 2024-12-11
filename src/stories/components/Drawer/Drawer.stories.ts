@@ -14,11 +14,11 @@ const meta: Meta = {
     header: { control: 'text' },
     default: { control: 'text' },
     footer: { control: 'text' },
-    isModal: { control: 'boolean' },
-    isDismissible: { control: 'boolean' },
+    modal: { control: 'boolean' },
+    dismissible: { control: 'boolean' },
     closeIcon: { control: 'select', options: Object.keys(iconsSet) },
-    isHeaderDivider: { control: 'boolean' },
-    isFooterDivider: { control: 'boolean' },
+    headerDivider: { control: 'boolean' },
+    footerDivider: { control: 'boolean' },
     theme: {
       control: 'select',
       options: [
@@ -50,11 +50,7 @@ const meta: Meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/api/csf
- * to learn how to use render functions.
- */
+
 export const Primary: Story = {
   args: {
     visible: true,

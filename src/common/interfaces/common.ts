@@ -1,3 +1,5 @@
+import type { iconsSet } from '@/common/constants/icons';
+
 export type TThemeColor =
   | 'white'
   | 'slate'
@@ -14,3 +16,5 @@ export type TThemeColor =
   | 'rose'
   | 'red'
   | 'black';
+
+export type TIcons = typeof iconsSet;

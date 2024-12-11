@@ -1,12 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Drawer from './Drawer.vue';
+import { iconsSet } from '@/common/constants/icons';
 
 const meta: Meta = {
   title: 'Components/Drawer',
   component: Drawer,
   tags: ['autodocs'],
   argTypes: {
+    visible: { control: 'boolean' },
+    position: { control: 'select', options: ['left', 'right', 'top', 'bottom'] },
+    width: { control: 'number' },
+    header: { control: 'text' },
+    default: { control: 'text' },
+    footer: { control: 'text' },
+    isModal: { control: 'boolean' },
+    isDismissible: { control: 'boolean' },
+    closeIcon: { control: 'select', options: Object.keys(iconsSet) },
+    isHeaderDivider: { control: 'boolean' },
+    isFooterDivider: { control: 'boolean' },
     theme: {
       control: 'select',
       options: [
@@ -27,11 +39,6 @@ const meta: Meta = {
         'black',
       ],
     },
-    visible: { control: 'boolean' },
-    width: { control: 'number' },
-    header: { control: 'text' },
-    default: { control: 'text' },
-    footer: { control: 'text' },
   },
   args: {
     // primary: false,
@@ -51,5 +58,24 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     visible: true,
+    default: 'Какой-то текст.',
+  },
+};
+
+export const BlackFull: Story = {
+  args: {
+    visible: true,
+    width: 200,
+    theme: 'black',
+    closeIcon: 'CrossIcon',
+    header: 'Drawer',
+    footer: 'The end.',
+    isHeaderDivider: true,
+    isFooterDivider: true,
+
+    default:
+      '  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dicta dolorum eaque explicabo illo. Beatae et eveniet itaque libero sint. Atque blanditiis consequuntur dolorum explicabo, facilis iste nulla numquam provident.',
+
+    isModal: true,
   },
 };

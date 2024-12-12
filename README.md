@@ -8,6 +8,8 @@
 - TreeList;
 - Drawer;
 - Button;
+- ToggleButton;
+- ToggleSwitch;
 - Divider;
 
 ### Настройка окружения

@@ -1,41 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import ToggleSwitch from './ToggleSwitch.vue';
+import Button from './Button.vue';
 
 const meta: Meta = {
-  title: 'Components/ToggleSwitch',
-  component: ToggleSwitch,
+  title: 'Components/Button',
+  component: Button,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used to select a boolean value.',
+        component: 'A component that is used to select a value from a list using a button.',
       },
     },
   },
   argTypes: {
-    active: { control: 'boolean' },
+    label: { control: 'text' },
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
-    negativeTheme: {
-      control: 'select',
-      options: [
-        'white',
-        'slate',
-        'blue',
-        'sky',
-        'teal',
-        'green',
-        'yellow',
-        'orange',
-        'pink',
-        'fuchsia',
-        'purple',
-        'indigo',
-        'rose',
-        'red',
-        'black',
-      ],
-    },
+    textStyle: { control: 'select', options: ['bold', 'italic'] },
+    iconPos: { control: 'select', options: ['left', 'top', 'right', 'bottom'] },
+    width: { control: 'text' },
     theme: {
       control: 'select',
       options: [
@@ -56,49 +39,70 @@ const meta: Meta = {
         'black',
       ],
     },
-    darkNegative: { control: 'boolean' },
-    disabled: { control: 'boolean' },
+    textColor: {
+      control: 'select',
+      options: [
+        'white',
+        'slate',
+        'blue',
+        'sky',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    border: {
+      control: 'select',
+      options: [
+        'white',
+        'slate',
+        'blue',
+        'sky',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
   },
   args: {
     // primary: false,
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   },
-} satisfies Meta<typeof ToggleSwitch>;
+} satisfies Meta<typeof Button>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {
-    darkNegative: true,
-    active: false,
-  },
+  args: {},
 };
 
-export const SmallLight: Story = {
+export const LargeFull: Story = {
   args: {
-    darkNegative: false,
-    negativeTheme: 'yellow',
-    theme: 'red',
-    size: 'small',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    darkNegative: true,
-    negativeTheme: 'purple',
-    theme: 'green',
+    label: 'Press me!',
     size: 'large',
-  },
-};
-
-export const Huge: Story = {
-  args: {
-    darkNegative: true,
-    negativeTheme: 'blue',
-    theme: 'orange',
-    size: 'huge',
+    textStyle: 'bold',
+    iconPos: 'left',
+    width: '200',
+    theme: 'sky',
+    textColor: 'white',
+    border: 'black',
   },
 };

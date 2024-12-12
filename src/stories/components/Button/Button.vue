@@ -1,28 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { convertThemeToColorBlackDefault, convertThemeToColorWhiteDefault } from './helpers/index';
-import type { TThemeColor } from './interfaces/index';
+import type { TThemeColor } from '@interfaces/common';
+import { convert500ThemeToColor } from '@helpers/colors';
 
-interface Props {
-  label?: string;
-  iconPos?: 'left' | 'top' | 'right' | 'bottom';
-  textStyle?: 'bold' | 'italic';
-  border?: TThemeColor;
-  size?: 'small' | 'medium' | 'large' | 'extraLarge';
-  textColor?: TThemeColor;
-  theme?: TThemeColor;
-  width?: string | number;
-}
-const props = withDefaults(defineProps<Props>(), {
-  iconPos: 'left'
-});
-const themeColor = computed(() => convertThemeToColorWhiteDefault(props.theme));
-const textColor = computed(() => convertThemeToColorBlackDefault(props.textColor));
-const borderColor = computed(() =>
-  props.border ? convertThemeToColorBlackDefault(props.border) : ''
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    size?: 'small' | 'medium' | 'large' | 'extraLarge';
+    textStyle?: 'bold' | 'italic';
+    iconPos?: 'left' | 'top' | 'right' | 'bottom';
+    width?: string | number;
+    theme?: TThemeColor;
+    textColor?: TThemeColor;
+    border?: TThemeColor;
+  }>(),
+  {
+    size: 'medium',
+    theme: 'white',
+    textColor: 'black',
+    iconPos: 'left',
+  },
 );
+const themeColor = computed(() => convert500ThemeToColor(props.theme));
+const textColor = computed(() => convert500ThemeToColor(props.textColor));
+const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
 const textSize = computed(() => {
-  if (!props?.size || props.size === 'medium') return '16px';
   switch (props.size) {
     case 'small':
       return '12px';
@@ -31,9 +33,9 @@ const textSize = computed(() => {
     case 'extraLarge':
       return '24px';
   }
+  return '16px';
 });
 const buttonPadding = computed(() => {
-  if (!props?.size || props.size === 'medium') return '0.75rem 0.5rem';
   switch (props.size) {
     case 'small':
       return '0.5rem 0.375rem';
@@ -42,6 +44,7 @@ const buttonPadding = computed(() => {
     case 'extraLarge':
       return '1.8rem 1.2rem';
   }
+  return '0.75rem 0.5rem';
 });
 const width = computed(() => (props.width ? `${props.width}px` : 'max-content'));
 </script>
@@ -52,8 +55,8 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
       'button',
       {
         'flex-column': iconPos === 'top' || iconPos === 'bottom',
-        border: borderColor
-      }
+        border: borderColor,
+      },
     ]"
     :style="`padding: ${buttonPadding}; width: ${width}`"
   >
@@ -64,17 +67,18 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
         'text',
         {
           bold: textStyle === 'bold',
-          italic: textStyle === 'italic'
-        }
+          italic: textStyle === 'italic',
+        },
       ]"
       >{{ label ?? 'Button' }}</span
     >
     <span
+      v-if="$slots.default"
       :class="[
         'icon',
         {
-          'order-1': iconPos === 'left' || iconPos === 'top'
-        }
+          'order-1': iconPos === 'left' || iconPos === 'top',
+        },
       ]"
     >
       <slot />

@@ -155,6 +155,7 @@ const drawerWidth = computed(() => {
   font-size: 32px;
   width: calc(100% - 30px);
   margin-bottom: 10px;
+  min-height: 37px;
   height: 37px;
   overflow: auto;
 }

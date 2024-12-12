@@ -171,7 +171,6 @@ body {
 *::before,
 *::after {
     box-sizing: border-box;
-    user-select: none;
     font-weight: 500;
 }
 

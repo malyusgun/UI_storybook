@@ -1,24 +1,28 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { convertThemeToColorWhiteDefault, icons } from './helpers/index';
-import type { ITreeItem, TThemeColor } from './interfaces/index';
-import TriangleOpenIcon from '@/shared/ui/icons/TriangleOpenIcon.vue';
+import { computed, ref, watch } from 'vue';
+import type { ITreeItem } from '@interfaces/components';
+import type { TThemeColor } from '@interfaces/common';
+import { iconsSet } from '@/common/constants/icons';
+import { convert500ThemeToColor } from '@helpers/colors';
+import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 
-interface Props {
-  items?: ITreeItem[];
-  maxWidth?: number;
-  expand?: boolean;
-  theme?: TThemeColor;
-  disabled?: boolean;
-  onClick?: (link?: string) => void | never | typeof link;
-}
-const props = withDefaults(defineProps<Props>(), {
-  maxWidth: 300,
-  disabled: false,
-  onClick: () => null
-});
+const props = withDefaults(
+  defineProps<{
+    items?: ITreeItem[];
+    maxWidth?: number;
+    expand?: boolean;
+    theme?: TThemeColor;
+    disabled?: boolean;
+  }>(),
+  {
+    theme: 'white',
+    maxWidth: 300,
+    disabled: false,
+  },
+);
+const emit = defineEmits(['onClick']);
 const items = computed(() => props.items);
-const themeColor = computed(() => convertThemeToColorWhiteDefault(props.theme));
+const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const textColor = computed(() => {
   if (!props.theme) return '#000000';
   if (props.theme === 'white') return '#000000';
@@ -28,22 +32,22 @@ const textColor = computed(() => {
 const state = ref([]);
 const setInitialState = () => {
   if (!props?.items) return;
-  for (let item of props.items) {
+  for (const item of props.items) {
     state.value.push({
       isOpen: props?.expand,
-      label: item.label
+      label: item.label,
     });
     if (item.children) {
-      for (let child of item.children) {
+      for (const child of item.children) {
         state.value.push({
           isOpen: props?.expand,
-          label: child.label
+          label: child.label,
         });
         if (child.children) {
-          for (let grandChild of child.children) {
+          for (const grandChild of child.children) {
             state.value.push({
               isOpen: props?.expand,
-              label: grandChild.label
+              label: grandChild.label,
             });
           }
         }
@@ -57,8 +61,8 @@ watch(
     if (items.value) setInitialState();
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 );
 const toggleIsOpen = (item) =>
   state.value.map((itemState) => {
@@ -74,41 +78,45 @@ const toggleIsOpen = (item) =>
       :class="[
         'item',
         {
-          openContent: state.find((itemState) => itemState.label === item.label && itemState.isOpen)
-        }
+          openContent: state.find(
+            (itemState) => itemState.label === item.label && itemState.isOpen,
+          ),
+        },
       ]"
     >
       <section
         :class="[
           'textContainer',
           {
-            pointer: !disabled && item.children
-          }
+            pointer: !disabled && item.children,
+          },
         ]"
       >
-        <TriangleOpenIcon
+        <TriangleIcon
           v-if="item.children && !disabled"
           :class="[
             'openButton',
             {
               openButtonOpened: state.find(
-                (itemState) => itemState.label === item.label && itemState.isOpen
-              )
-            }
+                (itemState) => itemState.label === item.label && itemState.isOpen,
+              ),
+            },
           ]"
           :color="textColor"
           size="15"
           @click.prevent="toggleIsOpen(item)"
         />
         <component
-          :is="icons[item.iconBefore]"
+          :is="iconsSet[item.iconBefore]"
           v-if="item.iconBefore"
           :color="item.iconColor"
           size="20"
         />
-        <a :href="item.link" class="label" @click.prevent="onClick(item.link)">{{ item.label }}</a>
+        <a :href="item.link" class="label" @click.prevent="emit('onClick', item.link)">{{
+          item.label
+        }}</a>
         <component
-          :is="icons[item.iconAfter]"
+          :is="iconsSet[item.iconAfter]"
           v-if="item.iconAfter"
           :color="item.iconColor"
           size="20"
@@ -123,44 +131,44 @@ const toggleIsOpen = (item) =>
             {
               pl50: !child.children,
               openContent: state.find(
-                (itemState) => itemState.label === child.label && itemState.isOpen
-              )
-            }
+                (itemState) => itemState.label === child.label && itemState.isOpen,
+              ),
+            },
           ]"
         >
           <section
             :class="[
               'textContainer',
               {
-                pointer: !disabled && child.children
-              }
+                pointer: !disabled && child.children,
+              },
             ]"
           >
-            <TriangleOpenIcon
+            <TriangleIcon
               v-if="child.children && !disabled"
               :class="[
                 'openButton',
                 {
                   openButtonOpened: state.find(
-                    (itemState) => itemState.label === child.label && itemState.isOpen
-                  )
-                }
+                    (itemState) => itemState.label === child.label && itemState.isOpen,
+                  ),
+                },
               ]"
               :color="textColor"
               size="15"
               @click.prevent="toggleIsOpen(child)"
             />
             <component
-              :is="icons[child.iconBefore]"
+              :is="iconsSet[child.iconBefore]"
               v-if="child.iconBefore"
               :color="child.iconColor"
               size="20"
             />
-            <a :href="child.link" class="label" @click.prevent="onClick(child.link)">{{
+            <a :href="child.link" class="label" @click.prevent="emit('onClick', item.link)">{{
               child.label
             }}</a>
             <component
-              :is="icons[child.iconAfter]"
+              :is="iconsSet[child.iconAfter]"
               v-if="child.iconAfter"
               :color="child.iconColor"
               size="20"
@@ -175,23 +183,27 @@ const toggleIsOpen = (item) =>
                 {
                   pl50: !grandChild.children,
                   openContent: state.find(
-                    (itemState) => itemState.label === grandChild.label && itemState.isOpen
-                  )
-                }
+                    (itemState) => itemState.label === grandChild.label && itemState.isOpen,
+                  ),
+                },
               ]"
             >
               <div class="textContainer">
                 <component
-                  :is="icons[grandChild.iconBefore]"
+                  :is="iconsSet[grandChild.iconBefore]"
                   v-if="grandChild.iconBefore"
                   :color="grandChild.iconColor"
                   size="20"
                 />
-                <p :href="grandChild.link" class="label" @click.prevent="onClick(grandChild.link)">
+                <p
+                  :href="grandChild.link"
+                  class="label"
+                  @click.prevent="emit('onClick', item.link)"
+                >
                   {{ grandChild.label }}
                 </p>
                 <component
-                  :is="icons[grandChild.iconAfter]"
+                  :is="iconsSet[grandChild.iconAfter]"
                   v-if="grandChild.iconAfter"
                   :color="grandChild.iconColor"
                   size="20"

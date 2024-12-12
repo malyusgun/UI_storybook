@@ -1,81 +1,71 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { convertThemeToColorBlackDefault, convertThemeToColorWhiteDefault } from './helpers/index';
-import { useVModel } from '@vueuse/core';
-type TTheme =
-  | 'white'
-  | 'slate'
-  | 'blue'
-  | 'sky'
-  | 'teal'
-  | 'lime'
-  | 'green'
-  | 'yellow'
-  | 'orange'
-  | 'pink'
-  | 'fuchsia'
-  | 'purple'
-  | 'indigo'
-  | 'rose'
-  | 'red'
-  | 'black';
-interface Props {
-  value: any;
-  options: {
-    label: string;
-    value?: any;
-    textColor?: TTheme;
-    backgroundColor?: TTheme;
-    isLabelHidden?: boolean;
-    iconPos?: string;
-    textStyle?: 'bold' | 'italic';
-  }[];
-  border?: TTheme;
-  size?: 'small' | 'medium' | 'large' | 'extraLarge';
-  theme?: TTheme;
-  rounded?: any;
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['update:value']);
-const value = useVModel(props, 'value', emit);
-const activeBGColor = computed(() =>
-  props.theme ? convertThemeToColorBlackDefault(props.theme) : ''
+import type { TThemeColor } from '@interfaces/common';
+import { convert500ThemeToColor } from '@helpers/colors';
+
+const props = withDefaults(
+  defineProps<{
+    options: {
+      label: string;
+      value?: never;
+      color?: TThemeColor;
+      activeColor?: TThemeColor;
+      backgroundColor?: TThemeColor;
+      isLabelHidden?: boolean;
+      iconPosition?: 'left' | 'right' | 'top' | 'bottom';
+      textStyle?: 'bold' | 'italic';
+    }[];
+    size?: 'small' | 'medium' | 'large' | 'huge';
+    rounded?: boolean;
+    activeBgColor?: TThemeColor;
+    border?: TThemeColor;
+    disabled?: boolean;
+  }>(),
+  {
+    size: 'medium',
+    border: 'black',
+    activeBgColor: 'sky',
+  },
 );
-const borderColor = computed(() =>
-  props.border ? convertThemeToColorBlackDefault(props.border) : ''
+const emit = defineEmits(['onClick']);
+const value = defineModel<boolean>('value');
+
+const activeBgColor = computed(() =>
+  props.activeBgColor ? convert500ThemeToColor(props.activeBgColor) : '',
 );
+const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
 const textSize = computed(() => {
-  if (!props?.size || props.size === 'medium') return '16px';
   switch (props.size) {
     case 'small':
       return '12px';
     case 'large':
       return '20px';
-    case 'extraLarge':
+    case 'huge':
       return '24px';
   }
+  return '16px';
 });
 const buttonPadding = computed(() => {
-  if (!props?.size || props.size === 'medium') return '0.75rem 0.5rem';
   switch (props.size) {
     case 'small':
       return '0.5rem 0.375rem';
     case 'large':
       return '1.2rem 0.8rem';
-    case 'extraLarge':
+    case 'huge':
       return '1.8rem 1.2rem';
   }
+  return '0.75rem 0.5rem';
 });
 const buttonHeight = computed(() => {
-  if (!props?.size || props.size === 'medium') return '40px';
   switch (props.size) {
     case 'small':
       return '24px';
     case 'large':
       return '68px';
-    case 'extraLarge':
+    case 'huge':
       return '114px';
   }
+  return '40px';
 });
 </script>
 
@@ -85,8 +75,9 @@ const buttonHeight = computed(() => {
       'buttonGroup',
       {
         'rounded-full': props.rounded,
-        border: borderColor
-      }
+        border: borderColor,
+        disabled: disabled,
+      },
     ]"
   >
     <button
@@ -95,53 +86,60 @@ const buttonHeight = computed(() => {
       :class="[
         'button',
         {
-          'flex-column': item.iconPos === 'top' || item.iconPos === 'bottom'
-        }
+          'flex-column': item.iconPosition === 'top' || item.iconPosition === 'bottom',
+        },
       ]"
       :style="`padding: ${buttonPadding}`"
-      @click.prevent="value = item?.value ?? item.label"
+      @click.prevent="
+        () => {
+          value = item?.value ?? item.label;
+          emit('onClick', value);
+        }
+      "
     >
       <span
-        :style="`background-color: ${activeBGColor && (value === item.value || value === item.label) ? activeBGColor : convertThemeToColorWhiteDefault(item.backgroundColor)}`"
+        :style="`background-color: ${activeBgColor && (value === item.value || value === item.label) ? activeBgColor : convert500ThemeToColor(item.backgroundColor ?? 'white')}`"
         :class="[
           'background',
           {
             'rounded-left': index === 0,
             'rounded-left-full': index === 0 && props.rounded,
             'rounded-right': index === options.length - 1,
-            'rounded-right-full': index === options.length - 1 && props.rounded
-          }
+            'rounded-right-full': index === options.length - 1 && props.rounded,
+          },
         ]"
       ></span>
       <span
         v-if="!item.isLabelHidden"
-        :style="`color: ${convertThemeToColorBlackDefault(item.textColor)}; font-size: ${textSize}`"
+        :style="`color: ${value === item.value || value === item.label ? item.activeColor : convert500ThemeToColor(item.color ?? 'black')}; font-size: ${textSize}`"
         :class="[
           'text',
           {
             bold: item.textStyle === 'bold',
-            italic: item.textStyle === 'italic'
-          }
+            italic: item.textStyle === 'italic',
+          },
         ]"
-        >{{ item.label ?? 'Button' }}</span
+        >{{ item.label ?? index }}</span
       >
-      <slot
+      <div
         :class="[
           'icon',
           {
-            'order-1': item.iconPos === 'left' || item.iconPos === 'top'
-          }
+            'order-1': item.iconPosition === 'left' || item.iconPosition === 'top',
+          },
         ]"
-        :name="`${index + 1}Icon`"
-      />
+      >
+        <slot :name="`${index + 1}Icon`" />
+      </div>
     </button>
   </div>
 </template>
 
 <style scoped>
 .buttonGroup {
+  width: max-content;
   display: flex;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   position: relative;
 }
 .button {
@@ -197,5 +195,12 @@ const buttonHeight = computed(() => {
 }
 .rounded-full {
   border-radius: v-bind(buttonHeight);
+}
+.disabled {
+  pointer-events: none;
+  background-color: #e1e7f1;
+}
+.disabled * {
+  color: #62708c !important;
 }
 </style>

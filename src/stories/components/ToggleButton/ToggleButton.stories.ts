@@ -1,22 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import ToggleSwitch from './ToggleSwitch.vue';
+import ToggleButton from './ToggleButton.vue';
+import { fn } from '@storybook/test';
 
 const meta: Meta = {
-  title: 'Components/ToggleSwitch',
-  component: ToggleSwitch,
+  title: 'Components/ToggleButton',
+  component: ToggleButton,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used to select a boolean value.',
+        component: 'A component that is used to select a value from a list using a button.',
       },
     },
   },
   argTypes: {
-    active: { control: 'boolean' },
+    options: {
+      control: 'array',
+    },
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
-    negativeTheme: {
+    rounded: { control: 'boolean' },
+    activeBgColor: {
       control: 'select',
       options: [
         'white',
@@ -36,7 +40,7 @@ const meta: Meta = {
         'black',
       ],
     },
-    theme: {
+    border: {
       control: 'select',
       options: [
         'white',
@@ -56,14 +60,14 @@ const meta: Meta = {
         'black',
       ],
     },
-    darkNegative: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
   args: {
     // primary: false,
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+    onClick: fn(),
   },
-} satisfies Meta<typeof ToggleSwitch>;
+} satisfies Meta<typeof ToggleButton>;
 
 export default meta;
 
@@ -71,34 +75,44 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    darkNegative: true,
-    active: false,
+    options: [
+      {
+        label: 'First',
+      },
+      {
+        label: 'Second',
+      },
+    ],
+
+    rounded: false,
+    disabled: false,
   },
 };
 
-export const SmallLight: Story = {
+export const LargeFull: Story = {
   args: {
-    darkNegative: false,
-    negativeTheme: 'yellow',
-    theme: 'red',
-    size: 'small',
-  },
-};
+    options: [
+      {
+        label: 'First',
+        color: 'white',
+        backgroundColor: 'black',
+      },
+      {
+        label: 'Second',
+        activeColor: 'blue',
+        backgroundColor: 'yellow',
+      },
+      {
+        label: 'Third',
+        activeColor: 'green',
+        backgroundColor: 'purple',
+      },
+    ],
 
-export const Large: Story = {
-  args: {
-    darkNegative: true,
-    negativeTheme: 'purple',
-    theme: 'green',
+    border: 'sky',
+    activeBgColor: 'red',
+    rounded: true,
+    disabled: false,
     size: 'large',
-  },
-};
-
-export const Huge: Story = {
-  args: {
-    darkNegative: true,
-    negativeTheme: 'blue',
-    theme: 'orange',
-    size: 'huge',
   },
 };

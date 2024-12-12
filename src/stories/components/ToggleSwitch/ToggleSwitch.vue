@@ -9,6 +9,7 @@ const props = withDefaults(
     theme?: TThemeColorNoWhite;
     negativeTheme?: TThemeColor;
     darkNegative?: boolean;
+    disabled?: boolean;
   }>(),
   {
     size: 'medium',
@@ -28,32 +29,32 @@ const inactiveColor = computed(() =>
 const sizes = computed(() => {
   if (!props?.size) {
     return {
-      containerWidth: 45,
-      containerHeight: 27,
-      padding: 4,
-      borderRadius: 14,
-      circleSize: 19,
-      transformXCircle: 18,
+      containerWidth: 37,
+      containerHeight: 21,
+      padding: 3,
+      borderRadius: 11,
+      circleSize: 15,
+      transformXCircle: 16,
     };
   }
   switch (props.size) {
     case 'small':
       return {
-        containerWidth: 35,
-        containerHeight: 21,
+        containerWidth: 28,
+        containerHeight: 16,
         padding: 3,
-        borderRadius: 11,
-        circleSize: 15,
-        transformXCircle: 14,
+        borderRadius: 8,
+        circleSize: 10,
+        transformXCircle: 12,
       };
     case 'large':
       return {
-        containerWidth: 55,
-        containerHeight: 33,
+        containerWidth: 45,
+        containerHeight: 27,
         padding: 4,
-        borderRadius: 17,
-        circleSize: 25,
-        transformXCircle: 22,
+        borderRadius: 14,
+        circleSize: 19,
+        transformXCircle: 18,
       };
     case 'huge':
       return {
@@ -66,33 +67,33 @@ const sizes = computed(() => {
       };
   }
   return {
-    containerWidth: 45,
-    containerHeight: 27,
-    padding: 4,
-    borderRadius: 14,
-    circleSize: 19,
-    transformXCircle: 18,
+    containerWidth: 37,
+    containerHeight: 21,
+    padding: 3,
+    borderRadius: 11,
+    circleSize: 15,
+    transformXCircle: 16,
   };
 });
 </script>
 
 <template>
   <button
-    :style="`width: ${sizes.containerWidth}px; min-height: ${sizes.containerHeight}px; border-radius: ${sizes.borderRadius}px; padding: ${sizes.padding}px;`"
+    :style="`width: ${sizes.containerWidth}px; min-height: ${sizes.containerHeight}px; border-radius: ${sizes.borderRadius}px; padding: ${sizes.padding}px; cursor: ${disabled ? 'auto' : 'pointer'}`"
     class="switcher"
-    @click.prevent="active = !active"
+    @click.prevent="!disabled && (active = !active)"
   >
     <span
-      :style="`background-color: ${themeColor}; border-radius: ${sizes.borderRadius}px;`"
+      :style="`background-color: ${disabled ? '#e1e7f1 !important' : themeColor}; border-radius: ${sizes.borderRadius}px;`"
       :class="[
         'activeBackground',
         {
-          inactiveBackground: !active,
+          inactiveBackground: !active && !disabled,
         },
       ]"
     ></span>
     <span
-      :style="`width: ${sizes.circleSize}px; height: ${sizes.circleSize}px; transform: translateX(${active ? sizes.transformXCircle : 0}px);`"
+      :style="`width: ${sizes.circleSize}px; height: ${sizes.circleSize}px; transform: translateX(${active ? sizes.transformXCircle : 0}px); background-color: ${disabled ? '#62708c' : 'white'}`"
       class="switcherCircle"
     ></span>
   </button>
@@ -101,7 +102,6 @@ const sizes = computed(() => {
 <style scoped>
 .switcher {
   position: relative;
-  cursor: pointer;
 }
 .activeBackground {
   display: block;
@@ -121,7 +121,6 @@ const sizes = computed(() => {
 }
 .switcherCircle {
   display: block;
-  background-color: white;
   border-radius: 50%;
   transition: transform 0.2s ease-in-out;
 }

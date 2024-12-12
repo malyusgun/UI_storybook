@@ -103,6 +103,9 @@ import TableIcon from '@stories/icons/Mono/TableIcon.vue';
 import TrashIcon from '@stories/icons/Mono/TrashIcon.vue';
 import UserIcon from '@stories/icons/Mono/UserIcon.vue';
 import ArrowsVerticalIcon from '@stories/icons/Mono/ArrowsVerticalIcon.vue';
+import ToggleButton from '@stories/components/ToggleButton/ToggleButton.vue';
+import ToggleSwitch from '@stories/components/ToggleSwitch/ToggleSwitch.vue';
+import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 
 const gentleIcons = [
   Age18Icon,
@@ -206,12 +209,29 @@ const gentleIcons = [
   SettingsIcon,
   TableIcon,
   TrashIcon,
+  TriangleIcon,
   UserIcon,
 ];
 const visibleDrawer = ref(true);
+const options = [
+  {
+    label: 'First',
+    textStyle: 'bold',
+    iconPosition: 'top',
+  },
+  {
+    label: 'Second',
+  },
+];
 </script>
 
 <template>
+  <ToggleButton :options="options" size="large">
+    <template #1Icon>
+      <TrashIcon />
+    </template>
+  </ToggleButton>
+  <ToggleSwitch />
   <Drawer v-model:visible="visibleDrawer" theme="sky" closeIcon="CropIcon">
     <template #header>Это - Drawer</template>
     <p>
@@ -286,7 +306,7 @@ const visibleDrawer = ref(true);
 .testButton {
   position: absolute;
   right: 50px;
-  bottom: 50px;
+  top: 50px;
   background-color: red;
   color: white;
   padding: 10px;

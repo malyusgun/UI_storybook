@@ -6,6 +6,13 @@ const meta: Meta = {
   title: 'Components/Divider',
   component: Divider,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'A component that is used to separate content.',
+      },
+    },
+  },
   argTypes: {
     height: { control: 'number' },
     type: { control: 'select', options: ['solid', 'dashed', 'dotted'] },

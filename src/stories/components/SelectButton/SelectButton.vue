@@ -152,6 +152,9 @@ const buttonHeight = computed(() => {
 .button:hover .background {
   filter: brightness(90%);
 }
+.button:active .background {
+  filter: brightness(75%);
+}
 .background {
   width: 100%;
   height: 100%;

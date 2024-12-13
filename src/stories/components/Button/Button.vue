@@ -6,13 +6,14 @@ import { convert500ThemeToColor } from '@helpers/colors';
 const props = withDefaults(
   defineProps<{
     label?: string;
-    size?: 'small' | 'medium' | 'large' | 'extraLarge';
+    size?: 'small' | 'medium' | 'large' | 'huge';
     textStyle?: 'bold' | 'italic';
     iconPos?: 'left' | 'top' | 'right' | 'bottom';
     width?: string | number;
     theme?: TThemeColor;
     textColor?: TThemeColor;
     border?: TThemeColor;
+    iconOnly?: boolean;
   }>(),
   {
     size: 'medium',
@@ -30,8 +31,8 @@ const textSize = computed(() => {
       return '12px';
     case 'large':
       return '20px';
-    case 'extraLarge':
-      return '24px';
+    case 'huge':
+      return '28px';
   }
   return '16px';
 });
@@ -41,7 +42,7 @@ const buttonPadding = computed(() => {
       return '0.5rem 0.375rem';
     case 'large':
       return '1.2rem 0.8rem';
-    case 'extraLarge':
+    case 'huge':
       return '1.8rem 1.2rem';
   }
   return '0.75rem 0.5rem';
@@ -62,6 +63,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   >
     <span :style="`background-color: ${themeColor}`" class="background"></span>
     <span
+      v-if="label || !iconOnly"
       :style="`color: ${textColor}; font-size: ${textSize}`"
       :class="[
         'text',
@@ -70,7 +72,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
           italic: textStyle === 'italic',
         },
       ]"
-      >{{ label ?? 'Button' }}</span
+      >{{ label ? label : !iconOnly ? 'Button' : '' }}</span
     >
     <span
       v-if="$slots.default"
@@ -98,6 +100,9 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
 }
 .button:hover .background {
   filter: brightness(90%);
+}
+.button:active .background {
+  filter: brightness(75%);
 }
 .background {
   width: 100%;

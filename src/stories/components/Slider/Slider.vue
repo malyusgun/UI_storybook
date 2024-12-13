@@ -1,32 +1,37 @@
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
-import { computed } from 'vue';
-import { convertThemeToColorBlackDefault, convertThemeToColorWhiteDefault } from './helpers/index';
+import { computed, ref, watch } from 'vue';
+import type { TThemeColor } from '@interfaces/common';
+import { convert500ThemeToColor } from '@helpers/colors';
 
-interface Props {
-  value: string | number;
-  width?: string | number;
-  min?: string | number;
-  max?: string | number;
-  step?: string | number;
-  size?: 'small' | 'medium' | 'large' | 'extraLarge';
-  theme?: string;
-  backgroundColor?: string;
-  orientation?: 'horizontal' | 'vertical';
-  isSmooth?: any;
-  options?: {
-    label: string;
-    value: number;
-    color?: string;
-  }[];
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['update:value']);
-const value = useVModel(props, 'value', emit);
+const props = withDefaults(
+  defineProps<{
+    width?: string | number;
+    min?: string | number;
+    max?: string | number;
+    step?: string | number;
+    size?: 'small' | 'medium' | 'large' | 'huge';
+    theme?: TThemeColor;
+    backgroundColor?: TThemeColor;
+    orientation?: 'horizontal' | 'vertical';
+    isSmooth?: boolean;
+    options?: {
+      label: string;
+      value: number;
+      color?: string;
+    }[];
+  }>(),
+  {
+    width: '200',
+    size: 'medium',
+    theme: 'white',
+    backgroundColor: 'black',
+  },
+);
+const value = defineModel('value');
 const optionValue = ref(
   typeof value.value === 'string'
     ? props.options!.findIndex((option) => option.label === value.value)
-    : value.value
+    : value.value,
 );
 watch([optionValue], () => {
   if (props.options) {
@@ -42,23 +47,21 @@ watch([value], () => {
   }
 });
 const sliderButtonSize = computed(() => {
-  if (!props.size) return '40px';
   switch (props.size) {
     case 'small':
       return '25px';
-    case 'medium':
-      return '40px';
     case 'large':
       return '70px';
-    case 'extraLarge':
+    case 'huge':
       return '100px';
   }
+  return '40px';
 });
 const sliderHeight = computed(() => `${Math.floor(sliderButtonSize.value.slice(0, -2) / 3)}px`);
-const sliderBorderRadius = props.isSmooth ? sliderHeight.value : '0%';
-const sliderButtonBorderRadius = props.isSmooth ? '50%' : '0%';
-const themeColor = computed(() => convertThemeToColorWhiteDefault(props.theme));
-const themeBackground = computed(() => convertThemeToColorBlackDefault(props.backgroundColor));
+const sliderBorderRadius = computed(() => (props.isSmooth ? sliderHeight.value : '0%'));
+const sliderButtonBorderRadius = computed(() => (props.isSmooth ? '50%' : '0%'));
+const themeColor = computed(() => convert500ThemeToColor(props.theme));
+const themeBackground = computed(() => convert500ThemeToColor(props.backgroundColor));
 </script>
 
 <template>
@@ -66,10 +69,10 @@ const themeBackground = computed(() => convertThemeToColorBlackDefault(props.bac
     :class="[
       'slideContainer',
       {
-        verticalSlider: orientation === 'vertical'
-      }
+        verticalSlider: orientation === 'vertical',
+      },
     ]"
-    :style="`width: ${width ?? 200}px`"
+    :style="`width: ${width}px`"
   >
     <input
       v-model="optionValue"
@@ -90,8 +93,8 @@ const themeBackground = computed(() => convertThemeToColorBlackDefault(props.bac
         :class="[
           'values',
           {
-            datalistVertical: orientation === 'vertical'
-          }
+            datalistVertical: orientation === 'vertical',
+          },
         ]"
       >
         <template v-for="option of options" :key="option.value">

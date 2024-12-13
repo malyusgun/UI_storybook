@@ -148,6 +148,9 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 }
+* {
+    font-family: Arial, serif;
+}
 #app {
     min-height: 100vh;
     display: flex;

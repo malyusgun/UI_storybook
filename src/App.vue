@@ -103,9 +103,11 @@ import TableIcon from '@stories/icons/Mono/TableIcon.vue';
 import TrashIcon from '@stories/icons/Mono/TrashIcon.vue';
 import UserIcon from '@stories/icons/Mono/UserIcon.vue';
 import ArrowsVerticalIcon from '@stories/icons/Mono/ArrowsVerticalIcon.vue';
-import ToggleButton from '@stories/components/ToggleButton/ToggleButton.vue';
+import SelectButton from '@stories/components/SelectButton/SelectButton.vue';
 import ToggleSwitch from '@stories/components/ToggleSwitch/ToggleSwitch.vue';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
+import Button from '@stories/components/Button/Button.vue';
+import Slider from '@stories/components/Slider/Slider.vue';
 
 const gentleIcons = [
   Age18Icon,
@@ -223,14 +225,77 @@ const options = [
     label: 'Second',
   },
 ];
+const sliderOptions = [
+  {
+    label: 0,
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 2,
+    value: 2,
+    color: 'orange',
+  },
+  {
+    label: 4,
+    value: 4,
+    color: 'yellow',
+  },
+  {
+    label: 6,
+    value: 6,
+    color: 'green',
+  },
+  {
+    label: 8,
+    value: 8,
+    color: 'sky',
+  },
+  {
+    label: 10,
+    value: 10,
+    color: 'purple',
+  },
+  {
+    label: 12,
+    value: 12,
+    color: 'purple',
+  },
+  {
+    label: 14,
+    value: 14,
+    color: 'purple',
+  },
+  {
+    label: 16,
+    value: 16,
+    color: 'purple',
+  },
+  {
+    label: 18,
+    value: 18,
+    color: 'purple',
+  },
+];
 </script>
 
 <template>
-  <ToggleButton :options="options" size="large">
+  <Slider
+    :options="sliderOptions"
+    width="400"
+    min="0"
+    max="18"
+    step="2"
+    backgroundColor="black"
+    theme="blue"
+    isSmooth
+  />
+  <Button theme="sky" label="I'm a button"></Button>
+  <SelectButton :options="options" size="large">
     <template #1Icon>
       <TrashIcon />
     </template>
-  </ToggleButton>
+  </SelectButton>
   <ToggleSwitch />
   <Drawer v-model:visible="visibleDrawer" theme="sky" closeIcon="CropIcon">
     <template #header>Это - Drawer</template>

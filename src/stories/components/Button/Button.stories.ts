@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used to select a value from a list using a button.',
+        component: 'A component that is used as a button. Can be used with icon.',
       },
     },
   },

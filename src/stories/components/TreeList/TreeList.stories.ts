@@ -9,7 +9,8 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used to select a value from a list using a TreeList.',
+        component:
+          'A component that is used to display hierarchical data. Can contain links to a new page or the same.',
       },
     },
   },
@@ -17,7 +18,6 @@ const meta: Meta = {
     items: { control: 'array' },
     maxWidth: { control: 'number' },
     expand: { control: 'boolean' },
-    disabled: { control: 'boolean' },
     theme: {
       control: 'select',
       options: [
@@ -60,6 +60,24 @@ export const Primary: Story = {
             children: [
               {
                 label: '1-1-1',
+                children: [
+                  {
+                    label: '1-1-1-1',
+                    children: [
+                      {
+                        label: '1-1-1-1-1',
+                        children: [
+                          { label: '1-1-1-1-1-1' },
+                          { label: '1-1-1-1-1-2' },
+                          { label: '1-1-1-1-1-3' },
+                          { label: '1-1-1-1-1-4' },
+                        ],
+                      },
+                    ],
+                  },
+                  { label: '1-1-1-2' },
+                  { label: '1-1-1-3' },
+                ],
               },
               {
                 label: '1-1-2',
@@ -84,5 +102,66 @@ export const Primary: Story = {
 };
 
 export const Full: Story = {
-  args: {},
+  args: {
+    items: [
+      {
+        label: 'Font-family (mdn web docs)',
+        color: 'green',
+        iconBefore: 'EncyclopediaIcon',
+        iconColor: 'green',
+        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+        linkBlank: true,
+        textStyle: 'bold',
+        children: [
+          {
+            label: 'Font-family (mdn web docs) but same page (error?)',
+            link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+            color: 'sky',
+            iconBefore: 'EyeIcon',
+            iconColor: 'white',
+            textStyle: 'italic',
+            isTriangleToColor: true,
+            children: [
+              {
+                label: '1-1-1',
+                color: 'red',
+                iconAfter: 'DiceIcon',
+                iconColor: 'red',
+                children: [
+                  {
+                    label: '1-1-1-1',
+                    children: [
+                      { label: '1-1-1-1-1' },
+                      { label: '1-1-1-1-2' },
+                      { label: '1-1-1-1-3' },
+                      { label: '1-1-1-1-4' },
+                    ],
+                  },
+                  { label: '1-1-1-2' },
+                  { label: '1-1-1-3' },
+                ],
+              },
+              {
+                label: '1-1-2',
+              },
+            ],
+          },
+          {
+            label: '1-2',
+          },
+        ],
+      },
+      {
+        label: 'Second',
+        children: [
+          {
+            label: '2-1',
+          },
+        ],
+      },
+    ],
+
+    expand: true,
+    theme: 'black',
+  },
 };

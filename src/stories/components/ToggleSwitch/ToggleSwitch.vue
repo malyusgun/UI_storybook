@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { TThemeColor, TThemeColorNoWhite } from '@interfaces/common';
 import { convert500ThemeToColor, convert800ThemeToColor } from '@helpers/colors';
+import type { ITSProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    size?: 'small' | 'medium' | 'large' | 'huge';
-    theme?: TThemeColorNoWhite;
-    negativeTheme?: TThemeColor;
-    darkNegative?: boolean;
-    disabled?: boolean;
-  }>(),
-  {
-    size: 'medium',
-    theme: 'sky',
-    negativeTheme: 'black',
-    darkNegative: true,
-  },
-);
+const props = withDefaults(defineProps<ITSProps>(), {
+  size: 'medium',
+  theme: 'sky',
+  negativeTheme: 'black',
+  darkNegative: true,
+});
 const active = defineModel<boolean>('active');
 
 const themeColor = computed(() => convert500ThemeToColor(props.theme));

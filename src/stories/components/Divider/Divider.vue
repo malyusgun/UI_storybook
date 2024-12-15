@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { TThemeColor } from '@interfaces/common';
 import { convert500ThemeToColor } from '@helpers/colors';
+import type { IDividerProps } from '@interfaces/componentsProps';
 
-interface Props {
-  height?: number;
-  type?: 'solid' | 'dashed' | 'dotted';
-  color?: TThemeColor;
-}
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<IDividerProps>(), {
   height: 1,
   type: 'solid',
   color: 'black',

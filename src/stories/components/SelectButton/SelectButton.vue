@@ -1,37 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { TThemeColor } from '@interfaces/common';
 import { convert500ThemeToColor } from '@helpers/colors';
+import type { ISBProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    options: {
-      label: string;
-      value?: never;
-      color?: TThemeColor;
-      activeColor?: TThemeColor;
-      backgroundColor?: TThemeColor;
-      isLabelHidden?: boolean;
-      iconPosition?: 'left' | 'right' | 'top' | 'bottom';
-      textStyle?: 'bold' | 'italic';
-    }[];
-    size?: 'small' | 'medium' | 'large' | 'huge';
-    rounded?: boolean;
-    activeBgColor?: TThemeColor;
-    border?: TThemeColor;
-    disabled?: boolean;
-  }>(),
-  {
-    size: 'medium',
-    border: 'black',
-    activeBgColor: 'sky',
-  },
-);
+const props = withDefaults(defineProps<ISBProps>(), {
+  size: 'medium',
+  border: 'black',
+  activeBackgroundColor: 'sky',
+});
 const emit = defineEmits(['onClick']);
-const value = defineModel<boolean>('value');
+const value = defineModel<never>('value');
 
-const activeBgColor = computed(() =>
-  props.activeBgColor ? convert500ThemeToColor(props.activeBgColor) : '',
+const activeBackgroundColorComputed = computed(() =>
+  props.activeBackgroundColor ? convert500ThemeToColor(props.activeBackgroundColor) : '',
 );
 const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
 const textSize = computed(() => {
@@ -92,13 +73,13 @@ const buttonHeight = computed(() => {
       :style="`padding: ${buttonPadding}`"
       @click.prevent="
         () => {
-          value = item?.value ?? item.label;
+          value = (item.value as never) ?? item.label;
           emit('onClick', value);
         }
       "
     >
       <span
-        :style="`background-color: ${activeBgColor && (value === item.value || value === item.label) ? activeBgColor : convert500ThemeToColor(item.backgroundColor ?? 'white')}`"
+        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : convert500ThemeToColor(item.backgroundColor ?? 'white')}`"
         :class="[
           'background',
           {
@@ -169,17 +150,8 @@ const buttonHeight = computed(() => {
   align-items: center;
   justify-content: center;
 }
-.flex-column {
-  flex-direction: column;
-}
 .order-1 {
   order: -1;
-}
-.bold {
-  font-weight: bold;
-}
-.italic {
-  font-style: italic;
 }
 .border {
   border: 2px solid v-bind(borderColor);

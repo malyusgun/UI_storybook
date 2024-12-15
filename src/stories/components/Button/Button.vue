@@ -1,29 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { TThemeColor } from '@interfaces/common';
 import { convert500ThemeToColor } from '@helpers/colors';
+import type { IButtonProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    label?: string;
-    size?: 'small' | 'medium' | 'large' | 'huge';
-    textStyle?: 'bold' | 'italic';
-    iconPos?: 'left' | 'top' | 'right' | 'bottom';
-    width?: string | number;
-    theme?: TThemeColor;
-    textColor?: TThemeColor;
-    border?: TThemeColor;
-    iconOnly?: boolean;
-  }>(),
-  {
-    size: 'medium',
-    theme: 'white',
-    textColor: 'black',
-    iconPos: 'left',
-  },
-);
+const props = withDefaults(defineProps<IButtonProps>(), {
+  size: 'medium',
+  theme: 'white',
+  textColor: 'black',
+  iconPos: 'left',
+});
+
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
-const textColor = computed(() => convert500ThemeToColor(props.textColor));
+const textColorComputed = computed(() => convert500ThemeToColor(props.textColor));
 const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
 const textSize = computed(() => {
   switch (props.size) {
@@ -64,7 +52,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
     <span :style="`background-color: ${themeColor}`" class="background"></span>
     <span
       v-if="label || !iconOnly"
-      :style="`color: ${textColor}; font-size: ${textSize}`"
+      :style="`color: ${textColorComputed}; font-size: ${textSize}`"
       :class="[
         'text',
         {
@@ -125,17 +113,8 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   align-items: center;
   justify-content: center;
 }
-.flex-column {
-  flex-direction: column;
-}
 .order-1 {
   order: -1;
-}
-.bold {
-  font-weight: bold;
-}
-.italic {
-  font-style: italic;
 }
 .border {
   border: 2px solid v-bind(borderColor);

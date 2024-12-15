@@ -39,8 +39,8 @@ if (!props.onClose) {
       :class="[
         'modalBackground',
         {
-          openedModalBackground: isVisible
-        }
+          openedModalBackground: isVisible,
+        },
       ]"
     ></section>
     <section
@@ -48,8 +48,8 @@ if (!props.onClose) {
       :class="[
         'modal',
         {
-          openedModal: isVisible
-        }
+          openedModal: isVisible,
+        },
       ]"
     >
       <header class="modalHeader">

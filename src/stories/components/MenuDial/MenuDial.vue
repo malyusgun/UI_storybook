@@ -3,18 +3,19 @@ import { useVModel } from '@vueuse/core';
 import PlusIcon from '@/shared/icons/PlusIcon.vue';
 import { computed } from 'vue';
 import { convertThemeToColorWhiteDefault } from './helpers/index';
+import type { TPosition, TSize, TTextStyle } from '@interfaces/common';
 
 interface Props {
   isActive: boolean;
   items: {
     label: string;
     theme?: string;
-    textStyle?: 'bold' | 'italic';
+    textStyle?: TTextStyle;
     onClick?: () => void;
   }[];
-  size?: 'small' | 'medium' | 'large' | 'extraLarge';
+  size?: TSize;
   theme?: string;
-  direction?: 'left' | 'right' | 'up' | 'down';
+  direction?: TPosition;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(['update:isActive']);
@@ -82,8 +83,8 @@ watch(isActive, () => {
         'menuList',
         {
           menuListColumn: direction === 'up' || direction === 'down',
-          menuListOpened: isActive
-        }
+          menuListOpened: isActive,
+        },
       ]"
       :style="menuListStyles"
     >
@@ -102,8 +103,8 @@ watch(isActive, () => {
             '',
             {
               bold: item.textStyle === 'bold',
-              italic: item.textStyle === 'italic'
-            }
+              italic: item.textStyle === 'italic',
+            },
           ]"
         >
           {{ item.label }}
@@ -161,11 +162,5 @@ watch(isActive, () => {
 }
 .menuElement:hover {
   filter: brightness(75%);
-}
-.bold {
-  font-weight: bold;
-}
-.italic {
-  font-style: italic;
 }
 </style>

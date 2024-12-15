@@ -20,7 +20,7 @@ const meta: Meta = {
     },
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
     rounded: { control: 'boolean' },
-    activeBgColor: {
+    activeBackgroundColor: {
       control: 'select',
       options: [
         'white',
@@ -110,7 +110,7 @@ export const LargeFull: Story = {
     ],
 
     border: 'sky',
-    activeBgColor: 'red',
+    activeBackgroundColor: 'red',
     rounded: true,
     disabled: false,
     size: 'large',

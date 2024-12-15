@@ -2,31 +2,19 @@
 import { computed } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
 import { convert500ThemeToColor, convert300ThemeToColor } from '@helpers/colors';
-import type { TIcons, TThemeColor } from '@interfaces/common';
+import type { IDrawerProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    position: 'left' | 'right' | 'top' | 'bottom';
-    width?: string | number;
-    theme?: TThemeColor;
-    modal?: boolean;
-    dismissible?: boolean;
-    closeIcon?: TIcons;
-    headerDivider?: boolean;
-    footerDivider?: boolean;
-  }>(),
-  {
-    visible: false,
-    position: 'left',
-    width: 400,
-    modal: true,
-    dismissible: true,
-    theme: 'white',
-    closeIcon: 'CrossIcon',
-    headerDivider: false,
-    footerDivider: false,
-  },
-);
+const props = withDefaults(defineProps<IDrawerProps>(), {
+  visible: false,
+  position: 'left',
+  width: 400,
+  modal: true,
+  dismissible: true,
+  theme: 'white',
+  closeIcon: 'CrossIcon',
+  headerDivider: false,
+  footerDivider: false,
+});
 const emit = defineEmits(['onClose']);
 const visible = defineModel<boolean>('visible');
 

@@ -1,32 +1,29 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { ITreeItem } from '@interfaces/components';
-import type { TThemeColor } from '@interfaces/common';
+import type { ITreeItem } from '@interfaces/componentsProp';
 import { convert500ThemeToColor } from '@helpers/colors';
 import TreeItems from '@stories/components/TreeList/TreeItems.vue';
+import type { ITLProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    items?: ITreeItem[];
-    maxWidth?: number;
-    expand?: boolean;
-    theme?: TThemeColor;
-  }>(),
-  {
-    theme: 'white',
-    maxWidth: 300,
-  },
-);
+interface IStateItem {
+  isOpen: boolean;
+  label: string;
+}
+
+const props = withDefaults(defineProps<ITLProps>(), {
+  theme: 'white',
+  maxWidth: 300,
+});
 const emit = defineEmits(['onClick']);
 const items = computed(() => props.items);
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const textColor = computed(() => {
-  if (!props.theme) return '#000000';
-  if (props.theme === 'white') return '#000000';
-  return '#ffffff';
+  if (!props.theme) return 'black';
+  if (props.theme === 'white') return 'black';
+  return 'white';
 });
 
-const state = ref([]);
+const state = ref<IStateItem[]>([]);
 const setItemChildrenToState = (items: ITreeItem[]) => {
   for (const item of items) {
     state.value.push({
@@ -51,10 +48,15 @@ watch(
     immediate: true,
   },
 );
-const toggleIsOpen = (item) =>
+const toggleIsOpen = (item: ITreeItem) => {
+  if (item.isLinkClicked) {
+    item.isLinkClicked = false;
+    return;
+  }
   state.value.map((itemState) => {
     if (itemState.label === item.label) itemState.isOpen = !itemState.isOpen;
   });
+};
 </script>
 
 <template>
@@ -66,6 +68,7 @@ const toggleIsOpen = (item) =>
       :items="items"
       :state="state"
       :textColor="textColor"
+      :themeColor="themeColor"
       @toggleIsOpen="toggleIsOpen"
       @onClick="emit('onClick')"
     />

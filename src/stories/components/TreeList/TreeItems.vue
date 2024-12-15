@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { iconsSet } from '@/common/constants/icons';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
-import type { ITreeItem } from '@interfaces/components';
-import type { TThemeColor } from '@interfaces/common';
 import { convert500ThemeToColor } from '@helpers/colors';
+import type { ITIProps } from '@interfaces/componentsProps';
 
-defineProps<{
-  state: {
-    isOpen: boolean;
-    label: string;
-  }[];
-  items: ITreeItem[];
-  textColor: TThemeColor;
-}>();
+defineProps<ITIProps>();
 const emit = defineEmits(['toggleIsOpen', 'onClick']);
 </script>
 
@@ -71,10 +63,16 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
               {
                 bold: item.textStyle === 'bold',
                 italic: item.textStyle === 'italic',
+                isDarkerOnHover: item.link,
               },
             ]"
             :style="`color: ${item.color ? convert500ThemeToColor(item.color) : textColor}`"
-            @click="emit('onClick', item.link)"
+            @click="
+              () => {
+                item.isLinkClicked = true;
+                emit('onClick', item.link);
+              }
+            "
             >{{ item.label }}</a
           >
           <component
@@ -87,9 +85,10 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
         </section>
         <section class="children">
           <TreeItems
-            :items="item.children"
+            :items="item.children ?? []"
             :state="state"
             :textColor="textColor"
+            :themeColor="themeColor"
             @toggleIsOpen="emit('toggleIsOpen', $event)"
           />
         </section>
@@ -145,10 +144,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
 .pl27 {
   padding-left: 27px;
 }
-.bold {
-  font-weight: bold;
-}
-.italic {
-  font-style: italic;
+.isDarkerOnHover:hover {
+  filter: brightness(80%);
 }
 </style>

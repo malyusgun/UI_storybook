@@ -15,7 +15,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    items: { control: 'array' },
+    items: { control: 'object' },
     maxWidth: { control: 'number' },
     expand: { control: 'boolean' },
     theme: {

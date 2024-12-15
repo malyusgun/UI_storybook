@@ -74,6 +74,7 @@ export const convert500ThemeToColor = (theme: string | undefined) => {
     case 'black':
       return '#000000';
   }
+  return '#000000';
 };
 
 export const convert800ThemeToColor = (theme: string | undefined) => {

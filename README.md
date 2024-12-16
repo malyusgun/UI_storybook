@@ -6,9 +6,11 @@
 
 ## Список компонентов:
 - TreeList;
+- Slider;
 - Drawer;
+- Modal;
+- SelectButton;
 - Button;
-- ToggleButton;
 - ToggleSwitch;
 - Divider;
 

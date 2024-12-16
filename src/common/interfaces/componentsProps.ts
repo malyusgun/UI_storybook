@@ -1,5 +1,6 @@
 import type {
   TBorder,
+  TExpandedPosition,
   TIcons,
   TPosition,
   TSize,
@@ -24,6 +25,18 @@ export interface ITIProps {
   items: ITreeItem[];
   textColor: TThemeColor;
   themeColor: string;
+}
+
+export interface IMDProps {
+  items: {
+    label: string;
+    theme?: string;
+    textStyle?: TTextStyle;
+    onClick?: () => void;
+  }[];
+  size?: TSize;
+  theme?: string;
+  direction?: TPosition;
 }
 
 export interface ISliderProps {
@@ -52,7 +65,10 @@ export interface IDrawerProps {
 
 export interface IModalProps {
   theme?: TThemeColor;
-  width?: number | string;
+  width?: string;
+  height?: string;
+  position?: TExpandedPosition;
+  dismissible?: boolean;
   closeIcon?: TIcons;
   headerDivider?: boolean;
 }

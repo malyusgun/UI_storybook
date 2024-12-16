@@ -110,6 +110,7 @@ import Button from '@stories/components/Button/Button.vue';
 import Slider from '@stories/components/Slider/Slider.vue';
 import type { ISBOption } from '@interfaces/componentsProp';
 import Modal from '@stories/components/Modal/Modal.vue';
+import MenuDial from '@stories/components/MenuDial/MenuDial.vue';
 
 const gentleIcons = [
   Age18Icon,
@@ -279,10 +280,18 @@ const options: ISBOption[] = [
 ];
 const visible = ref(false);
 const onClose = () => console.log('close!');
+const value = ref();
 </script>
 
 <template>
-  <Modal v-model:visible="visible" @onClose="onClose"></Modal>
+  {{ value }}
+  <Modal v-model:visible="visible" theme="red" @onClose="onClose"
+    ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo
+    nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam
+    repellat saepe temporibus?</Modal
+  >
+  <MenuDial :items="[{ label: 'First' }]" />
   <Slider
     :options="sliderOptions"
     orientation="vertical"
@@ -295,7 +304,7 @@ const onClose = () => console.log('close!');
     isSmooth
   />
   <Button @click="visible = true" theme="sky" label="I'm a button"></Button>
-  <SelectButton :options="options" size="large">
+  <SelectButton :options="options" size="large" v-model:value="value">
     <template #1Icon>
       <TrashIcon />
     </template>

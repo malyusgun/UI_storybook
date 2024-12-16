@@ -1,34 +1,23 @@
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
-import PlusIcon from '@/shared/icons/PlusIcon.vue';
-import { computed } from 'vue';
-import { convertThemeToColorWhiteDefault } from './helpers/index';
-import type { TPosition, TSize, TTextStyle } from '@interfaces/common';
+import { computed, watch } from 'vue';
+import type { IMDProps } from '@interfaces/componentsProps';
+import { convert500ThemeToColor } from '@helpers/colors';
+import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
 
-interface Props {
-  isActive: boolean;
-  items: {
-    label: string;
-    theme?: string;
-    textStyle?: TTextStyle;
-    onClick?: () => void;
-  }[];
-  size?: TSize;
-  theme?: string;
-  direction?: TPosition;
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['update:isActive']);
-const isActive = useVModel(props, 'isActive', emit);
+const props = withDefaults(defineProps<IMDProps>(), {
+  theme: 'white',
+  size: 'medium',
+  direction: 'right',
+});
+const active = defineModel('active');
 
-const themeColor = computed(() => convertThemeToColorWhiteDefault(props.theme));
+const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const textColor = computed(() => {
   if (!props.theme) return '#000000';
   if (props.theme === 'white') return '#000000';
   return '#ffffff';
 });
 const elementsSize = computed(() => {
-  if (!props?.size) return 40;
   switch (props.size) {
     case 'small':
       return 30;
@@ -36,29 +25,29 @@ const elementsSize = computed(() => {
       return 40;
     case 'large':
       return 55;
-    case 'extraLarge':
+    case 'huge':
       return 70;
   }
+  return 40;
 });
 const menuListStyles = computed(() => {
-  if (!props.direction)
-    return `transform: translateY(-${elementsSize.value / 2}px) translateX(${isActive.value ? elementsSize.value + 10 : 0}px)`;
   switch (props.direction) {
     case 'right':
-      return `transform: translateY(-${elementsSize.value / 2}px) translateX(${isActive.value ? elementsSize.value + 10 : 0}px)`;
+      return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : 0}px)`;
     case 'left':
-      return `flex-direction: row-reverse; transform: translateY(-${elementsSize.value / 2}px) ${isActive.value ? `translateX(calc(-100% - 10px))` : ''}`;
-    case 'up':
-      return `transform: translateY(-${isActive.value ? (0.5 + props.items.length) * elementsSize.value + 10 : elementsSize.value / 2}px)`;
-    case 'down':
-      return `transform: translateY(${isActive.value ? 20 : 0}px)`;
+      return `flex-direction: row-reverse; transform: translateY(-${elementsSize.value / 2}px) ${active.value ? `translateX(calc(-100% - 10px))` : ''}`;
+    case 'top':
+      return `transform: translateY(-${active.value ? (0.5 + props.items.length) * elementsSize.value + 10 : elementsSize.value / 2}px)`;
+    case 'bottom':
+      return `transform: translateY(${active.value ? 20 : 0}px)`;
   }
+  return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : 0}px)`;
 });
 const onClick = () => {
-  isActive.value = false;
+  active.value = false;
 };
-watch(isActive, () => {
-  if (isActive.value) {
+watch(active, () => {
+  if (active.value) {
     setTimeout(() => {
       document.addEventListener('click', onClick);
     }, 0);
@@ -71,9 +60,9 @@ watch(isActive, () => {
 <template>
   <section class="menuContainer">
     <button
-      :style="`background-color: ${themeColor ?? 'white'}; width: ${elementsSize}px; height: ${elementsSize}px; transform: ${isActive ? 'rotate(135deg)' : ''};`"
+      :style="`border: ${theme === 'white' ? '2px solid black' : ''}; background-color: ${themeColor ?? 'white'}; width: ${elementsSize}px; height: ${elementsSize}px; transform: ${active ? 'rotate(135deg)' : ''};`"
       class="menuButton"
-      @click.prevent="isActive = !isActive"
+      @click.prevent="active = !active"
     >
       <slot name="buttonIcon" />
       <PlusIcon v-if="!$slots.buttonIcon" :size="elementsSize - 10" :color="textColor" />
@@ -83,7 +72,7 @@ watch(isActive, () => {
         'menuList',
         {
           menuListColumn: direction === 'up' || direction === 'down',
-          menuListOpened: isActive,
+          menuListOpened: active,
         },
       ]"
       :style="menuListStyles"
@@ -91,10 +80,10 @@ watch(isActive, () => {
       <li
         v-for="(item, index) of items"
         :key="item.label"
-        :style="`height: ${elementsSize}px; background-color: ${convertThemeToColorWhiteDefault(item.theme)};
+        :style="`height: ${elementsSize}px; background-color: ${convert500ThemeToColor(item.theme ?? 'white')};
         color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}; border-color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}`"
         class="menuElement"
-        @click.prevent="item?.onClick"
+        @click.prevent="() => (item.onClick ? item.onClick() : false)"
       >
         <slot :name="`${index + 1}IconBefore`" />
         <p
@@ -121,7 +110,6 @@ watch(isActive, () => {
 }
 .menuButton {
   position: relative;
-  border: 2px solid black;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -130,6 +118,9 @@ watch(isActive, () => {
   transition: 0.2s ease-in-out;
 }
 .menuButton:hover {
+  filter: brightness(90%);
+}
+.menuButton:active {
   filter: brightness(75%);
 }
 .menuList {
@@ -161,6 +152,9 @@ watch(isActive, () => {
   transition: 0.2s ease-in-out;
 }
 .menuElement:hover {
+  filter: brightness(90%);
+}
+.menuElement:active {
   filter: brightness(75%);
 }
 </style>

@@ -16,7 +16,14 @@ const props = withDefaults(defineProps<IDrawerProps>(), {
   footerDivider: false,
 });
 const emit = defineEmits(['onClose']);
-const visible = defineModel<boolean>('visible');
+const visible = defineModel<boolean>('visible', {
+  set(value) {
+    if (!value) {
+      emit('onClose');
+    }
+    return value;
+  },
+});
 
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const scrollColor = computed(() => convert300ThemeToColor(props.theme));
@@ -57,15 +64,7 @@ const drawerWidth = computed(() => {
     >
       <header class="drawerHeader">
         <slot name="header" />
-        <button
-          class="buttonClose"
-          @click.prevent="
-            () => {
-              visible = false;
-              emit('onClose');
-            }
-          "
-        >
+        <button class="buttonClose" @click.prevent="visible = false">
           <component :is="iconsSet[closeIcon]" :color="textColor" />
         </button>
       </header>
@@ -173,10 +172,6 @@ const drawerWidth = computed(() => {
   width: 30px;
   display: flex;
   align-items: center;
-}
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;

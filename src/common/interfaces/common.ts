@@ -25,6 +25,8 @@ export type TTextStyle = 'bold' | 'italic';
 
 export type TPosition = 'top' | 'right' | 'bottom' | 'left';
 
+export type TExpandedPosition = TPosition | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+
 export type TBorder = 'solid' | 'dashed' | 'dotted';
 
 export type TIcons = keyof typeof iconsSet;

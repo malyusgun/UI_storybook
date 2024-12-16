@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Slider from './Slider.vue';
-import type { TThemeColor } from '@interfaces/common';
 
 const meta: Meta = {
   title: 'Components/Slider',
@@ -15,7 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    options: { control: 'array' },
+    options: { control: 'object' },
     width: { control: 'text' },
     min: { control: 'text' },
     max: { control: 'text' },
@@ -81,12 +80,13 @@ export const Primary: Story = {
 export const Full: Story = {
   args: {
     min: '0',
-    max: '10',
+    max: '20',
     step: '2',
-    size: 'small',
+    size: 'large',
     backgroundColor: 'black',
     theme: 'blue',
     isSmooth: true,
+
     options: [
       {
         label: 0,
@@ -138,6 +138,24 @@ export const Full: Story = {
         value: 18,
         color: 'purple',
       },
+      {
+        label: 20,
+        value: 20,
+        color: 'purple',
+      },
     ],
+
+    width: '300',
+  },
+};
+
+export const Smooth: Story = {
+  args: {
+    max: '1000',
+    isSmooth: true,
+    width: '300',
+    size: 'medium',
+    backgroundColor: 'blue',
+    theme: 'black',
   },
 };

@@ -1,32 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { TThemeColor } from '@interfaces/common';
 import { convert500ThemeToColor } from '@helpers/colors';
+import type { ISliderProps } from '@interfaces/componentsProps';
 
-const props = withDefaults(
-  defineProps<{
-    width?: string | number;
-    min?: string | number;
-    max?: string | number;
-    step?: string | number;
-    size?: 'small' | 'medium' | 'large' | 'huge';
-    theme?: TThemeColor;
-    backgroundColor?: TThemeColor;
-    orientation?: 'horizontal' | 'vertical';
-    isSmooth?: boolean;
-    options?: {
-      label: string;
-      value: number;
-      color?: string;
-    }[];
-  }>(),
-  {
-    width: '200',
-    size: 'medium',
-    theme: 'white',
-    backgroundColor: 'black',
-  },
-);
+const props = withDefaults(defineProps<ISliderProps>(), {
+  width: '100',
+  size: 'medium',
+  theme: 'sky',
+  backgroundColor: 'black',
+});
 const value = defineModel('value');
 const optionValue = ref(
   typeof value.value === 'string'
@@ -35,7 +17,9 @@ const optionValue = ref(
 );
 watch([optionValue], () => {
   if (props.options) {
-    value.value = props.options!.find((option) => option.value == optionValue.value)!.label;
+    value.value = props.options!.find(
+      (option) => (option.value ?? option.label) == optionValue.value,
+    )!.label;
   } else value.value = optionValue.value;
 });
 watch([value], () => {
@@ -49,25 +33,41 @@ watch([value], () => {
 const sliderButtonSize = computed(() => {
   switch (props.size) {
     case 'small':
-      return '25px';
+      return '10px';
     case 'large':
-      return '70px';
+      return '30px';
     case 'huge':
-      return '100px';
+      return '40px';
   }
-  return '40px';
+  return '20px';
 });
-const sliderHeight = computed(() => `${Math.floor(sliderButtonSize.value.slice(0, -2) / 3)}px`);
+const optionsFontSize = computed(() => {
+  if (!props.options?.length) return;
+  switch (props.size) {
+    case 'small':
+      return '10px';
+    case 'large':
+      return '14px';
+    case 'huge':
+      return '16px';
+  }
+  return '12px';
+});
+const widthHalf = computed(() => `${Math.floor(+props.width / 2)}px`);
+const sliderHeight = computed(() => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2.5)}px`);
 const sliderBorderRadius = computed(() => (props.isSmooth ? sliderHeight.value : '0%'));
 const sliderButtonBorderRadius = computed(() => (props.isSmooth ? '50%' : '0%'));
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const themeBackground = computed(() => convert500ThemeToColor(props.backgroundColor));
+const marksListPadding = computed(
+  () => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2)}px`,
+);
 </script>
 
 <template>
   <div
     :class="[
-      'slideContainer',
+      'sliderContainer',
       {
         verticalSlider: orientation === 'vertical',
       },
@@ -82,35 +82,23 @@ const themeBackground = computed(() => convert500ThemeToColor(props.backgroundCo
       :max="max ?? 100"
       :step="step ?? 1"
     />
-    <input type="range" list="values" class="opacity-0 size-0" />
-
     <div v-if="options?.length">
       <ul class="marksList" :style="`width: ${width ?? 200}px`">
-        <li v-for="option of options" :key="option.label">|</li>
+        <li
+          v-for="option of options"
+          :key="option.label"
+          class="mark"
+          :style="`color: ${convert500ThemeToColor(option?.color) ?? 'white'}; font-size: ${optionsFontSize}`"
+        >
+          {{ option.label }}
+        </li>
       </ul>
-      <datalist
-        id="values"
-        :class="[
-          'values',
-          {
-            datalistVertical: orientation === 'vertical',
-          },
-        ]"
-      >
-        <template v-for="option of options" :key="option.value">
-          <option
-            :value="option.value"
-            :label="option.label"
-            :style="`color: ${option.color ?? 'white'}`"
-          ></option>
-        </template>
-      </datalist>
     </div>
   </div>
 </template>
 
 <style scoped>
-.slideContainer {
+.sliderContainer {
   width: v-bind(width);
 }
 .slider {
@@ -149,16 +137,13 @@ const themeBackground = computed(() => convert500ThemeToColor(props.backgroundCo
   cursor: pointer;
 }
 .verticalSlider {
+  margin-top: v-bind(widthHalf);
   transform: rotate(270deg);
 }
 datalist {
   display: flex;
   justify-content: space-between;
   width: v-bind(width);
-}
-.datalistVertical {
-  flex-direction: column;
-  writing-mode: vertical-lr;
 }
 .values {
   padding: 0 -15px;
@@ -171,6 +156,14 @@ option {
   justify-content: space-between;
   margin-bottom: 5px;
   font-size: 10px;
-  padding: 0 10px;
+  padding: 0 v-bind(marksListPadding);
+}
+.mark {
+  display: flex;
+  justify-content: center;
+  line-height: 40px;
+  background-color: black;
+  width: 1px;
+  height: 10px;
 }
 </style>

@@ -1,36 +1,28 @@
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
 import { computed } from 'vue';
-import { convertThemeToColorWhiteDefault } from '@/app/helpers';
-import type { TThemeColor } from './interfaces/index';
+import { convert500ThemeToColor } from '@helpers/colors';
+import type { IModalProps } from '@interfaces/componentsProps';
 
-interface Props {
-  isVisible: boolean;
-  theme?: TThemeColor;
-  width?: number | string;
-  onClose?: () => never;
-}
-const props = defineProps<Props>();
-const themeColor = computed(() => convertThemeToColorWhiteDefault(props.theme));
+const props = withDefaults(defineProps<IModalProps>(), {
+  theme: 'white',
+});
+const emit = defineEmits(['onClose']);
+const visible = defineModel('visible', {
+  set(value) {
+    emit('onClose');
+    return value;
+  },
+});
+const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const textColor = computed(() => {
   if (!props.theme) return '#000000';
   if (props.theme === 'white') return '#000000';
   return '#ffffff';
 });
-const emit = defineEmits(['update:isVisible']);
-const isVisible = useVModel(props, 'isVisible', emit);
-const onKeydown = (event) => {
-  if (event.key === 'Escape' && isVisible.value) isVisible.value = false;
+const onKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && visible.value) visible.value = false;
 };
 document.addEventListener('keydown', onKeydown);
-const unwatch = watch(isVisible, () => {
-  if (!isVisible.value) {
-    props.onClose();
-  }
-});
-if (!props.onClose) {
-  unwatch();
-}
 </script>
 
 <template>
@@ -39,7 +31,7 @@ if (!props.onClose) {
       :class="[
         'modalBackground',
         {
-          openedModalBackground: isVisible,
+          openedModalBackground: visible,
         },
       ]"
     ></section>
@@ -48,13 +40,13 @@ if (!props.onClose) {
       :class="[
         'modal',
         {
-          openedModal: isVisible,
+          openedModal: visible,
         },
       ]"
     >
       <header class="modalHeader">
         <slot name="header" />
-        <div class="buttonClose" @click.prevent="isVisible = false">
+        <div class="buttonClose" @click.prevent="visible = false">
           <svg
             width="40px"
             height="40px"

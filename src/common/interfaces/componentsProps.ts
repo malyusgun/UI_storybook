@@ -50,6 +50,13 @@ export interface IDrawerProps {
   footerDivider?: boolean;
 }
 
+export interface IModalProps {
+  theme?: TThemeColor;
+  width?: number | string;
+  closeIcon?: TIcons;
+  headerDivider?: boolean;
+}
+
 export interface ISBProps {
   options: ISBOption[];
   size?: TSize;

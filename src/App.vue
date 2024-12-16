@@ -108,6 +108,8 @@ import ToggleSwitch from '@stories/components/ToggleSwitch/ToggleSwitch.vue';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 import Button from '@stories/components/Button/Button.vue';
 import Slider from '@stories/components/Slider/Slider.vue';
+import type { ISBOption } from '@interfaces/componentsProp';
+import Modal from '@stories/components/Modal/Modal.vue';
 
 const gentleIcons = [
   Age18Icon,
@@ -215,16 +217,6 @@ const gentleIcons = [
   UserIcon,
 ];
 const visibleDrawer = ref(true);
-const options = [
-  {
-    label: 'First',
-    textStyle: 'bold',
-    iconPosition: 'top',
-  },
-  {
-    label: 'Second',
-  },
-];
 const sliderOptions = [
   {
     label: 0,
@@ -273,15 +265,27 @@ const sliderOptions = [
   },
   {
     label: 18,
-    value: 18,
-    color: 'purple',
   },
 ];
+const options: ISBOption[] = [
+  {
+    label: 'First',
+    textStyle: 'bold',
+    iconPosition: 'top',
+  },
+  {
+    label: 'Second',
+  },
+];
+const visible = ref(false);
+const onClose = () => console.log('close!');
 </script>
 
 <template>
+  <Modal v-model:visible="visible" @onClose="onClose"></Modal>
   <Slider
     :options="sliderOptions"
+    orientation="vertical"
     width="400"
     min="0"
     max="18"
@@ -290,7 +294,7 @@ const sliderOptions = [
     theme="blue"
     isSmooth
   />
-  <Button theme="sky" label="I'm a button"></Button>
+  <Button @click="visible = true" theme="sky" label="I'm a button"></Button>
   <SelectButton :options="options" size="large">
     <template #1Icon>
       <TrashIcon />

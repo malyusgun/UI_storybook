@@ -6,6 +6,7 @@
 
 ## Список компонентов:
 - TreeList;
+- MenuDial;
 - Slider;
 - Drawer;
 - Modal;

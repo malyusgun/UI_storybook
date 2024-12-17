@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import type { IMDProps } from '@interfaces/componentsProps';
 import { convert500ThemeToColor } from '@helpers/colors';
 import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
@@ -13,7 +13,6 @@ const active = defineModel('active');
 
 const themeColor = computed(() => convert500ThemeToColor(props.theme));
 const textColor = computed(() => {
-  if (!props.theme) return '#000000';
   if (props.theme === 'white') return '#000000';
   return '#ffffff';
 });
@@ -21,8 +20,6 @@ const elementsSize = computed(() => {
   switch (props.size) {
     case 'small':
       return 30;
-    case 'medium':
-      return 40;
     case 'large':
       return 55;
     case 'huge':
@@ -32,29 +29,32 @@ const elementsSize = computed(() => {
 });
 const menuListStyles = computed(() => {
   switch (props.direction) {
-    case 'right':
-      return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : 0}px)`;
     case 'left':
-      return `flex-direction: row-reverse; transform: translateY(-${elementsSize.value / 2}px) ${active.value ? `translateX(calc(-100% - 10px))` : ''}`;
-    case 'top':
-      return `transform: translateY(-${active.value ? (0.5 + props.items.length) * elementsSize.value + 10 : elementsSize.value / 2}px)`;
-    case 'bottom':
-      return `transform: translateY(${active.value ? 20 : 0}px)`;
+      return `flex-direction: row-reverse; transform: translateY(-${elementsSize.value / 2}px) ${active.value ? `translateX(calc(-100% - 10px))` : 'translateX(calc(-100% + 60px))'}`;
+    case 'up':
+      return `flex-direction: column-reverse; transform: translateY(-${active.value ? (0.5 + props.items.length) * elementsSize.value + 15 : 1.5 * elementsSize.value}px) translateX(calc(-50% + ${elementsSize.value / 2}px))`;
+    case 'down':
+      return `flex-direction: column; transform: translateY(${active.value ? 25 : -20}px) translateX(calc(-50% + ${elementsSize.value / 2}px))`;
   }
-  return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : 0}px)`;
+  return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : -20}px)`;
 });
-const onClick = () => {
-  active.value = false;
-};
-watch(active, () => {
-  if (active.value) {
-    setTimeout(() => {
-      document.addEventListener('click', onClick);
-    }, 0);
-  } else {
-    document.removeEventListener('click', onClick);
-  }
-});
+// const circleStylesItems = computed(() => {
+//   if (props.direction !== 'circle') {
+//     return '';
+//   }
+//   const styles = [];
+//   let deg = 0;
+//   const itemsCount = props.items.length;
+//   const degToItem = Math.round(360 / itemsCount);
+//   for (let i = 0; i < itemsCount; i++) {
+//     styles.push(`transform: rotate(${deg}deg) rotate(${-deg}deg)`);
+//     deg += degToItem;
+//   }
+//   console.log(styles);
+//   return styles;
+// });
+const openLink = (url: string, isBlank: boolean | undefined) =>
+  window.open(url, isBlank ? '_blank' : '_self');
 </script>
 
 <template>
@@ -81,9 +81,14 @@ watch(active, () => {
         v-for="(item, index) of items"
         :key="item.label"
         :style="`height: ${elementsSize}px; background-color: ${convert500ThemeToColor(item.theme ?? 'white')};
-        color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}; border-color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}`"
+        color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}; border-color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'};`"
         class="menuElement"
-        @click.prevent="() => (item.onClick ? item.onClick() : false)"
+        @click="
+          () => {
+            if (item.link) openLink(item.link, item.linkBlank);
+            if (item.onClick) item.onClick();
+          }
+        "
       >
         <slot :name="`${index + 1}IconBefore`" />
         <p
@@ -132,9 +137,6 @@ watch(active, () => {
   left: 0;
   opacity: 0;
   transition: 0.2s ease-in-out;
-}
-.menuListColumn {
-  flex-direction: column;
 }
 .menuListOpened {
   pointer-events: auto;

@@ -38,10 +38,7 @@ const meta: Meta = {
       ],
     },
   },
-  args: {
-    // primary: false,
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  },
+  args: {},
 } satisfies Meta<typeof MenuDial>;
 
 export default meta;
@@ -67,12 +64,15 @@ export const Full: Story = {
   args: {
     items: [
       {
-        label: 'First',
+        label: 'font-family link',
         theme: 'green',
+        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+        linkBlank: true,
       },
       {
         label: 'Second',
         theme: 'green',
+        textStyle: 'italic',
       },
     ],
 

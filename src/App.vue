@@ -281,18 +281,51 @@ const options: ISBOption[] = [
 const visible = ref(false);
 const onClose = () => console.log('close!');
 const value = ref();
+const active = ref(false);
+const sliderValue = ref(1);
 </script>
 
 <template>
-  {{ value }}
   <Modal v-model:visible="visible" theme="red" @onClose="onClose"
     ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing
     elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo
     nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam
-    repellat saepe temporibus?</Modal
+    repellat saepe temporibus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
+    explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil
+    officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe
+    temporibus?</Modal
   >
-  <MenuDial :items="[{ label: 'First' }]" />
+  <MenuDial
+    v-model:active="active"
+    theme="sky"
+    direction="right"
+    :items="[
+      {
+        label: 'font-family',
+        theme: 'green',
+        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+        linkBlank: true,
+        textStyle: 'bold',
+      },
+      {
+        label: 'Second',
+        theme: 'red',
+        textStyle: 'italic',
+      },
+    ]"
+  >
+    <template #1IconBefore>
+      <AnchorLinkIcon size="20" color="white" />
+    </template>
+    <template #2IconBefore>
+      <CrossIcon color="white" />
+    </template>
+    <template #2IconAfter>
+      <CrossIcon color="white" />
+    </template>
+  </MenuDial>
   <Slider
+    v-model:value="sliderValue"
     :options="sliderOptions"
     orientation="vertical"
     width="400"
@@ -330,7 +363,10 @@ const value = ref();
       recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
       blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio optio
       reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit
-      amet, consectetur adipisicing elit.
+      amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo
+      nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas
+      quisquam repellat saepe temporibus?
     </p>
     <template #footer>
       pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template

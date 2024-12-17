@@ -1,5 +1,6 @@
 import type {
   TBorder,
+  TDirection,
   TExpandedPosition,
   TIcons,
   TPosition,
@@ -32,11 +33,14 @@ export interface IMDProps {
     label: string;
     theme?: string;
     textStyle?: TTextStyle;
+    link?: string;
+    linkBlank?: boolean;
     onClick?: () => void;
   }[];
   size?: TSize;
   theme?: string;
-  direction?: TPosition;
+  direction?: TDirection;
+  // direction?: TDirection | 'circle';
 }
 
 export interface ISliderProps {

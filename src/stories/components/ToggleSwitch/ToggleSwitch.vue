@@ -77,7 +77,7 @@ const sizes = computed(() => {
     <span
       :style="`background-color: ${disabled ? '#e1e7f1 !important' : themeColor}; border-radius: ${sizes.borderRadius}px;`"
       :class="[
-        'activeBackground',
+        'background',
         {
           inactiveBackground: !active && !disabled,
         },
@@ -94,20 +94,20 @@ const sizes = computed(() => {
 .switcher {
   position: relative;
 }
-.activeBackground {
+.background {
   display: block;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .inactiveBackground {
   background-color: v-bind(inactiveColor) !important;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
-.switcher:hover .inactiveBackground {
+.switcher:hover .background {
   filter: brightness(90%);
 }
 .switcherCircle {

@@ -48,13 +48,6 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             "
             size="17"
           />
-          <component
-            :is="iconsSet[item.iconBefore]"
-            v-if="item.iconBefore"
-            :color="convert500ThemeToColor(item.iconColor)"
-            style="min-width: 17px"
-            size="17"
-          />
           <a
             :href="item.link"
             :target="item.linkBlank ? '_blank' : '_self'"
@@ -76,15 +69,20 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
                 emit('onClick', item.link);
               }
             "
-            >{{ item.label }}</a
-          >
-          <component
-            :is="iconsSet[item.iconAfter]"
-            v-if="item.iconAfter"
-            :color="convert500ThemeToColor(item.iconColor)"
-            style="min-width: 17px"
-            size="17"
-          />
+            ><component
+              :is="iconsSet[item.iconBefore]"
+              v-if="item.iconBefore"
+              :color="convert500ThemeToColor(item.iconColor)"
+              style="min-width: 17px"
+              size="17" />
+            <span>{{ item.label }}</span
+            ><component
+              :is="iconsSet[item.iconAfter]"
+              v-if="item.iconAfter"
+              :color="convert500ThemeToColor(item.iconColor)"
+              style="min-width: 17px"
+              size="17"
+          /></a>
         </section>
         <section class="children">
           <TreeItems
@@ -107,7 +105,8 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
   background-color: v-bind(themeColor);
 }
 .label {
-  display: inline-block;
+  display: flex;
+  gap: 5px;
   position: relative;
   padding: 4px 5px;
   background-color: v-bind(themeColor);

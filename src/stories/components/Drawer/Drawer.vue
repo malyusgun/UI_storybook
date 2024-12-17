@@ -46,7 +46,7 @@ const drawerWidth = computed(() => {
           drawerBackgroundOpened: visible,
         },
       ]"
-      @click.prevent="dismissible ? (visible = false) : false"
+      @click.prevent="dismissible ? (visible = false) : ''"
     ></section>
     <section
       :style="`color: ${textColor}; background-color: ${themeColor}`"
@@ -150,6 +150,7 @@ const drawerWidth = computed(() => {
   flex: 1 1 auto;
   overflow: auto;
   margin: 10px;
+  padding-right: 10px;
 }
 .drawerFooter {
   padding: 10px 10px 0 10px;

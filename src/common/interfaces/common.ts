@@ -23,6 +23,8 @@ export type TSize = 'small' | 'medium' | 'large' | 'huge';
 
 export type TTextStyle = 'bold' | 'italic';
 
+export type TDirection = 'up' | 'right' | 'down' | 'left';
+
 export type TPosition = 'top' | 'right' | 'bottom' | 'left';
 
 export type TExpandedPosition = TPosition | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';

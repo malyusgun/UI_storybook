@@ -1,36 +1,40 @@
-# UI_storybook
+# UI_Storybook
 
-UI library of components of Vue.
+> UI-библиотека компонентов на Vue, созданная с целью получить опыт
+> и использовать в других проектах ввиду её предполагаемой в будущем
+> лёгкости и простоте.
 
-Components list:
--
+## Список компонентов:
+- TreeList;
+- MenuDial;
+- Slider;
+- Drawer;
+- Modal;
+- SelectButton;
+- Button;
+- ToggleSwitch;
+- Divider;
 
-## Project Setup
+### Настройка окружения
 
 ```sh
 yarn
 ```
 
-### Compile and Hot-Reload for Development
+### Просмотр существующих иконок в виде списка и тестирование компонентов
 
 ```sh
 yarn dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Проверка типов, компиляция и минимизация для production
 
 ```sh
 yarn build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Важные моменты при разработке
 
-```sh
-yarn test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
-```
+После создания иконки:
+1. Добавить иконку в iconsSet (src/common/constants/icons);
+2. Добавить иконку в соответствующий массив в App.vue.

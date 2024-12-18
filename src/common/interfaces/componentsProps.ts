@@ -77,6 +77,14 @@ export interface IModalProps {
   headerDivider?: boolean;
 }
 
+export interface IPopupProps {
+  parentSelector?: string;
+  theme?: TThemeColor;
+  maxWidth?: string;
+  maxHeight?: string;
+  padding?: string;
+}
+
 export interface ISBProps {
   options: ISBOption[];
   size?: TSize;

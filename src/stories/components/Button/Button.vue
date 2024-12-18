@@ -80,7 +80,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
 .button {
   position: relative;
   border-radius: 7px;
-  display: flex;
+  display: inline-flex;
   gap: 8px;
   justify-content: center;
   align-items: center;

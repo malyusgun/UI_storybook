@@ -7,13 +7,17 @@
 ## Список компонентов:
 - TreeList;
 - MenuDial;
+- Popup;
 - Slider;
 - Drawer;
 - Modal;
 - SelectButton;
 - Button;
 - ToggleSwitch;
-- Divider;
+- Divider.
+
+## Components count: 10
+## Bundle size: 248.7KB
 
 ### Настройка окружения
 

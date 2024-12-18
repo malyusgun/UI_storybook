@@ -111,6 +111,7 @@ import Slider from '@stories/components/Slider/Slider.vue';
 import type { ISBOption } from '@interfaces/componentsProp';
 import Modal from '@stories/components/Modal/Modal.vue';
 import MenuDial from '@stories/components/MenuDial/MenuDial.vue';
+import Popup from '@stories/components/Popup/Popup.vue';
 
 const gentleIcons = [
   Age18Icon,
@@ -282,10 +283,32 @@ const visible = ref(false);
 const onClose = () => console.log('close!');
 const value = ref();
 const active = ref(false);
+const popupActive = ref(false);
+const popupActive2 = ref(false);
 const sliderValue = ref(1);
 </script>
 
 <template>
+  <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
+  <Popup v-model:active="popupActive" parentSelector=".hui" theme="sky">
+    <Button
+      @click="
+        () => {
+          popupActive = false;
+          visible = true;
+        }
+      "
+      label="Открыть модальное окно"
+    />
+  </Popup>
+  <Popup v-model:active="popupActive2" theme="sky"
+    >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat
+    soluta, vel velit voluptas. Accusamus aut, error et minima neque praesentium, ratione,
+    reprehenderit repudiandae saepe ut vero! Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas. Accusamus aut, error et
+    minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!</Popup
+  >
+
   <Modal v-model:visible="visible" theme="red" @onClose="onClose"
     ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing
     elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo

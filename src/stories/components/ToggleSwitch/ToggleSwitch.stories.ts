@@ -20,9 +20,9 @@ const meta: Meta = {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -40,9 +40,9 @@ const meta: Meta = {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -56,7 +56,11 @@ const meta: Meta = {
         'black',
       ],
     },
-    darkNegative: { control: 'boolean' },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessNegativeTheme: {
+      control: 'select',
+      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
     disabled: { control: 'boolean' },
   },
   args: {},
@@ -68,14 +72,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    darkNegative: true,
     active: false,
   },
 };
 
 export const SmallLight: Story = {
   args: {
-    darkNegative: false,
     negativeTheme: 'yellow',
     theme: 'red',
     size: 'small',
@@ -84,7 +86,6 @@ export const SmallLight: Story = {
 
 export const Large: Story = {
   args: {
-    darkNegative: true,
     negativeTheme: 'purple',
     theme: 'green',
     size: 'large',
@@ -93,7 +94,6 @@ export const Large: Story = {
 
 export const Huge: Story = {
   args: {
-    darkNegative: true,
     negativeTheme: 'blue',
     theme: 'orange',
     size: 'huge',

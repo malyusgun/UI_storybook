@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { iconsSet } from '@/common/constants/icons';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
-import { convert500ThemeToColor } from '@helpers/colors';
 import type { ITIProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 defineProps<ITIProps>();
 const emit = defineEmits(['toggleIsOpen', 'onClick']);
@@ -44,7 +44,9 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
               },
             ]"
             :color="
-              item.color && item.isTriangleToColor ? convert500ThemeToColor(item.color) : textColor
+              item.color && item.isTriangleToColor
+                ? convertThemeToColor(item.color, item.darknessColor ?? 500)
+                : textColor
             "
             size="17"
           />
@@ -59,7 +61,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
                 isDarkerOnHover: item.link,
               },
             ]"
-            :style="`color: ${item.color ? convert500ThemeToColor(item.color) : textColor}`"
+            :style="`color: ${item.color ? convertThemeToColor(item.color, item.darknessColor ?? 500) : textColor}`"
             @click="
               () => {
                 item.isLinkClicked = true;
@@ -72,14 +74,14 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             ><component
               :is="iconsSet[item.iconBefore]"
               v-if="item.iconBefore"
-              :color="convert500ThemeToColor(item.iconColor)"
+              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? 500)"
               style="min-width: 17px"
               size="17" />
             <span>{{ item.label }}</span
             ><component
               :is="iconsSet[item.iconAfter]"
               v-if="item.iconAfter"
-              :color="convert500ThemeToColor(item.iconColor)"
+              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? 500)"
               style="min-width: 17px"
               size="17"
           /></a>

@@ -7,34 +7,49 @@
 ## Список компонентов:
 - TreeList;
 - MenuDial;
+- Popup;
 - Slider;
 - Drawer;
 - Modal;
 - SelectButton;
 - Button;
 - ToggleSwitch;
-- Divider;
+- Divider.
 
-### Настройка окружения
-
+---
+## Общая информация
+### Components count: 10
+### Bundle size: 254.6KB
+---
+## Важные моменты при разработке
+### Общее начало шаблона для компонентов:
+```  
+const props = withDefaults(defineProps<IProps>(), {  
+   
+});    
+const emit = defineEmits(['']);  
+const visible = defineModel('');  
+watch(, () => {});  
+const computed = computed(() => );  
+```
+- I*Componentname*Props вместо ```IProps```;
+- watchers после defineModel;
+- далее - computeds;
+- затем - функции (handlers).
+### После создания иконки:
+1. Добавить иконку в iconsSet (src/common/constants/icons);
+2. Добавить иконку в соответствующий массив в App.vue.
+---
+## Настройка окружения
+### Установка зависимостей:
 ```sh
 yarn
 ```
-
-### Просмотр существующих иконок в виде списка и тестирование компонентов
-
+### Просмотр существующих иконок в виде списка и тестирование компонентов:
 ```sh
 yarn dev
 ```
-
-### Проверка типов, компиляция и минимизация для production
-
+### Проверка типов, компиляция и минимизация для production:
 ```sh
 yarn build
 ```
-
-## Важные моменты при разработке
-
-После создания иконки:
-1. Добавить иконку в iconsSet (src/common/constants/icons);
-2. Добавить иконку в соответствующий массив в App.vue.

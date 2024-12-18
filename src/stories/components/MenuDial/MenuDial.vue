@@ -1,21 +1,29 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IMDProps } from '@interfaces/componentsProps';
-import { convert500ThemeToColor } from '@helpers/colors';
 import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
+import { convertThemeToColor } from '@helpers/common';
+import { convertWhiteOrBlackToColor } from '@helpers/colors';
 
 const props = withDefaults(defineProps<IMDProps>(), {
   theme: 'white',
+  darknessTheme: 500,
   size: 'medium',
   direction: 'right',
 });
 const active = defineModel('active');
 
-const themeColor = computed(() => convert500ThemeToColor(props.theme));
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const textColor = computed(() => {
-  if (props.theme === 'white') return '#000000';
+  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
+    return '#000000';
   return '#ffffff';
 });
+const borderColor = computed(() =>
+  props.theme === 'white' || props.theme === 'black'
+    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
+    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+);
 const elementsSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -34,7 +42,7 @@ const menuListStyles = computed(() => {
     case 'up':
       return `flex-direction: column-reverse; transform: translateY(-${active.value ? (0.5 + props.items.length) * elementsSize.value + 15 : 1.5 * elementsSize.value}px) translateX(calc(-50% + ${elementsSize.value / 2}px))`;
     case 'down':
-      return `flex-direction: column; transform: translateY(${active.value ? 25 : -20}px) translateX(calc(-50% + ${elementsSize.value / 2}px))`;
+      return `flex-direction: column; transform: translateY(${active.value ? elementsSize.value / 1.75 : -20}px) translateX(calc(-50% + ${elementsSize.value / 2}px))`;
   }
   return `transform: translateY(-${elementsSize.value / 2}px) translateX(${active.value ? elementsSize.value + 10 : -20}px)`;
 });
@@ -60,7 +68,7 @@ const openLink = (url: string, isBlank: boolean | undefined) =>
 <template>
   <section class="menuContainer">
     <button
-      :style="`border: ${theme === 'white' ? '2px solid black' : ''}; background-color: ${themeColor ?? 'white'}; width: ${elementsSize}px; height: ${elementsSize}px; transform: ${active ? 'rotate(135deg)' : ''};`"
+      :style="`border: 2px solid ${borderColor}; background-color: ${themeColor ?? 'white'}; width: ${elementsSize}px; height: ${elementsSize}px; transform: ${active ? 'rotate(135deg)' : ''};`"
       class="menuButton"
       @click.prevent="active = !active"
     >
@@ -80,8 +88,8 @@ const openLink = (url: string, isBlank: boolean | undefined) =>
       <li
         v-for="(item, index) of items"
         :key="item.label"
-        :style="`height: ${elementsSize}px; background-color: ${convert500ThemeToColor(item.theme ?? 'white')};
-        color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'}; border-color: ${!item.theme || item.theme === 'white' ? 'black' : 'white'};`"
+        :style="`height: ${elementsSize}px; background-color: ${convertThemeToColor(item.theme ?? 'white', item.darknessTheme ?? 500)};
+        color: ${item.theme === 'white' || ((item.darknessTheme ?? 500) <= 600 && item.theme !== 'black') ? 'black' : 'white'}; border-color: ${borderColor};`"
         class="menuElement"
         @click="
           () => {
@@ -147,7 +155,7 @@ const openLink = (url: string, isBlank: boolean | undefined) =>
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border: 1px solid white;
+  border: 1px solid v-bind(borderColor);
   border-radius: 5px;
   user-select: none;
   cursor: pointer;

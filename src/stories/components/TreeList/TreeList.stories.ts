@@ -18,13 +18,14 @@ const meta: Meta = {
     items: { control: 'object' },
     maxWidth: { control: 'number' },
     expand: { control: 'boolean' },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -124,6 +125,8 @@ export const Full: Story = {
                 color: 'red',
                 iconAfter: 'DiceIcon',
                 iconColor: 'red',
+                darknessColor: 400,
+                darknessIconColor: 400,
                 children: [
                   {
                     label: '1-1-1-1',
@@ -160,5 +163,6 @@ export const Full: Story = {
 
     expand: true,
     theme: 'black',
+    darknessTheme: 800,
   },
 };

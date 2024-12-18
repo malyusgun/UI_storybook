@@ -1,32 +1,45 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { convert300ThemeToColor, convert500ThemeToColor } from '@helpers/colors';
+import { computed, watch } from 'vue';
+import { convertWhiteOrBlackToColor } from '@helpers/colors';
 import type { IModalProps } from '@interfaces/componentsProps';
 import { iconsSet } from '@/common/constants/icons';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IModalProps>(), {
   visible: false,
   dismissible: false,
   theme: 'white',
+  darknessTheme: 500,
   width: '30%',
   height: '30%',
   headerDivider: false,
   closeIcon: 'CrossIcon',
 });
+const body = document.querySelector('body')!;
 const emit = defineEmits(['onClose']);
 const visible = defineModel('visible', {
   set(value) {
     if (!value) {
+      body.style.overflow = 'auto';
       emit('onClose');
     }
     return value;
   },
 });
-const themeColor = computed(() => convert500ThemeToColor(props.theme));
-const scrollColor = computed(() => convert300ThemeToColor(props.theme));
+watch(visible, () => {
+  if (visible.value) {
+    body.style.overflow = 'hidden';
+  }
+});
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const scrollAndBorderColor = computed(() =>
+  props.theme === 'white' || props.theme === 'black'
+    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
+    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+);
 const textColor = computed(() => {
-  if (!props.theme) return '#000000';
-  if (props.theme === 'white') return '#000000';
+  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
+    return '#000000';
   return '#ffffff';
 });
 const onKeydown = (event: KeyboardEvent) => {
@@ -101,7 +114,7 @@ document.addEventListener('keydown', onKeydown);
   min-width: 250px;
   min-height: 100px;
   padding: 20px;
-  border: 2px solid gray;
+  border: 2px solid v-bind(scrollAndBorderColor);
   border-radius: 15px;
   opacity: 0;
   transform: scale(0.5);
@@ -145,7 +158,7 @@ document.addEventListener('keydown', onKeydown);
 }
 .divider {
   height: 2px;
-  background-color: v-bind(scrollColor);
+  background-color: v-bind(scrollAndBorderColor);
   position: absolute;
   left: 20px;
   top: 60px;
@@ -153,7 +166,7 @@ document.addEventListener('keydown', onKeydown);
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: v-bind(scrollColor);
+  background-color: v-bind(scrollAndBorderColor);
 }
 .toTop {
   top: 10px !important;

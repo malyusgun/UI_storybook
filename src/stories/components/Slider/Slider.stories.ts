@@ -22,13 +22,18 @@ const meta: Meta = {
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     isSmooth: { control: 'boolean' },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessBackgroundColor: {
+      control: 'select',
+      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
     theme: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -46,9 +51,9 @@ const meta: Meta = {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',

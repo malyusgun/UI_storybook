@@ -108,7 +108,7 @@ import ToggleSwitch from '@stories/components/ToggleSwitch/ToggleSwitch.vue';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 import Button from '@stories/components/Button/Button.vue';
 import Slider from '@stories/components/Slider/Slider.vue';
-import type { ISBOption } from '@interfaces/componentsProp';
+import type { ISBOption, ISliderOptions } from '@interfaces/componentsProp';
 import Modal from '@stories/components/Modal/Modal.vue';
 import MenuDial from '@stories/components/MenuDial/MenuDial.vue';
 import Popup from '@stories/components/Popup/Popup.vue';
@@ -219,7 +219,7 @@ const gentleIcons = [
   UserIcon,
 ];
 const visibleDrawer = ref(true);
-const sliderOptions = [
+const sliderOptions: ISliderOptions[] = [
   {
     label: 0,
     value: 0,

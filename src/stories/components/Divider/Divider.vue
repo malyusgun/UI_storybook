@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { convert500ThemeToColor } from '@helpers/colors';
 import type { IDividerProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IDividerProps>(), {
   height: 1,
   type: 'solid',
   color: 'black',
+  darknessColor: 500,
 });
-const colorConverted = computed(() => convert500ThemeToColor(props.color));
+const colorConverted = computed(() => convertThemeToColor(props.color, props.darknessColor));
 </script>
 
 <template>

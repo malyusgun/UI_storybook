@@ -19,13 +19,21 @@ const meta: Meta = {
     },
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
     rounded: { control: 'boolean' },
+    darknessActiveBackgroundColor: {
+      control: 'select',
+      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
+    darknessBorder: {
+      control: 'select',
+      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
     activeBackgroundColor: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -43,9 +51,9 @@ const meta: Meta = {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -94,6 +102,7 @@ export const LargeFull: Story = {
       },
       {
         label: 'Second',
+        color: 'red',
         activeColor: 'blue',
         backgroundColor: 'yellow',
       },

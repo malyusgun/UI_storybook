@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { convert500ThemeToColor } from '@helpers/colors';
 import type { ISliderProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISliderProps>(), {
   width: '100',
   size: 'medium',
   theme: 'sky',
   backgroundColor: 'black',
+  darknessTheme: 500,
+  darknessBackgroundColor: 500,
 });
 const value = defineModel('value');
 const optionValue = ref(
@@ -57,8 +59,10 @@ const widthHalf = computed(() => `${Math.floor(+props.width / 2)}px`);
 const sliderHeight = computed(() => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2.5)}px`);
 const sliderBorderRadius = computed(() => (props.isSmooth ? sliderHeight.value : '0%'));
 const sliderButtonBorderRadius = computed(() => (props.isSmooth ? '50%' : '0%'));
-const themeColor = computed(() => convert500ThemeToColor(props.theme));
-const themeBackground = computed(() => convert500ThemeToColor(props.backgroundColor));
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const themeBackground = computed(() =>
+  convertThemeToColor(props.backgroundColor, props.darknessBackgroundColor),
+);
 const marksListPadding = computed(
   () => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2)}px`,
 );
@@ -86,9 +90,9 @@ const marksListPadding = computed(
       <ul class="marksList" :style="`width: ${width ?? 200}px`">
         <li
           v-for="option of options"
-          :key="option.label"
+          :key="String(option.label)"
           class="mark"
-          :style="`color: ${convert500ThemeToColor(option?.color) ?? 'white'}; font-size: ${optionsFontSize}`"
+          :style="`color: ${convertThemeToColor(option.color ?? 'black', option.darknessColor ?? 500) ?? 'white'}; font-size: ${optionsFontSize}`"
         >
           {{ option.label }}
         </li>

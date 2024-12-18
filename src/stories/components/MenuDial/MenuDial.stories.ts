@@ -16,14 +16,15 @@ const meta: Meta = {
   argTypes: {
     items: { control: 'object' },
     size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
-    direction: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    direction: { control: 'select', options: ['up', 'down', 'left', 'right'] },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',
@@ -77,5 +78,53 @@ export const Full: Story = {
     ],
 
     theme: 'sky',
+  },
+};
+
+export const Down: Story = {
+  args: {
+    items: [
+      {
+        label: 'font-family link',
+        theme: 'green',
+        darknessTheme: 700,
+        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+        linkBlank: true,
+      },
+      {
+        label: 'Second',
+        theme: 'green',
+        darknessTheme: 800,
+        textStyle: 'italic',
+      },
+    ],
+    theme: 'red',
+    darknessTheme: 700,
+    direction: 'down',
+  },
+};
+
+export const Huge: Story = {
+  args: {
+    items: [
+      {
+        label: 'font-family link',
+        theme: 'green',
+        darknessTheme: 700,
+        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+        linkBlank: true,
+      },
+      {
+        label: 'Second',
+        theme: 'green',
+        darknessTheme: 800,
+        textStyle: 'italic',
+      },
+    ],
+
+    theme: 'red',
+    darknessTheme: 700,
+    direction: 'right',
+    size: 'medium',
   },
 };

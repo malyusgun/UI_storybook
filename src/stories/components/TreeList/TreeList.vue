@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { ITreeItem } from '@interfaces/componentsProp';
-import { convert500ThemeToColor } from '@helpers/colors';
 import TreeItems from '@stories/components/TreeList/TreeItems.vue';
 import type { ITLProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 interface IStateItem {
   isOpen: boolean;
@@ -13,14 +13,15 @@ interface IStateItem {
 const props = withDefaults(defineProps<ITLProps>(), {
   theme: 'white',
   maxWidth: 300,
+  darknessTheme: 500,
 });
 const emit = defineEmits(['onClick']);
 const items = computed(() => props.items);
-const themeColor = computed(() => convert500ThemeToColor(props.theme));
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const textColor = computed(() => {
-  if (!props.theme) return 'black';
-  if (props.theme === 'white') return 'black';
-  return 'white';
+  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
+    return '#000000';
+  return '#ffffff';
 });
 
 const state = ref<IStateItem[]>([]);

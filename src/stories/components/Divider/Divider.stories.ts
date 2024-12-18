@@ -16,13 +16,14 @@ const meta: Meta = {
   argTypes: {
     height: { control: 'number' },
     type: { control: 'select', options: ['solid', 'dashed', 'dotted'] },
+    darknessColor: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     color: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',

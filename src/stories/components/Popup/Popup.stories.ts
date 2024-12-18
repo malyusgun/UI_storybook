@@ -20,13 +20,14 @@ const meta: Meta = {
     maxWidth: { control: 'text' },
     maxHeight: { control: 'text' },
     padding: { control: 'text' },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',

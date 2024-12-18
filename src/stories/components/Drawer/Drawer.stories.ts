@@ -26,13 +26,14 @@ const meta: Meta = {
     closeIcon: { control: 'select', options: Object.keys(iconsSet) },
     headerDivider: { control: 'boolean' },
     footerDivider: { control: 'boolean' },
+    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
       control: 'select',
       options: [
         'white',
-        'slate',
         'blue',
         'sky',
+        'cyan',
         'teal',
         'green',
         'yellow',

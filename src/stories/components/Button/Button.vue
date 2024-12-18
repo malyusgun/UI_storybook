@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { convert500ThemeToColor } from '@helpers/colors';
 import type { IButtonProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IButtonProps>(), {
   size: 'medium',
   theme: 'white',
   textColor: 'black',
   iconPos: 'left',
+  darknessTheme: 500,
+  darknessTextColor: 500,
+  darknessBorder: 500,
 });
 
-const themeColor = computed(() => convert500ThemeToColor(props.theme));
-const textColorComputed = computed(() => convert500ThemeToColor(props.textColor));
-const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const textColorComputed = computed(() =>
+  convertThemeToColor(props.textColor, props.darknessTextColor),
+);
+const borderColor = computed(() =>
+  !props.border ? '' : convertThemeToColor(props.border, props.darknessBorder),
+);
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':

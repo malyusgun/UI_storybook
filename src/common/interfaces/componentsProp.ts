@@ -1,4 +1,4 @@
-import type { TIcons, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
+import type { TDarkness, TIcons, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
 
 export interface ITreeItem {
   label: string;
@@ -11,7 +11,19 @@ export interface ITreeItem {
   iconAfter?: TIcons;
   iconColor?: TThemeColor;
   children?: ITreeItem[];
+  darknessColor?: TDarkness;
+  darknessIconColor?: TDarkness;
   isLinkClicked?: boolean;
+}
+
+export interface IMDItemProps {
+  label: string;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  textStyle?: TTextStyle;
+  link?: string;
+  linkBlank?: boolean;
+  onClick?: () => void;
 }
 
 export interface ISBOption {
@@ -20,13 +32,17 @@ export interface ISBOption {
   color?: TThemeColor;
   activeColor?: TThemeColor;
   backgroundColor?: TThemeColor;
+  darknessColor?: TDarkness;
+  darknessActiveColor?: TDarkness;
+  darknessBackgroundColor?: TDarkness;
   isLabelHidden?: boolean;
   iconPosition?: TPosition;
   textStyle?: TTextStyle;
 }
 
 export interface ISliderOptions {
-  label: string | number;
+  label: string | number | boolean;
   value?: string | number;
-  color?: string;
+  color?: TThemeColor;
+  darknessColor?: TDarkness;
 }

@@ -1,20 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { convert500ThemeToColor } from '@helpers/colors';
 import type { ISBProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISBProps>(), {
   size: 'medium',
-  border: 'black',
   activeBackgroundColor: 'sky',
+  darknessActiveBackgroundColor: 500,
+  darknessBorder: 500,
 });
 const emit = defineEmits(['onClick']);
 const value = defineModel<never>('value');
 
 const activeBackgroundColorComputed = computed(() =>
-  props.activeBackgroundColor ? convert500ThemeToColor(props.activeBackgroundColor) : '',
+  props.activeBackgroundColor
+    ? convertThemeToColor(props.activeBackgroundColor, props.darknessActiveBackgroundColor)
+    : '',
 );
-const borderColor = computed(() => (props.border ? convert500ThemeToColor(props.border) : ''));
+const borderColor = computed(() =>
+  !props.border ? '' : convertThemeToColor(props.border, props.darknessBorder),
+);
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -79,7 +84,7 @@ const buttonHeight = computed(() => {
       "
     >
       <span
-        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : convert500ThemeToColor(item.backgroundColor ?? 'white')}`"
+        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : convertThemeToColor(item.backgroundColor ?? 'white', item.darknessBackgroundColor ?? 500)}`"
         :class="[
           'background',
           {
@@ -92,7 +97,7 @@ const buttonHeight = computed(() => {
       ></span>
       <span
         v-if="!item.isLabelHidden"
-        :style="`color: ${value === item.value || value === item.label ? item.activeColor : convert500ThemeToColor(item.color ?? 'black')}; font-size: ${textSize}`"
+        :style="`color: ${(item.value && value === item.value) || value === item.label ? convertThemeToColor(item.activeColor ?? 'black', item.darknessActiveColor ?? 500) : convertThemeToColor(item.color ?? 'black', item.darknessColor ?? 500)}; font-size: ${textSize}`"
         :class="[
           'text',
           {
@@ -102,7 +107,8 @@ const buttonHeight = computed(() => {
         ]"
         >{{ item.label ?? index }}</span
       >
-      <div
+      <span
+        v-if="$slots[`${index + 1}Icon`]"
         :class="[
           'icon',
           {
@@ -111,7 +117,7 @@ const buttonHeight = computed(() => {
         ]"
       >
         <slot :name="`${index + 1}Icon`" />
-      </div>
+      </span>
     </button>
   </div>
 </template>

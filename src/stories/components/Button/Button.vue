@@ -4,7 +4,7 @@ import type { IButtonProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IButtonProps>(), {
-  size: 'medium',
+  size: 'normal',
   theme: 'white',
   textColor: 'black',
   iconPos: 'left',

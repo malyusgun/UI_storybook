@@ -25,7 +25,7 @@ export type TDarkness = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export type TThemeColorNoWhite = Exclude<TThemeColor, 'white'>;
 
-export type TSize = 'small' | 'medium' | 'large' | 'huge';
+export type TSize = 'small' | 'normal' | 'large' | 'huge';
 
 export type TTextStyle = 'bold' | 'italic';
 

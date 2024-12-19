@@ -8,7 +8,7 @@ import { convertWhiteOrBlackToColor } from '@helpers/colors';
 const props = withDefaults(defineProps<IMDProps>(), {
   theme: 'white',
   darknessTheme: 500,
-  size: 'medium',
+  size: 'normal',
   direction: 'right',
 });
 const active = defineModel('active');

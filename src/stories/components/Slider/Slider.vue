@@ -5,7 +5,7 @@ import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISliderProps>(), {
   width: '100',
-  size: 'medium',
+  size: 'normal',
   theme: 'sky',
   backgroundColor: 'black',
   darknessTheme: 500,

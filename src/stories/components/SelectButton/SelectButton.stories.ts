@@ -17,7 +17,7 @@ const meta: Meta = {
     options: {
       control: 'object',
     },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     rounded: { control: 'boolean' },
     darknessActiveBackgroundColor: {
       control: 'select',

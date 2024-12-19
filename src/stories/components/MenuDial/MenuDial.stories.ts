@@ -15,7 +15,7 @@ const meta: Meta = {
   },
   argTypes: {
     items: { control: 'object' },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     direction: { control: 'select', options: ['up', 'down', 'left', 'right'] },
     darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
@@ -125,6 +125,6 @@ export const Huge: Story = {
     theme: 'red',
     darknessTheme: 700,
     direction: 'right',
-    size: 'medium',
+    size: 'normal',
   },
 };

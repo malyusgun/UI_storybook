@@ -4,7 +4,7 @@ import type { ISBProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISBProps>(), {
-  size: 'medium',
+  size: 'normal',
   activeBackgroundColor: 'sky',
   darknessActiveBackgroundColor: 500,
   darknessBorder: 500,

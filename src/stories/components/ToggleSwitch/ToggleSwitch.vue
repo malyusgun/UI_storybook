@@ -4,7 +4,7 @@ import type { ITSProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ITSProps>(), {
-  size: 'medium',
+  size: 'normal',
   theme: 'sky',
   negativeTheme: 'black',
   darknessTheme: 500,

@@ -95,8 +95,10 @@ export interface ISBProps {
   options: ISBOption[];
   size?: TSize;
   rounded?: boolean;
+  theme?: TThemeColor;
   activeBackgroundColor?: TThemeColor;
   border?: TThemeColor;
+  darknessTheme?: TDarkness;
   darknessActiveBackgroundColor?: TDarkness;
   darknessBorder?: TDarkness;
   disabled?: boolean;

@@ -5,13 +5,21 @@ import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISBProps>(), {
   size: 'normal',
+  theme: 'white',
   activeBackgroundColor: 'sky',
+  darknessTheme: 500,
   darknessActiveBackgroundColor: 500,
   darknessBorder: 500,
 });
 const emit = defineEmits(['onClick']);
 const value = defineModel<never>('value');
 
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const textColor = computed(() => {
+  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
+    return '#000000';
+  return '#ffffff';
+});
 const activeBackgroundColorComputed = computed(() =>
   props.activeBackgroundColor
     ? convertThemeToColor(props.activeBackgroundColor, props.darknessActiveBackgroundColor)
@@ -84,7 +92,7 @@ const buttonHeight = computed(() => {
       "
     >
       <span
-        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : convertThemeToColor(item.backgroundColor ?? 'white', item.darknessBackgroundColor ?? 500)}`"
+        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : (convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? 500) ?? themeColor)}`"
         :class="[
           'background',
           {
@@ -97,9 +105,8 @@ const buttonHeight = computed(() => {
       ></span>
       <span
         v-if="!item.isLabelHidden"
-        :style="`color: ${(item.value && value === item.value) || value === item.label ? convertThemeToColor(item.activeColor ?? 'black', item.darknessActiveColor ?? 500) : convertThemeToColor(item.color ?? 'black', item.darknessColor ?? 500)}; font-size: ${textSize}`"
+        :style="`color: ${(item.value && value === item.value) || value === item.label ? (convertThemeToColor(item.activeColor, item.darknessActiveColor ?? 500) ?? textColor) : (convertThemeToColor(item.color, item.darknessColor ?? 500) ?? textColor)}; font-size: ${textSize}`"
         :class="[
-          'text',
           {
             bold: item.textStyle === 'bold',
             italic: item.textStyle === 'italic',

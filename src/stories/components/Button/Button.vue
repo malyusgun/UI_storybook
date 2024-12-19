@@ -92,11 +92,12 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   justify-content: center;
   align-items: center;
   user-select: none;
+  transition: filter 0.2s ease-in-out;
 }
-.button:hover .background {
+.button:hover {
   filter: brightness(90%);
 }
-.button:active .background {
+.button:active {
   filter: brightness(75%);
 }
 .background {
@@ -106,7 +107,6 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   top: 0;
   left: 0;
   border-radius: 5px;
-  transition: filter 0.2s ease-in-out;
 }
 .text {
   position: relative;

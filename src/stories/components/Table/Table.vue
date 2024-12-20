@@ -6,7 +6,7 @@ import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextCo
 const props = withDefaults(defineProps<ITableProps>(), {
   gap: '5px',
   theme: 'white',
-  darknessTheme: 500,
+  darknessTheme: '500',
   fontSize: '16px',
 });
 const gap = computed(() => props.gap);

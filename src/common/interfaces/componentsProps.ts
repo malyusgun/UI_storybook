@@ -14,8 +14,22 @@ import type {
   IMDItemProps,
   ISBOption,
   ISliderOptions,
+  ITableColumn,
+  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
+
+export interface ITableProps {
+  columns: ITableColumn[];
+  data: ITableItem[][];
+  theme?: TThemeColor;
+  textColor?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
+  gap?: string;
+  fontSize?: string;
+  showAllLines?: boolean;
+}
 
 export interface ITLProps {
   items: ITreeItem[];
@@ -31,7 +45,7 @@ export interface ITIProps {
     label: string;
   }[];
   items: ITreeItem[];
-  textColor: string;
+  color: string;
   themeColor: string;
 }
 
@@ -39,7 +53,9 @@ export interface IMDProps {
   items: IMDItemProps[];
   size?: TSize;
   theme?: TThemeColor;
+  iconColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessIconColor?: TDarkness;
   direction?: TDirection;
   // direction?: TDirection | 'circle';
 }
@@ -63,6 +79,7 @@ export interface IDrawerProps {
   position?: TPosition;
   width?: string | number;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   modal?: boolean;
   dismissible?: boolean;
@@ -73,7 +90,9 @@ export interface IDrawerProps {
 
 export interface IModalProps {
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   width?: string;
   height?: string;
   position?: TExpandedPosition;
@@ -85,7 +104,9 @@ export interface IModalProps {
 export interface IPopupProps {
   parentSelector?: string;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   maxWidth?: string;
   maxHeight?: string;
   padding?: string;
@@ -96,11 +117,11 @@ export interface ISBProps {
   size?: TSize;
   rounded?: boolean;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   activeBackgroundColor?: TThemeColor;
-  border?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   darknessActiveBackgroundColor?: TDarkness;
-  darknessBorder?: TDarkness;
   disabled?: boolean;
 }
 
@@ -113,10 +134,8 @@ export interface IButtonProps {
   iconOnly?: boolean;
   theme?: TThemeColor;
   textColor?: TThemeColor;
-  border?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
-  darknessBorder?: TDarkness;
 }
 
 export interface ITSProps {

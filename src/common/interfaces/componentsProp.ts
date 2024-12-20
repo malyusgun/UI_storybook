@@ -1,5 +1,28 @@
 import type { TDarkness, TIcons, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
 
+export interface ITableColumn {
+  name: string;
+  type?: TTableColumnType;
+  isFilter?: boolean;
+}
+
+export interface ITableItem {
+  value: string;
+  editable?: boolean;
+}
+
+export type TTableColumnType =
+  | 'checkbox'
+  | 'text'
+  | 'date'
+  | 'tag'
+  | 'select'
+  | 'rating'
+  | 'progressBar'
+  | 'knob'
+  | 'avatar'
+  | 'image';
+
 export interface ITreeItem {
   label: string;
   link?: string;
@@ -19,7 +42,9 @@ export interface ITreeItem {
 export interface IMDItemProps {
   label: string;
   theme?: TThemeColor;
+  color?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessColor?: TDarkness;
   textStyle?: TTextStyle;
   link?: string;
   linkBlank?: boolean;

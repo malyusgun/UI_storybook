@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { convertWhiteOrBlackToColor } from '@helpers/colors';
 import type { IModalProps } from '@interfaces/componentsProps';
 import { iconsSet } from '@/common/constants/icons';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IModalProps>(), {
   visible: false,
   dismissible: false,
   theme: 'white',
-  darknessTheme: 500,
+  darknessTheme: '500',
   width: '30%',
   height: '30%',
   headerDivider: false,
@@ -32,16 +31,12 @@ watch(visible, () => {
   }
 });
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const scrollAndBorderColor = computed(() =>
-  props.theme === 'white' || props.theme === 'black'
-    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
-    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
 const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && visible.value) visible.value = false;
 };
@@ -60,7 +55,7 @@ document.addEventListener('keydown', onKeydown);
       @click.prevent="() => (dismissible ? (visible = false) : false)"
     ></section>
     <section
-      :style="`color: ${textColor}; background-color: ${themeColor}; width: ${width}; height: ${height}`"
+      :style="`color: ${color}; background-color: ${themeColor}; width: ${width}; height: ${height}`"
       :class="[
         'modal',
         {
@@ -82,7 +77,7 @@ document.addEventListener('keydown', onKeydown);
           <slot name="header" />
         </div>
         <button class="buttonClose" @click.prevent="visible = false">
-          <component :is="iconsSet[closeIcon]" :color="textColor" />
+          <component :is="iconsSet[closeIcon]" :color="color" />
         </button>
         <div v-if="headerDivider" class="divider"></div>
       </header>
@@ -114,7 +109,7 @@ document.addEventListener('keydown', onKeydown);
   min-width: 250px;
   min-height: 100px;
   padding: 20px;
-  border: 2px solid v-bind(scrollAndBorderColor);
+  border: 2px solid v-bind(secondaryColor);
   border-radius: 15px;
   opacity: 0;
   transform: scale(0.5);
@@ -158,7 +153,7 @@ document.addEventListener('keydown', onKeydown);
 }
 .divider {
   height: 2px;
-  background-color: v-bind(scrollAndBorderColor);
+  background-color: v-bind(secondaryColor);
   position: absolute;
   left: 20px;
   top: 60px;
@@ -166,7 +161,7 @@ document.addEventListener('keydown', onKeydown);
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: v-bind(scrollAndBorderColor);
+  background-color: v-bind(secondaryColor);
 }
 .toTop {
   top: 10px !important;

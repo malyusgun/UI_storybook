@@ -17,9 +17,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
         'item',
         {
           pl27: !item.children,
-          openContent: state.find(
-            (itemState) => itemState.label === item.label && itemState.isOpen,
-          ),
+          openContent: state.find((itemState) => itemState.label === item.label && itemState.isOpen),
         },
       ]"
     >
@@ -38,15 +36,13 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             :class="[
               'openButton',
               {
-                openButtonOpened: state.find(
-                  (itemState) => itemState.label === item.label && itemState.isOpen,
-                ),
+                openButtonOpened: state.find((itemState) => itemState.label === item.label && itemState.isOpen),
               },
             ]"
             :color="
               item.color && item.isTriangleToColor
-                ? convertThemeToColor(item.color, item.darknessColor ?? 500)
-                : textColor
+                ? convertThemeToColor(item.color, item.darknessColor ?? '500')
+                : color
             "
             size="17"
           />
@@ -61,7 +57,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
                 isDarkerOnHover: item.link,
               },
             ]"
-            :style="`color: ${item.color ? convertThemeToColor(item.color, item.darknessColor ?? 500) : textColor}`"
+            :style="`color: ${item.color ? convertThemeToColor(item.color, item.darknessColor ?? '500') : color}`"
             @click="
               () => {
                 item.isLinkClicked = true;
@@ -74,14 +70,14 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             ><component
               :is="iconsSet[item.iconBefore]"
               v-if="item.iconBefore"
-              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? 500)"
+              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? '500')"
               style="min-width: 17px"
               size="17" />
             <span>{{ item.label }}</span
             ><component
               :is="iconsSet[item.iconAfter]"
               v-if="item.iconAfter"
-              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? 500)"
+              :color="convertThemeToColor(item.iconColor ?? 'black', item.darknessIconColor ?? '500')"
               style="min-width: 17px"
               size="17"
           /></a>
@@ -90,7 +86,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
           <TreeItems
             :items="item.children ?? []"
             :state="state"
-            :textColor="textColor"
+            :color="color"
             :themeColor="themeColor"
             @toggleIsOpen="emit('toggleIsOpen', $event)"
           />

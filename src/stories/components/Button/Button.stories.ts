@@ -19,12 +19,11 @@ const meta: Meta = {
     textStyle: { control: 'select', options: ['bold', 'italic'] },
     iconPos: { control: 'select', options: ['left', 'top', 'right', 'bottom'] },
     width: { control: 'text' },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
-    darknessBorder: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
     theme: {
       control: 'select',
       options: [

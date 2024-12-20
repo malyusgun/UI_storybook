@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
 import type { ISliderProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 
@@ -8,21 +8,21 @@ const props = withDefaults(defineProps<ISliderProps>(), {
   size: 'normal',
   theme: 'sky',
   backgroundColor: 'black',
-  darknessTheme: 500,
-  darknessBackgroundColor: 500,
+  darknessTheme: '500',
+  darknessBackgroundColor: '500',
 });
 const value = defineModel('value');
-const optionValue = ref(
-  typeof value.value === 'string'
-    ? props.options!.findIndex((option) => option.label === value.value)
-    : value.value,
-);
-watch([optionValue], () => {
-  if (props.options) {
-    value.value = props.options!.find(
-      (option) => (option.value ?? option.label) == optionValue.value,
-    )!.label;
-  } else value.value = optionValue.value;
+const optionValue = computed({
+  get() {
+    return typeof value.value === 'string' && props.options
+      ? props.options.findIndex((option) => option.label === value.value)
+      : value.value;
+  },
+  set(newValue) {
+    if (props.options) {
+      value.value = props.options!.find((option) => (option.value ?? option.label) == newValue)!.label;
+    } else value.value = newValue;
+  },
 });
 watch([value], () => {
   if (value.value !== optionValue.value) {
@@ -60,12 +60,8 @@ const sliderHeight = computed(() => `${Math.floor(+sliderButtonSize.value.slice(
 const sliderBorderRadius = computed(() => (props.isSmooth ? sliderHeight.value : '0%'));
 const sliderButtonBorderRadius = computed(() => (props.isSmooth ? '50%' : '0%'));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const themeBackground = computed(() =>
-  convertThemeToColor(props.backgroundColor, props.darknessBackgroundColor),
-);
-const marksListPadding = computed(
-  () => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2)}px`,
-);
+const themeBackground = computed(() => convertThemeToColor(props.backgroundColor, props.darknessBackgroundColor));
+const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.slice(0, -2) / 2)}px`);
 </script>
 
 <template>
@@ -78,21 +74,14 @@ const marksListPadding = computed(
     ]"
     :style="`width: ${width}px`"
   >
-    <input
-      v-model="optionValue"
-      type="range"
-      class="slider"
-      :min="min ?? 0"
-      :max="max ?? 100"
-      :step="step ?? 1"
-    />
+    <input v-model="optionValue" type="range" class="slider" :min="min ?? 0" :max="max ?? 100" :step="step ?? 1" />
     <div v-if="options?.length">
       <ul class="marksList" :style="`width: ${width ?? 200}px`">
         <li
           v-for="option of options"
           :key="String(option.label)"
           class="mark"
-          :style="`color: ${convertThemeToColor(option.color ?? 'black', option.darknessColor ?? 500) ?? 'white'}; font-size: ${optionsFontSize}`"
+          :style="`color: ${convertThemeToColor(option.color ?? 'black', option.darknessColor ?? '500') ?? 'white'}; font-size: ${optionsFontSize}`"
         >
           {{ option.label }}
         </li>

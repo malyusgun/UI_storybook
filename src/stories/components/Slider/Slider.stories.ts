@@ -22,10 +22,10 @@ const meta: Meta = {
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     isSmooth: { control: 'boolean' },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessBackgroundColor: {
       control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
     theme: {
       control: 'select',

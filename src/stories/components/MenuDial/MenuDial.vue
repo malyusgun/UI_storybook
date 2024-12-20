@@ -2,28 +2,24 @@
 import { computed } from 'vue';
 import type { IMDProps } from '@interfaces/componentsProps';
 import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
-import { convertThemeToColor } from '@helpers/common';
-import { convertWhiteOrBlackToColor } from '@helpers/colors';
+import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import type { IMDItemProps } from '@interfaces/componentsProp';
 
 const props = withDefaults(defineProps<IMDProps>(), {
   theme: 'white',
-  darknessTheme: 500,
+  darknessTheme: '500',
   size: 'normal',
   direction: 'right',
 });
 const active = defineModel('active');
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
-const borderColor = computed(() =>
-  props.theme === 'white' || props.theme === 'black'
-    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
-    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+const color = computed(() =>
+  props.iconColor
+    ? convertThemeToColor(props.iconColor, props.darknessIconColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
+const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const elementsSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -61,8 +57,14 @@ const menuListStyles = computed(() => {
 //   console.log(styles);
 //   return styles;
 // });
-const openLink = (url: string, isBlank: boolean | undefined) =>
-  window.open(url, isBlank ? '_blank' : '_self');
+const openLink = (url: string, isBlank: boolean | undefined) => window.open(url, isBlank ? '_blank' : '_self');
+const calcItemColor = (item: IMDItemProps) => {
+  return item.color
+    ? convertThemeToColor(item.color, item.darknessColor)
+    : item.theme === 'white' || +((item.darknessTheme ?? '500') <= 600 && item.theme !== 'black')
+      ? 'black'
+      : 'white';
+};
 </script>
 
 <template>
@@ -73,7 +75,7 @@ const openLink = (url: string, isBlank: boolean | undefined) =>
       @click.prevent="active = !active"
     >
       <slot name="buttonIcon" />
-      <PlusIcon v-if="!$slots.buttonIcon" :size="elementsSize - 10" :color="textColor" />
+      <PlusIcon v-if="!$slots.buttonIcon" :size="elementsSize - 10" :color="color" />
     </button>
     <ul
       :class="[
@@ -88,8 +90,8 @@ const openLink = (url: string, isBlank: boolean | undefined) =>
       <li
         v-for="(item, index) of items"
         :key="item.label"
-        :style="`height: ${elementsSize}px; background-color: ${convertThemeToColor(item.theme ?? 'white', item.darknessTheme ?? 500)};
-        color: ${item.theme === 'white' || ((item.darknessTheme ?? 500) <= 600 && item.theme !== 'black') ? 'black' : 'white'}; border-color: ${borderColor};`"
+        :style="`height: ${elementsSize}px; background-color: ${convertThemeToColor(item.theme ?? 'white', item.darknessTheme ?? '500')};
+        color: ${calcItemColor(item)}; border-color: ${borderColor};`"
         class="menuElement"
         @click="
           () => {

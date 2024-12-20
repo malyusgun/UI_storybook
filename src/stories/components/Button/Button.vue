@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IButtonProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IButtonProps>(), {
   size: 'normal',
   theme: 'white',
-  textColor: 'black',
   iconPos: 'left',
-  darknessTheme: 500,
-  darknessTextColor: 500,
-  darknessBorder: 500,
+  darknessTheme: '500',
+  darknessTextColor: '500',
 });
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const textColorComputed = computed(() =>
-  convertThemeToColor(props.textColor, props.darknessTextColor),
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const borderColor = computed(() =>
-  !props.border ? '' : convertThemeToColor(props.border, props.darknessBorder),
-);
+const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const width = computed(() => (props.width ? `${props.width}px` : 'max-content'));
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -42,7 +41,6 @@ const buttonPadding = computed(() => {
   }
   return '0.75rem 0.5rem';
 });
-const width = computed(() => (props.width ? `${props.width}px` : 'max-content'));
 </script>
 
 <template>
@@ -59,7 +57,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
     <span :style="`background-color: ${themeColor}`" class="background"></span>
     <span
       v-if="label || !iconOnly"
-      :style="`color: ${textColorComputed}; font-size: ${textSize}`"
+      :style="`color: ${color}; font-size: ${textSize}`"
       :class="[
         'text',
         {

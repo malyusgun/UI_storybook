@@ -29,8 +29,8 @@ const props = withDefaults(defineProps<IProps>(), {
 });    
 const emit = defineEmits(['']);  
 const visible = defineModel('');  
-watch(, () => {});  
-const computed = computed(() => );  
+// watch(, () => {});
+// const computed1 = computed(() => );
 ```
 - I*Componentname*Props вместо ```IProps```;
 - watchers после defineModel;

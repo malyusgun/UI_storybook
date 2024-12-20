@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue';
 import type { ITreeItem } from '@interfaces/componentsProp';
 import TreeItems from '@stories/components/TreeList/TreeItems.vue';
 import type { ITLProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 interface IStateItem {
   isOpen: boolean;
@@ -13,16 +13,16 @@ interface IStateItem {
 const props = withDefaults(defineProps<ITLProps>(), {
   theme: 'white',
   maxWidth: 300,
-  darknessTheme: 500,
+  darknessTheme: '500',
 });
 const emit = defineEmits(['onClick']);
 const items = computed(() => props.items);
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
+);
 
 const state = ref<IStateItem[]>([]);
 const setItemChildrenToState = (items: ITreeItem[]) => {
@@ -68,7 +68,7 @@ const toggleIsOpen = (item: ITreeItem) => {
     <TreeItems
       :items="items"
       :state="state"
-      :textColor="textColor"
+      :color="color"
       :themeColor="themeColor"
       @toggleIsOpen="toggleIsOpen"
       @onClick="emit('onClick')"

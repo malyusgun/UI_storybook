@@ -302,30 +302,30 @@ const sliderValue = ref(1);
     />
   </Popup>
   <Popup v-model:active="popupActive2" theme="sky"
-    >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat
-    soluta, vel velit voluptas. Accusamus aut, error et minima neque praesentium, ratione,
-    reprehenderit repudiandae saepe ut vero! Lorem ipsum dolor sit amet, consectetur adipisicing
-    elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas. Accusamus aut, error et
-    minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!</Popup
+    >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
+    voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero! Lorem
+    ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas.
+    Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!</Popup
   >
 
   <Modal v-model:visible="visible" theme="red" @onClose="onClose"
-    ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing
-    elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo
-    nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam
-    repellat saepe temporibus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
-    explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil
-    officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe
-    temporibus?</Modal
+    ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
+    explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu
+    nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe temporibus? Lorem ipsum dolor sit
+    amet, consectetur adipisicing elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima
+    necessitatibus, nemo nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam
+    repellat saepe temporibus?</Modal
   >
   <MenuDial
     v-model:active="active"
     theme="sky"
     direction="right"
+    darknessTheme="600"
     :items="[
       {
         label: 'font-family',
         theme: 'green',
+        color: 'white',
         link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
         linkBlank: true,
         textStyle: 'bold',
@@ -333,6 +333,7 @@ const sliderValue = ref(1);
       {
         label: 'Second',
         theme: 'red',
+        darknessTheme: '600',
         textStyle: 'italic',
       },
     ]"
@@ -359,7 +360,9 @@ const sliderValue = ref(1);
     theme="blue"
     isSmooth
   />
-  <Button @click="visible = true" theme="sky" label="I'm a button"></Button>
+  <Button @click="visible = true" textColor="white" theme="sky" label="I'm a button"></Button>
+  <Button @click="visible = true" theme="sky" darknessTheme="600" label="I'm a button"></Button>
+  <Button @click="visible = true" theme="sky" darknessTheme="700" label="I'm a button"></Button>
   <SelectButton :options="options" size="large" v-model:value="value">
     <template #1Icon>
       <TrashIcon />
@@ -369,31 +372,25 @@ const sliderValue = ref(1);
   <Drawer v-model:visible="visibleDrawer" theme="sky" closeIcon="CropIcon">
     <template #header>Это - Drawer</template>
     <p>
-      pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit
-      amet, consectetur adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore
-      voluptas. Aperiam dignissimos enim, fuga fugit, modi, nam necessitatibus numquam obcaecati
-      omnis recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
-      blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio optio
-      reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit
-      amet, consectetur adipisicing elit. Ducimus expedita laboriosam nesciunt voluptatum! Ab animi
-      illum impedit iusto libero magni maxime molestias nisi nobis possimus provident quia repellat,
-      rerum suscipit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem modi ratione
-      reiciendis. Cupiditate deserunt eaque eum labore qui rem? Consequatur corporis, dolorem
-      doloremque eveniet facilis obcaecati quasi repellat vel velit. pizdwertyuki
-      lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet,
-      consectetur adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas.
-      Aperiam dignissimos enim, fuga fugit, modi, nam necessitatibus numquam obcaecati omnis
-      recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
-      blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio optio
-      reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit
-      amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Eaque explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo
-      nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas
-      quisquam repellat saepe temporibus?
+      pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur
+      adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga
+      fugit, modi, nam necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet,
+      consectetur adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto
+      molestiae odio optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor
+      sit amet, consectetur adipisicing elit. Ducimus expedita laboriosam nesciunt voluptatum! Ab animi illum impedit
+      iusto libero magni maxime molestias nisi nobis possimus provident quia repellat, rerum suscipit. Lorem ipsum dolor
+      sit amet, consectetur adipisicing elit. Autem modi ratione reiciendis. Cupiditate deserunt eaque eum labore qui
+      rem? Consequatur corporis, dolorem doloremque eveniet facilis obcaecati quasi repellat vel velit. pizdwertyuki
+      lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga fugit, modi, nam
+      necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur
+      adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio
+      optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit amet,
+      consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo, facere
+      fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu nemo nesciunt nihil
+      officia, pariatur praesentium quas quisquam repellat saepe temporibus?
     </p>
-    <template #footer>
-      pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template
-    ></Drawer
+    <template #footer> pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template></Drawer
   >
   <main class="main">
     <h2 class="title"><span class="mono">Mono</span> icons</h2>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { IPopupProps } from '@interfaces/componentsProps';
 import { computed, ref } from 'vue';
-import { convertThemeToColor } from '@helpers/common';
-import { convertWhiteOrBlackToColor } from '@helpers/colors';
+import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IPopupProps>(), {
   parentSelector: 'body',
@@ -11,21 +10,16 @@ const props = withDefaults(defineProps<IPopupProps>(), {
   maxWidth: '300px',
   maxHeight: '100px',
   padding: '5px',
-  darknessTheme: 500,
-  darknessBorder: 500,
+  darknessTheme: '500',
 });
 const active = defineModel<boolean>('active');
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const scrollAndBorderColor = computed(() =>
-  props.theme === 'white' || props.theme === 'black'
-    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
-    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
 
 const top = ref();
 const left = ref();
@@ -58,15 +52,11 @@ document.addEventListener('pointerdown', (e) => {
     oncontextmenu="return false"
     id="popup"
     @pointerdown.stop=""
-    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}; color: ${textColor}`"
+    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}; color: ${color}`"
   >
-    <div
-      :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto; padding-right: 5px`"
-    >
+    <div :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto; padding-right: 5px`">
       <slot />
-      <p v-if="!$slots.default" style="background-color: black; color: white; padding: 10px">
-        Popup
-      </p>
+      <p v-if="!$slots.default" style="background-color: black; color: white; padding: 10px">Popup</p>
     </div>
   </section>
 </template>
@@ -76,11 +66,11 @@ document.addEventListener('pointerdown', (e) => {
   position: fixed;
   transition: opacity 0.2s ease-in-out;
   background-color: v-bind(themeColor);
-  border: 1px solid v-bind(scrollAndBorderColor);
+  border: 1px solid v-bind(secondaryColor);
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: v-bind(scrollAndBorderColor);
+  background-color: v-bind(secondaryColor);
 }
 </style>

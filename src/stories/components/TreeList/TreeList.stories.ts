@@ -18,7 +18,7 @@ const meta: Meta = {
     items: { control: 'object' },
     maxWidth: { control: 'number' },
     expand: { control: 'boolean' },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
       control: 'select',
       options: [

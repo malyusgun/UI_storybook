@@ -1,33 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ISBProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<ISBProps>(), {
   size: 'normal',
   theme: 'white',
   activeBackgroundColor: 'sky',
-  darknessTheme: 500,
-  darknessActiveBackgroundColor: 500,
-  darknessBorder: 500,
+  darknessTheme: '500',
+  darknessActiveBackgroundColor: '500',
 });
 const emit = defineEmits(['onClick']);
 const value = defineModel<never>('value');
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
+);
 const activeBackgroundColorComputed = computed(() =>
   props.activeBackgroundColor
     ? convertThemeToColor(props.activeBackgroundColor, props.darknessActiveBackgroundColor)
     : '',
 );
-const borderColor = computed(() =>
-  !props.border ? '' : convertThemeToColor(props.border, props.darknessBorder),
-);
+const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -92,7 +89,7 @@ const buttonHeight = computed(() => {
       "
     >
       <span
-        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : (convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? 500) ?? themeColor)}`"
+        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : (convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? '500') ?? themeColor)}`"
         :class="[
           'background',
           {
@@ -105,7 +102,7 @@ const buttonHeight = computed(() => {
       ></span>
       <span
         v-if="!item.isLabelHidden"
-        :style="`color: ${(item.value && value === item.value) || value === item.label ? (convertThemeToColor(item.activeColor, item.darknessActiveColor ?? 500) ?? textColor) : (convertThemeToColor(item.color, item.darknessColor ?? 500) ?? textColor)}; font-size: ${textSize}`"
+        :style="`color: ${(item.value && value === item.value) || value === item.label ? (convertThemeToColor(item.activeColor, item.darknessActiveColor ?? '500') ?? color) : (convertThemeToColor(item.color, item.darknessColor ?? '500') ?? color)}; font-size: ${textSize}`"
         :class="[
           {
             bold: item.textStyle === 'bold',

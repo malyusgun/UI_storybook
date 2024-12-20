@@ -25,18 +25,9 @@ const meta: Meta = {
     closeIcon: { control: 'select', options: Object.keys(iconsSet) },
     position: {
       control: 'select',
-      options: [
-        'top',
-        'right',
-        'bottom',
-        'left',
-        'topLeft',
-        'topRight',
-        'bottomLeft',
-        'bottomRight',
-      ],
+      options: ['top', 'right', 'bottom', 'left', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'],
     },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
       control: 'select',
       options: [

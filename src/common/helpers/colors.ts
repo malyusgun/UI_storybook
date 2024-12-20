@@ -2,15 +2,15 @@ import type { TDarkness, TThemeColor } from '@interfaces/common';
 
 export const convertWhiteOrBlackToColor = (theme: 'white' | 'black', darkness: TDarkness) => {
   if (theme === 'white') {
-    if (darkness === 500 || darkness === 400 || darkness === 600) return '#cbd5e1';
-    if (darkness === 300 || darkness === 700) return '#94a3b8';
-    if (darkness === 200 || darkness === 800) return '#f1f5f9';
-    if (darkness === 100 || darkness === 900) return '#e2e8f0';
+    if (darkness === '500' || darkness === '400' || darkness === '600') return '#cbd5e1';
+    if (darkness === '300' || darkness === '700') return '#94a3b8';
+    if (darkness === '200' || darkness === '800') return '#f1f5f9';
+    if (darkness === '100' || darkness === '900') return '#e2e8f0';
   }
-  if (darkness === 500 || darkness === 400 || darkness === 600) return '#475569';
-  if (darkness === 300 || darkness === 700) return '#64748b';
-  if (darkness === 200 || darkness === 800) return '#94a3b8';
-  if (darkness === 100 || darkness === 900) return '#cbd5e1';
+  if (darkness === '500' || darkness === '400' || darkness === '600') return '#475569';
+  if (darkness === '300' || darkness === '700') return '#64748b';
+  if (darkness === '200' || darkness === '800') return '#94a3b8';
+  if (darkness === '100' || darkness === '900') return '#cbd5e1';
 };
 
 export const convert100ThemeToColor = (theme: TThemeColor) => {

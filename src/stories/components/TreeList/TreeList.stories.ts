@@ -125,8 +125,8 @@ export const Full: Story = {
                 color: 'red',
                 iconAfter: 'DiceIcon',
                 iconColor: 'red',
-                darknessColor: 400,
-                darknessIconColor: 400,
+                darknessColor: '300',
+                darknessIconColor: '700',
                 children: [
                   {
                     label: '1-1-1-1',

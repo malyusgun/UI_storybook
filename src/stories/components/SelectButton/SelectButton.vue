@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import type { ISBProps } from '@interfaces/componentsProps';
 import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import type { ISBOption } from '@interfaces/componentsProp';
 
 const props = withDefaults(defineProps<ISBProps>(), {
   size: 'normal',
@@ -19,10 +20,8 @@ const color = computed(() =>
     ? convertThemeToColor(props.textColor, props.darknessTextColor)
     : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const activeBackgroundColorComputed = computed(() =>
-  props.activeBackgroundColor
-    ? convertThemeToColor(props.activeBackgroundColor, props.darknessActiveBackgroundColor)
-    : '',
+const activeBGColorComputed = computed(() =>
+  convertThemeToColor(props.activeBackgroundColor, props.darknessActiveBackgroundColor),
 );
 const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const textSize = computed(() => {
@@ -58,6 +57,30 @@ const buttonHeight = computed(() => {
   }
   return '40px';
 });
+const calcItemColor = (item: ISBOption) => {
+  if ((item.value && value.value === item.value) || String(value.value) === item.label) {
+    const activeColor = item.activeColor;
+    if (!activeColor) {
+      return color.value;
+    } else {
+      return convertThemeToColor(activeColor, item.darknessActiveColor ?? '500');
+    }
+  } else {
+    const itemColor = item.color;
+    if (!itemColor) {
+      return color.value;
+    } else {
+      return convertThemeToColor(itemColor, item.darknessColor ?? '500');
+    }
+  }
+};
+const calcBGColorItem = (item: ISBOption) => {
+  return (value.value && value.value === item.value) || String(value.value) === item.label
+    ? activeBGColorComputed.value
+    : item.backgroundColor
+      ? convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? '500')
+      : themeColor.value;
+};
 </script>
 
 <template>
@@ -89,7 +112,7 @@ const buttonHeight = computed(() => {
       "
     >
       <span
-        :style="`background-color: ${activeBackgroundColorComputed && ((value && value === item.value) || value === item.label) ? activeBackgroundColorComputed : (convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? '500') ?? themeColor)}`"
+        :style="`background-color: ${calcBGColorItem(item)}`"
         :class="[
           'background',
           {
@@ -102,7 +125,7 @@ const buttonHeight = computed(() => {
       ></span>
       <span
         v-if="!item.isLabelHidden"
-        :style="`color: ${(item.value && value === item.value) || value === item.label ? (convertThemeToColor(item.activeColor, item.darknessActiveColor ?? '500') ?? color) : (convertThemeToColor(item.color, item.darknessColor ?? '500') ?? color)}; font-size: ${textSize}`"
+        :style="`color: ${calcItemColor(item)}; font-size: ${textSize}`"
         :class="[
           {
             bold: item.textStyle === 'bold',

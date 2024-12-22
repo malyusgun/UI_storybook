@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<IModalProps>(), {
   dismissible: false,
   theme: 'white',
   darknessTheme: '500',
+  darknessTextColor: '500',
   width: '30%',
   height: '30%',
   headerDivider: false,

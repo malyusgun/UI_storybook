@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IPopupProps } from '@interfaces/componentsProps';
 import { computed, ref } from 'vue';
-import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToSecondaryColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IPopupProps>(), {
   parentSelector: 'body',
@@ -15,11 +15,6 @@ const props = withDefaults(defineProps<IPopupProps>(), {
 const active = defineModel<boolean>('active');
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
-const color = computed(() =>
-  props.textColor
-    ? convertThemeToColor(props.textColor, props.darknessTextColor)
-    : convertThemeToTextColor(props.theme, props.darknessTheme),
-);
 
 const top = ref();
 const left = ref();
@@ -52,7 +47,7 @@ document.addEventListener('pointerdown', (e) => {
     oncontextmenu="return false"
     id="popup"
     @pointerdown.stop=""
-    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}; color: ${color}`"
+    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}`"
   >
     <div :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto; padding-right: 5px`">
       <slot />

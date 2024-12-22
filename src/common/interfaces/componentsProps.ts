@@ -81,6 +81,7 @@ export interface IDrawerProps {
   theme?: TThemeColor;
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   modal?: boolean;
   dismissible?: boolean;
   closeIcon?: TIcons;
@@ -90,9 +91,7 @@ export interface IDrawerProps {
 
 export interface IModalProps {
   theme?: TThemeColor;
-  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
-  darknessTextColor?: TDarkness;
   width?: string;
   height?: string;
   position?: TExpandedPosition;

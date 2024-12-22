@@ -32,8 +32,8 @@ export const convertThemeToColor = (theme: TThemeColor, darkness: TDarkness | st
  */
 export const convertThemeToSecondaryColor = (theme: TThemeColor, darkness: TDarkness | string = '500') => {
   return theme === 'white' || theme === 'black'
-    ? convertWhiteOrBlackToColor(theme, darkness)
-    : convertThemeToColor(theme, String(100 + ((darkness + 600) % 900)));
+    ? convertWhiteOrBlackToColor(theme, darkness as TDarkness)
+    : convertThemeToColor(theme, String(100 + ((+darkness + 600) % 900)));
 };
 
 export const convertThemeToTextColor = (theme: TThemeColor, darkness: TDarkness | string = '500') => {

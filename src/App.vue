@@ -325,7 +325,8 @@ const sliderValue = ref(1);
       {
         label: 'font-family',
         theme: 'green',
-        color: 'white',
+        color: 'red',
+        darknessColor: '500',
         link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
         linkBlank: true,
         textStyle: 'bold',
@@ -333,6 +334,8 @@ const sliderValue = ref(1);
       {
         label: 'Second',
         theme: 'red',
+        color: 'sky',
+        darknessColor: '500',
         darknessTheme: '600',
         textStyle: 'italic',
       },

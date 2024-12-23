@@ -14,13 +14,12 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    columns: { control: 'object' },
-    data: { control: 'object' },
-    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
+    columns: { control: 'text' },
+    data: { control: 'text' },
     fontSize: { control: 'text' },
     gap: { control: 'text' },
-    width: { control: 'text' },
     showAllLines: { control: 'boolean' },
+    stripedRows: { control: 'boolean' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -47,26 +46,6 @@ const meta: Meta = {
       ],
     },
     textColor: {
-      control: 'select',
-      options: [
-        'white',
-        'blue',
-        'sky',
-        'cyan',
-        'teal',
-        'green',
-        'yellow',
-        'orange',
-        'pink',
-        'fuchsia',
-        'purple',
-        'indigo',
-        'rose',
-        'red',
-        'black',
-      ],
-    },
-    border: {
       control: 'select',
       options: [
         'white',
@@ -201,12 +180,27 @@ export const Full: Story = {
           value: 'Russia',
         },
       ],
+      [
+        {
+          value: 'Ксюша',
+        },
+        {
+          value: '32',
+        },
+        {
+          value: 'Frontend',
+        },
+        {
+          value: 'Russia',
+        },
+      ],
     ],
 
-    fontSize: '32px',
+    fontSize: '20px',
     showAllLines: true,
     gap: '70px',
     border: 'fuchsia',
     theme: 'black',
+    stripedRows: true,
   },
 };

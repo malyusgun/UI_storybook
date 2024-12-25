@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { IPopupProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, type Ref, ref } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor } from '@helpers/common';
+import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IPopupProps>(), {
   parentSelector: 'body',
@@ -12,33 +13,33 @@ const props = withDefaults(defineProps<IPopupProps>(), {
   padding: '5px',
   darknessTheme: '500',
 });
-const active = defineModel<boolean>('active');
+const active = defineModel<boolean>('active') as Ref<boolean>;
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 
 const top = ref();
 const left = ref();
-const isContainer = ref();
+const isOnContainerClick = ref();
 
 const container = document.querySelector(props.parentSelector);
 if (container) {
   container.addEventListener('pointerdown', (event: Event) => {
     const e = event as PointerEvent;
     if (e.button === 2) {
-      isContainer.value = true;
-      if (!active.value) active.value = true;
-      top.value = e.clientY;
-      left.value = e.clientX;
+      isOnContainerClick.value = true;
+      if (!active.value && !(window as CustomWindow).blockPopupActions) active.value = true;
+      top.value = e.pageY;
+      left.value = e.pageX;
       e.stopPropagation();
     }
   });
   container.addEventListener('contextmenu', (e) => {
-    if (isContainer.value) e.preventDefault();
+    if (isOnContainerClick.value) e.preventDefault();
   });
 }
 
 document.addEventListener('pointerdown', (e) => {
-  if (e.button === 0) active.value = false;
+  if (e.button === 0 && !(window as CustomWindow).blockPopupActions) active.value = false;
 });
 </script>
 
@@ -58,7 +59,7 @@ document.addEventListener('pointerdown', (e) => {
 
 <style scoped>
 #popup {
-  position: fixed;
+  position: absolute;
   transition: opacity 0.2s ease-in-out;
   background-color: v-bind(themeColor);
   border: 1px solid v-bind(secondaryColor);

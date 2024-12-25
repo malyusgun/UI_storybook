@@ -41,7 +41,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             ]"
             :color="
               item.color && item.isTriangleToColor
-                ? convertThemeToColor(item.color, item.darknessColor ?? '500')
+                ? convertThemeToColor(item.color!, item.darknessColor ?? '500')
                 : color
             "
             size="17"

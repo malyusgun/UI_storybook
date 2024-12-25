@@ -42,7 +42,6 @@ const meta: Meta = {
       ],
     },
   },
-  args: {},
 } satisfies Meta<typeof Popup>;
 
 export default meta;

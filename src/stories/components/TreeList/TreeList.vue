@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<ITLProps>(), {
   theme: 'white',
   maxWidth: 300,
   darknessTheme: '500',
+  expand: false,
 });
 const emit = defineEmits(['onClick']);
 const items = computed(() => props.items);
@@ -28,9 +29,9 @@ const state = ref<IStateItem[]>([]);
 const setItemChildrenToState = (items: ITreeItem[]) => {
   for (const item of items) {
     state.value.push({
-      isOpen: props?.expand,
+      isOpen: props.expand,
       label: item.label,
-    });
+    } as IStateItem);
     if (item.children) {
       setItemChildrenToState(item.children);
     }

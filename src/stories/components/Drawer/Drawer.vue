@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, type Ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
 import type { IDrawerProps } from '@interfaces/componentsProps';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
+import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IDrawerProps>(), {
-  visible: false,
   position: 'left',
   width: 400,
   modal: true,
@@ -21,15 +21,19 @@ const emit = defineEmits(['onClose']);
 const visible = defineModel<boolean>('visible', {
   set(value) {
     if (!value) {
+      (window as CustomWindow).blockPopupActions = false;
       body.style.overflow = 'auto';
+      body.style.paddingRight = '0';
       emit('onClose');
     }
     return value;
   },
-});
+}) as Ref<boolean>;
 watch(visible, () => {
   if (visible.value) {
+    (window as CustomWindow).blockPopupActions = true;
     body.style.overflow = 'hidden';
+    body.style.paddingRight = '14px';
   }
 });
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
@@ -54,7 +58,7 @@ const drawerWidth = computed(() => {
           drawerBackgroundOpened: visible,
         },
       ]"
-      @pointerdown.stop="dismissible ? (visible = false) : ''"
+      @pointerdown="() => (dismissible ? (visible = false) : '')"
     ></section>
     <section
       :style="`color: ${color}; background-color: ${themeColor}`"

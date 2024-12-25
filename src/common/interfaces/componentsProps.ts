@@ -36,6 +36,8 @@ export interface ITLProps {
   maxWidth?: number;
   expand?: boolean;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
+  darknessTextColor?: TDarkness;
   darknessTheme?: TDarkness;
 }
 
@@ -91,7 +93,9 @@ export interface IDrawerProps {
 
 export interface IModalProps {
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   width?: string;
   height?: string;
   position?: TExpandedPosition;

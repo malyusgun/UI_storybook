@@ -61,7 +61,7 @@ const openLink = (url: string, isBlank: boolean | undefined) => window.open(url,
 const calcItemColor = (item: IMDItemProps) => {
   return item.color
     ? convertThemeToColor(item.color, item.darknessColor)
-    : item.theme === 'white' || +((item.darknessTheme ?? '500') <= 600 && item.theme !== 'black')
+    : item.theme === 'white' || (+(item.darknessTheme ?? '500') <= 600 && item.theme !== 'black')
       ? 'black'
       : 'white';
 };

@@ -72,7 +72,7 @@ const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.sl
         verticalSlider: orientation === 'vertical',
       },
     ]"
-    :style="`width: ${width}px`"
+    :style="`width: ${width}px; margin-bottom: ${orientation === 'vertical' ? +width / 2 + 'px' : 0}`"
   >
     <input v-model="optionValue" type="range" class="slider" :min="min ?? 0" :max="max ?? 100" :step="step ?? 1" />
     <div v-if="options?.length">
@@ -131,7 +131,10 @@ const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.sl
 }
 .verticalSlider {
   margin-top: v-bind(widthHalf);
-  transform: rotate(270deg);
+  transform: rotate(270deg) translateY(-100%);
+}
+.verticalSlider .marksList {
+  padding-bottom: 0;
 }
 datalist {
   display: flex;
@@ -150,6 +153,7 @@ option {
   margin-bottom: 5px;
   font-size: 10px;
   padding: 0 v-bind(marksListPadding);
+  padding-bottom: 20px;
 }
 .mark {
   display: flex;

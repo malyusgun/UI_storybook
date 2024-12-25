@@ -3,6 +3,7 @@ import { computed, watch } from 'vue';
 import type { IModalProps } from '@interfaces/componentsProps';
 import { iconsSet } from '@/common/constants/icons';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
+import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IModalProps>(), {
   visible: false,
@@ -20,7 +21,9 @@ const emit = defineEmits(['onClose']);
 const visible = defineModel('visible', {
   set(value) {
     if (!value) {
+      (window as CustomWindow).blockPopupActions = false;
       body.style.overflow = 'auto';
+      body.style.paddingRight = '0';
       emit('onClose');
     }
     return value;
@@ -28,7 +31,9 @@ const visible = defineModel('visible', {
 });
 watch(visible, () => {
   if (visible.value) {
+    (window as CustomWindow).blockPopupActions = true;
     body.style.overflow = 'hidden';
+    body.style.paddingRight = '14px';
   }
 });
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
@@ -53,7 +58,7 @@ document.addEventListener('keydown', onKeydown);
           openedModalBackground: visible,
         },
       ]"
-      @click.prevent="() => (dismissible ? (visible = false) : false)"
+      @pointerdown="() => (dismissible ? (visible = false) : false)"
     ></section>
     <section
       :style="`color: ${color}; background-color: ${themeColor}; width: ${width}; height: ${height}`"
@@ -105,7 +110,7 @@ document.addEventListener('keydown', onKeydown);
   opacity: 1;
 }
 .modal {
-  position: absolute;
+  position: fixed;
   z-index: -50;
   min-width: 250px;
   min-height: 100px;

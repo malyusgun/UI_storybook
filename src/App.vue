@@ -113,7 +113,7 @@ import Modal from '@stories/components/Modal/Modal.vue';
 import MenuDial from '@stories/components/MenuDial/MenuDial.vue';
 import Popup from '@stories/components/Popup/Popup.vue';
 
-const gentleIcons = [
+const gentleIcons = {
   Age18Icon,
   AirplaneIcon,
   AlarmIcon,
@@ -217,8 +217,8 @@ const gentleIcons = [
   TrashIcon,
   TriangleIcon,
   UserIcon,
-];
-const visibleDrawer = ref(true);
+};
+const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
   {
     label: 0,
@@ -289,121 +289,120 @@ const sliderValue = ref(1);
 </script>
 
 <template>
-  <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
-  <Popup v-model:active="popupActive" parentSelector=".hui" theme="sky">
-    <Button
-      @click="
-        () => {
-          popupActive = false;
-          visible = true;
-        }
-      "
-      label="Открыть модальное окно"
-    />
-  </Popup>
-  <Popup v-model:active="popupActive2" theme="sky"
-    >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
-    voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero! Lorem
-    ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas.
-    Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!</Popup
-  >
-
-  <Modal v-model:visible="visible" theme="red" @onClose="onClose"
-    ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
-    explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu
-    nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe temporibus? Lorem ipsum dolor sit
-    amet, consectetur adipisicing elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima
-    necessitatibus, nemo nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas quisquam
-    repellat saepe temporibus?</Modal
-  >
-  <MenuDial
-    v-model:active="active"
-    theme="sky"
-    direction="right"
-    darknessTheme="600"
-    :items="[
-      {
-        label: 'font-family',
-        theme: 'green',
-        color: 'red',
-        darknessColor: '500',
-        link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
-        linkBlank: true,
-        textStyle: 'bold',
-      },
-      {
-        label: 'Second',
-        theme: 'red',
-        color: 'sky',
-        darknessColor: '500',
-        darknessTheme: '600',
-        textStyle: 'italic',
-      },
-    ]"
-  >
-    <template #1IconBefore>
-      <AnchorLinkIcon size="20" color="white" />
-    </template>
-    <template #2IconBefore>
-      <CrossIcon color="white" />
-    </template>
-    <template #2IconAfter>
-      <CrossIcon color="white" />
-    </template>
-  </MenuDial>
-  <Slider
-    v-model:value="sliderValue"
-    :options="sliderOptions"
-    orientation="vertical"
-    width="400"
-    min="0"
-    max="18"
-    step="2"
-    backgroundColor="black"
-    theme="blue"
-    isSmooth
-  />
-  <Button @click="visible = true" textColor="white" theme="sky" label="I'm a button"></Button>
-  <Button @click="visible = true" theme="sky" darknessTheme="600" label="I'm a button"></Button>
-  <Button @click="visible = true" theme="sky" darknessTheme="700" label="I'm a button"></Button>
-  <SelectButton :options="options" size="large" v-model:value="value">
-    <template #1Icon>
-      <TrashIcon />
-    </template>
-  </SelectButton>
-  <ToggleSwitch />
-  <Drawer v-model:visible="visibleDrawer" theme="sky" closeIcon="CropIcon">
-    <template #header>Это - Drawer</template>
-    <p>
-      pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur
-      adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga
-      fugit, modi, nam necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet,
-      consectetur adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto
-      molestiae odio optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor
-      sit amet, consectetur adipisicing elit. Ducimus expedita laboriosam nesciunt voluptatum! Ab animi illum impedit
-      iusto libero magni maxime molestias nisi nobis possimus provident quia repellat, rerum suscipit. Lorem ipsum dolor
-      sit amet, consectetur adipisicing elit. Autem modi ratione reiciendis. Cupiditate deserunt eaque eum labore qui
-      rem? Consequatur corporis, dolorem doloremque eveniet facilis obcaecati quasi repellat vel velit. pizdwertyuki
-      lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga fugit, modi, nam
-      necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet, consectetur
-      adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto molestiae odio
-      optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor sit amet,
-      consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque explicabo, facere
-      fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu nemo nesciunt nihil
-      officia, pariatur praesentium quas quisquam repellat saepe temporibus?
-    </p>
-    <template #footer> pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template></Drawer
-  >
   <main class="main">
     <h2 class="title"><span class="mono">Mono</span> icons</h2>
     <ul class="iconsList">
-      <li class="iconsItem" v-for="icon of gentleIcons" :key="icon.__name">
-        <component :is="icon" class="icon" />
-        <span class="iconName">{{ icon.__name!.slice(0, -4) }}</span>
+      <li class="iconsItem" v-for="icon of Object.entries(gentleIcons)" :key="icon[0]">
+        <component :is="icon[1]" class="icon" />
+        <span class="iconName">{{ icon[0].slice(0, -4) }}</span>
       </li>
     </ul>
+    <h2 class="title gradient-text">Playground</h2>
     <button class="testButton" @click="visibleDrawer = !visibleDrawer">Нажми меня</button>
+    <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
+    <Popup v-model:active="popupActive" parentSelector=".hui" theme="sky">
+      <Button
+        @click="
+          () => {
+            popupActive = false;
+            visible = true;
+          }
+        "
+        label="Открыть модальное окно"
+      />
+    </Popup>
+    <Popup v-model:active="popupActive2" theme="sky"
+      >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
+      voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
+      voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut
+      vero!</Popup
+    >
+
+    <Modal v-model:visible="visible" theme="red" @onClose="onClose"
+      ><template #header>huuuuuuuuuuui</template>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
+      explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu
+      nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe temporibus? Lorem ipsum dolor sit
+      amet, consectetur adipisicing elit. Eaque explicabo, facere fuga hic id impedit magnam maiores minima
+      necessitatibus, nemo nesciunt nihil officia, pariatu nemo nesciunt nihil officia, pariatur praesentium quas
+      quisquam repellat saepe temporibus?</Modal
+    >
+    <MenuDial
+      v-model:active="active"
+      theme="sky"
+      direction="right"
+      darknessTheme="600"
+      :items="[
+        {
+          label: 'font-family',
+          theme: 'green',
+          color: 'red',
+          darknessColor: '500',
+          link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family',
+          linkBlank: true,
+          textStyle: 'bold',
+        },
+        {
+          label: 'Second',
+          theme: 'red',
+          color: 'sky',
+          darknessColor: '500',
+          darknessTheme: '600',
+          textStyle: 'italic',
+        },
+      ]"
+    >
+      <template #1IconBefore>
+        <AnchorLinkIcon size="20" color="white" />
+      </template>
+      <template #2IconBefore>
+        <CrossIcon color="white" />
+      </template>
+      <template #2IconAfter>
+        <CrossIcon color="white" />
+      </template>
+    </MenuDial>
+    <Slider
+      v-model:value="sliderValue"
+      :options="sliderOptions"
+      width="400"
+      min="0"
+      max="18"
+      step="2"
+      backgroundColor="black"
+      theme="blue"
+      isSmooth
+    />
+    <Button @click="visible = true" textColor="white" theme="sky" label="I'm a button"></Button>
+    <SelectButton :options="options" size="large" v-model:value="value">
+      <template #1Icon>
+        <TrashIcon />
+      </template>
+    </SelectButton>
+    <ToggleSwitch />
+    <Drawer v-model:visible="visibleDrawer" theme="sky" :dismissible="false" closeIcon="CropIcon">
+      <template #header>Это - Drawer</template>
+      <p>
+        pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga
+        fugit, modi, nam necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto
+        molestiae odio optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor
+        sit amet, consectetur adipisicing elit. Ducimus expedita laboriosam nesciunt voluptatum! Ab animi illum impedit
+        iusto libero magni maxime molestias nisi nobis possimus provident quia repellat, rerum suscipit. Lorem ipsum
+        dolor sit amet, consectetur adipisicing elit. Autem modi ratione reiciendis. Cupiditate deserunt eaque eum
+        labore qui rem? Consequatur corporis, dolorem doloremque eveniet facilis obcaecati quasi repellat vel velit.
+        pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Amet deleniti, esse in ipsam quis sapiente tempore voluptas. Aperiam dignissimos enim, fuga
+        fugit, modi, nam necessitatibus numquam obcaecati omnis recusandae voluptatibus! Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Atque blanditiis consectetur cum delectus ducimus eius est hic incidunt iusto
+        molestiae odio optio reiciendis reprehenderit saepe tempora vel, veniam veritatis voluptates. Lorem ipsum dolor
+        sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque
+        explicabo, facere fuga hic id impedit magnam maiores minima necessitatibus, nemo nesciunt nihil officia, pariatu
+        nemo nesciunt nihil officia, pariatur praesentium quas quisquam repellat saepe temporibus?
+      </p>
+      <template #footer> pizdwertyukilokl,kmjhgfw ewesrdtyukilo,kmjng eartyukikdhgfgjhklj.,kga</template></Drawer
+    >
   </main>
 </template>
 
@@ -441,12 +440,15 @@ const sliderValue = ref(1);
   font-style: italic;
 }
 .testButton {
-  position: absolute;
-  right: 50px;
-  top: 50px;
   background-color: red;
+  margin-bottom: 30px;
   color: white;
   padding: 10px;
   border-radius: 5px;
+}
+.gradient-text {
+  background: linear-gradient(to right, hotpink, yellow, dodgerblue);
+  background-clip: text;
+  color: transparent;
 }
 </style>

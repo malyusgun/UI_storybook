@@ -29,6 +29,7 @@ export interface ITableProps {
   gap?: string;
   fontSize?: string;
   showAllLines?: boolean;
+  stripedRows?: boolean;
 }
 
 export interface ITLProps {

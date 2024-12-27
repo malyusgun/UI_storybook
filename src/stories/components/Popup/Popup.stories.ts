@@ -48,7 +48,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     default:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat\n    soluta, vel velit voluptas. Accusamus aut, error et minima neque praesentium, ratione,\n    reprehenderit repudiandae saepe ut vero! Lorem ipsum dolor sit amet, consectetur adipisicing\n    elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas. Accusamus aut, error et\n    minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!',

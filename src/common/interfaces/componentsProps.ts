@@ -30,6 +30,7 @@ export interface ITableProps {
   fontSize?: string;
   showAllLines?: boolean;
   stripedRows?: boolean;
+  center?: boolean;
 }
 
 export interface ITLProps {

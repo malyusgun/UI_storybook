@@ -76,7 +76,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     visible: true,
     default: 'Какой-то текст.',

@@ -3,7 +3,10 @@ import type { TDarkness, TIcons, TPosition, TTextStyle, TThemeColor } from '@int
 export interface ITableColumn {
   name: string;
   type?: TTableColumnType;
-  isFilter?: boolean;
+  editable?: boolean;
+  filterable?: boolean;
+  sortable?: boolean;
+  padding?: string;
 }
 
 export interface ITableItem {

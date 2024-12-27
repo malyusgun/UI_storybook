@@ -49,7 +49,7 @@ type Story = StoryObj<typeof meta>;
  * See https://storybook.js.org/docs/api/csf
  * to learn how to use render functions.
  */
-export const Primary: Story = {
+export const Simple: Story = {
   args: {},
 };
 

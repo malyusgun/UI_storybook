@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { ITableProps } from '@interfaces/componentsProps';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 import type { ITableItem } from '@interfaces/componentsProp';
+import FilterIcon from '@stories/icons/Mono/FilterIcon.vue';
+import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
+import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
+import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   gap: '5px',
@@ -22,6 +26,22 @@ const color = computed(() =>
 );
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
+
+const sortState = ref<string[]>(
+  (() => {
+    const columns = props.columns;
+    const result = [];
+    for (const column of columns) {
+      result.push(column.sortable ? 'none' : '');
+    }
+    return result;
+  })(),
+);
+
+const changeColumnSortMode = (index: number) => {
+  const cur = sortState.value[index];
+  sortState.value[index] = cur === 'none' ? 'down' : cur === 'down' ? 'up' : 'none';
+};
 </script>
 
 <template>
@@ -38,14 +58,49 @@ const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, S
             :class="{
               leftBorder: showAllLines,
             }"
-            v-for="column of columns"
+            v-for="(column, index) of columns"
             :key="column.name"
             class="columnHeader"
             style="padding: 5px 0 5px 5px"
           >
-            <div class="columnFlex">
-              {{ column.name }}
-              <div></div>
+            <div
+              :style="`justify-content: ${center ? 'center' : 'start'}; padding: ${center ? `0px calc(${gap} / 2 + ${column.padding ?? '0px'} / 2)` : `0 ${column.padding ?? '0px'} 0 0`}`"
+              :class="[
+                'columnFlex',
+                {
+                  columnGap: !center,
+                },
+              ]"
+            >
+              <div class="columnHeader-container">
+                <h3>
+                  {{ column.name }}
+                </h3>
+                <button v-if="column.sortable" @click.prevent="changeColumnSortMode(index)">
+                  <SortVerticalIcon
+                    v-show="sortState[index] === 'none'"
+                    :color="textColor"
+                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
+                  />
+                  <SortDownIcon
+                    v-show="sortState[index] === 'down'"
+                    :color="textColor"
+                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
+                  />
+                  <SortUpIcon
+                    v-show="sortState[index] === 'up'"
+                    :color="textColor"
+                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
+                  />
+                </button>
+                <button v-if="column.filterable" @click.prevent="">
+                  <FilterIcon
+                    :color="textColor"
+                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
+                  />
+                </button>
+              </div>
+              <div v-if="!center"></div>
             </div>
           </th>
         </tr>
@@ -59,7 +114,7 @@ const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, S
             }"
             v-for="item of row"
             :key="item.value"
-            style="padding: 5px"
+            :style="`padding: 5px; text-align: ${center ? 'center' : 'start'}`"
           >
             {{ item.value }}
           </td>
@@ -90,8 +145,14 @@ tr::after {
 }
 .columnFlex {
   display: flex;
-  gap: v-bind(gap);
   font-weight: bold;
+}
+.columnGap {
+  gap: v-bind(gap);
+}
+.columnHeader-container {
+  display: flex;
+  gap: 10px;
 }
 .tableLines {
   border-top: 1px solid v-bind(secondaryColor);

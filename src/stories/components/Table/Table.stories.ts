@@ -20,6 +20,7 @@ const meta: Meta = {
     gap: { control: 'text' },
     showAllLines: { control: 'boolean' },
     stripedRows: { control: 'boolean' },
+    center: { control: 'boolean' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -73,7 +74,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     columns: [
       {
@@ -122,14 +123,19 @@ export const Full: Story = {
       {
         name: 'Name',
         type: 'text',
+        sortable: true,
       },
       {
         name: 'Age',
         type: 'text',
+        filterable: true,
       },
       {
         name: 'Hobbies',
         type: 'text',
+        padding: '30px',
+        filterable: true,
+        sortable: true,
       },
       {
         name: 'Country',
@@ -198,9 +204,12 @@ export const Full: Story = {
 
     fontSize: '20px',
     showAllLines: true,
-    gap: '70px',
+    gap: '20px',
     border: 'fuchsia',
     theme: 'black',
     stripedRows: true,
+    textColor: 'white',
+    darknessTextColor: '500',
+    center: true,
   },
 };

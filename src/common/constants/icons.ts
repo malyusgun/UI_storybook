@@ -103,6 +103,10 @@ import TableIcon from '@stories/icons/Mono/TableIcon.vue';
 import TrashIcon from '@stories/icons/Mono/TrashIcon.vue';
 import UserIcon from '@stories/icons/Mono/UserIcon.vue';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
+import SortHorizontalIcon from '@stories/icons/Mono/SortHorizontalIcon.vue';
+import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
+import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
+import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
 
 export const iconsSet: Record<string, Component> = {
   Age18Icon: Age18Icon,
@@ -204,6 +208,10 @@ export const iconsSet: Record<string, Component> = {
   PointerIcon: PointerIcon,
   SaveIcon: SaveIcon,
   SettingsIcon: SettingsIcon,
+  SortDownIcon,
+  SortHorizontalIcon,
+  SortUpIcon,
+  SortVerticalIcon,
   TableIcon: TableIcon,
   TrashIcon: TrashIcon,
   TriangleIcon: TriangleIcon,

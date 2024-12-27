@@ -98,6 +98,10 @@ import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
 import PointerIcon from '@stories/icons/Mono/PointerIcon.vue';
 import SaveIcon from '@stories/icons/Mono/SaveIcon.vue';
 import SettingsIcon from '@stories/icons/Mono/SettingsIcon.vue';
+import SortHorizontalIcon from '@stories/icons/Mono/SortHorizontalIcon.vue';
+import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
+import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
+import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
 import LineIcon from '@stories/icons/Mono/LineIcon.vue';
 import TableIcon from '@stories/icons/Mono/TableIcon.vue';
 import TrashIcon from '@stories/icons/Mono/TrashIcon.vue';
@@ -213,6 +217,10 @@ const gentleIcons = {
   PointerIcon,
   SaveIcon,
   SettingsIcon,
+  SortDownIcon,
+  SortHorizontalIcon,
+  SortUpIcon,
+  SortVerticalIcon,
   TableIcon,
   TrashIcon,
   TriangleIcon,
@@ -420,6 +428,7 @@ const sliderValue = ref(1);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 10px;
+  margin-bottom: 20px;
 }
 .iconsItem {
   font-size: 14px;

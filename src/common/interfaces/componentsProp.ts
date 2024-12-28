@@ -6,6 +6,7 @@ export interface ITableColumn {
   editable?: boolean;
   filterable?: boolean;
   sortable?: boolean;
+  initSort?: 'up' | 'down' | 'none';
   padding?: string;
 }
 
@@ -16,6 +17,7 @@ export interface ITableItem {
 
 export type TTableColumnType =
   | 'checkbox'
+  | 'number'
   | 'text'
   | 'date'
   | 'tag'

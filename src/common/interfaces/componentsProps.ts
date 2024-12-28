@@ -22,15 +22,16 @@ import type {
 export interface ITableProps {
   columns: ITableColumn[];
   data: ITableItem[][];
+  multipleSort?: boolean;
+  gap?: string;
+  showAllLines?: boolean;
+  stripedRows?: boolean;
+  center?: boolean;
+  fontSize?: string;
   theme?: TThemeColor;
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
-  gap?: string;
-  fontSize?: string;
-  showAllLines?: boolean;
-  stripedRows?: boolean;
-  center?: boolean;
 }
 
 export interface ITLProps {

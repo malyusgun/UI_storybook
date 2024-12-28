@@ -21,6 +21,7 @@ const meta: Meta = {
     showAllLines: { control: 'boolean' },
     stripedRows: { control: 'boolean' },
     center: { control: 'boolean' },
+    multipleSort: { control: 'boolean' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -195,6 +196,20 @@ export const Full: Story = {
         },
         {
           value: 'Frontend',
+        },
+        {
+          value: 'Russia',
+        },
+      ],
+      [
+        {
+          value: 'Ксюша',
+        },
+        {
+          value: '32',
+        },
+        {
+          value: 'Backend',
         },
         {
           value: 'Russia',

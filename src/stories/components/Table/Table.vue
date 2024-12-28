@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ITableProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 import type { ITableItem } from '@interfaces/componentsProp';
 import FilterIcon from '@stories/icons/Mono/FilterIcon.vue';
@@ -14,10 +14,10 @@ const props = withDefaults(defineProps<ITableProps>(), {
   darknessTheme: '500',
   fontSize: '16px',
 });
+const columns = ref(props.columns);
+watch(props.columns, () => (columns.value = props.columns));
 const gap = computed(() => props.gap);
-// const emit = defineEmits(['']);
-const data = defineModel('data') as ITableItem[][];
-// watch(, () => {});
+const data = defineModel<ITableItem[][]>('data');
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
   props.textColor
@@ -27,20 +27,57 @@ const color = computed(() =>
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
 
-const sortState = ref<string[]>(
-  (() => {
-    const columns = props.columns;
-    const result = [];
-    for (const column of columns) {
-      result.push(column.sortable ? 'none' : '');
-    }
-    return result;
-  })(),
-);
+// ['', 'up', 'none', '', 'none', ...]
+const sortState = computed<string[]>(() => {
+  const result = [];
+  for (const column of columns.value) {
+    result.push(column.sortable ? (column.initSort ?? 'none') : '');
+  }
+  return result;
+});
+
+const sortStateActive = ref([]);
+const rows = computed<ITableItem[][]>(() => {
+  // ['up', 'down', ...]
+  const rows = [...data.value];
+  if (!sortStateActive.value.length) return rows;
+
+  if (props.multipleSort) {
+    // let indexColumn = sortState.value.findIndex((state) => state && state !== 'none');
+    // let lastColumnIndexSorted = indexColumn;
+    // console.log('indexColumn: ', indexColumn);
+    // for (const sortItem of sortStateActive.value) {
+    //   rows.sort((a, b) =>
+    //     sortItem.split('$')[1] === 'down'
+    //       ? a[indexColumn].value.localeCompare(b[indexColumn].value)
+    //       : b[indexColumn].value.localeCompare(a[indexColumn].value),
+    //   );
+    //   indexColumn = sortState.value.findIndex(
+    //     (state, index) => state && state !== 'none' && index !== lastColumnIndexSorted,
+    //   );
+    //   lastColumnIndexSorted = indexColumn;
+    // }
+    // return rows;
+  } else {
+    const index = sortStateActive.value[0];
+    const value = sortStateActive.value[1];
+    return rows.sort((a, b) =>
+      value === 'down' ? a[index].value.localeCompare(b[index].value) : b[index].value.localeCompare(a[index].value),
+    );
+  }
+});
 
 const changeColumnSortMode = (index: number) => {
   const cur = sortState.value[index];
-  sortState.value[index] = cur === 'none' ? 'down' : cur === 'down' ? 'up' : 'none';
+  const newValue = cur === 'none' ? 'down' : cur === 'down' ? 'up' : 'none';
+  if (cur === 'up') {
+    sortStateActive.value = [];
+  } else {
+    sortStateActive.value[0] = index;
+    sortStateActive.value[1] = newValue;
+  }
+  if (!props.multipleSort) columns.value.forEach((column) => (column.initSort = 'none'));
+  columns.value[index].initSort = newValue;
 };
 </script>
 
@@ -76,7 +113,11 @@ const changeColumnSortMode = (index: number) => {
                 <h3>
                   {{ column.name }}
                 </h3>
-                <button v-if="column.sortable" @click.prevent="changeColumnSortMode(index)">
+                <button
+                  v-if="column.sortable"
+                  @click.prevent="changeColumnSortMode(index)"
+                  style="min-width: 20px; min-height: 20px"
+                >
                   <SortVerticalIcon
                     v-show="sortState[index] === 'none'"
                     :color="textColor"
@@ -106,7 +147,7 @@ const changeColumnSortMode = (index: number) => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) of data" :key="index">
+        <tr v-for="(row, index) of rows" :key="index">
           <td
             :class="{
               leftBorder: showAllLines,

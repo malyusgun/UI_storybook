@@ -143,7 +143,6 @@ export const Full: Story = {
         type: 'text',
       },
     ],
-
     data: [
       [
         {
@@ -216,14 +215,11 @@ export const Full: Story = {
         },
       ],
     ],
-
     fontSize: '20px',
     showAllLines: true,
-    gap: '20px',
     border: 'fuchsia',
     theme: 'black',
     stripedRows: true,
-    textColor: 'white',
     darknessTextColor: '500',
     center: true,
   },

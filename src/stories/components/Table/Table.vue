@@ -7,17 +7,43 @@ import FilterIcon from '@stories/icons/Mono/FilterIcon.vue';
 import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
 import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
 import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
+import { calcColumnPadding, calcRows } from '@stories/components/Table/helpers';
+import Popup from '@stories/components/Popup/Popup.vue';
+import Button from '@stories/components/Button/Button.vue';
+import CheckMarkIcon from '@stories/icons/Mono/CheckMarkIcon.vue';
+import CrossIcon from '@stories/icons/Mono/CrossIcon.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
-  gap: '5px',
   theme: 'white',
   darknessTheme: '500',
   fontSize: '16px',
 });
-const columns = ref(props.columns);
-watch(props.columns, () => (columns.value = props.columns));
-const gap = computed(() => props.gap);
 const data = defineModel<ITableItem[][]>('data');
+
+const columns = ref(props.columns);
+const sortStateActive = ref<[number, string] | []>([]);
+const isFilterPopup = ref<boolean>(false);
+const columnToFilter = ref<number>(0);
+const filterValue = ref<string>('');
+
+watch(props.columns, () => (columns.value = props.columns));
+
+const initGap = computed(
+  () =>
+    props.gap ??
+    (!props.fontSize || isNaN(+props.fontSize.slice(0, -3))
+      ? '5px'
+      : parseInt(props.fontSize) < 20
+        ? '5px'
+        : parseInt(props.fontSize) < 36
+          ? '10px'
+          : '15px'),
+);
+const iconSize = computed(() => {
+  const twoLetters = props.fontSize.slice(0, -2);
+  const threeLetters = props.fontSize.slice(0, -3);
+  return !twoLetters || isNaN(+twoLetters) ? (!threeLetters || isNaN(+threeLetters) ? '16' : threeLetters) : twoLetters;
+});
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
   props.textColor
@@ -36,36 +62,9 @@ const sortState = computed<string[]>(() => {
   return result;
 });
 
-const sortStateActive = ref([]);
-const rows = computed<ITableItem[][]>(() => {
-  // ['up', 'down', ...]
-  const rows = [...data.value];
-  if (!sortStateActive.value.length) return rows;
-
-  if (props.multipleSort) {
-    // let indexColumn = sortState.value.findIndex((state) => state && state !== 'none');
-    // let lastColumnIndexSorted = indexColumn;
-    // console.log('indexColumn: ', indexColumn);
-    // for (const sortItem of sortStateActive.value) {
-    //   rows.sort((a, b) =>
-    //     sortItem.split('$')[1] === 'down'
-    //       ? a[indexColumn].value.localeCompare(b[indexColumn].value)
-    //       : b[indexColumn].value.localeCompare(a[indexColumn].value),
-    //   );
-    //   indexColumn = sortState.value.findIndex(
-    //     (state, index) => state && state !== 'none' && index !== lastColumnIndexSorted,
-    //   );
-    //   lastColumnIndexSorted = indexColumn;
-    // }
-    // return rows;
-  } else {
-    const index = sortStateActive.value[0];
-    const value = sortStateActive.value[1];
-    return rows.sort((a, b) =>
-      value === 'down' ? a[index].value.localeCompare(b[index].value) : b[index].value.localeCompare(a[index].value),
-    );
-  }
-});
+const rows = computed<ITableItem[][]>(() =>
+  calcRows(data.value!, sortStateActive.value, props.multipleSort, columnToFilter.value, filterValue.value),
+);
 
 const changeColumnSortMode = (index: number) => {
   const cur = sortState.value[index];
@@ -79,6 +78,24 @@ const changeColumnSortMode = (index: number) => {
   if (!props.multipleSort) columns.value.forEach((column) => (column.initSort = 'none'));
   columns.value[index].initSort = newValue;
 };
+const setFilter = (column: number) => {
+  if (columnToFilter.value === column || !isFilterPopup.value) {
+    isFilterPopup.value = !isFilterPopup.value;
+  }
+  if (columnToFilter.value !== column) {
+    columnToFilter.value = column;
+  }
+};
+const calcLeft = (selector: string) => {
+  const el = document.querySelector(selector);
+  const table = document.querySelector('#table')!;
+  if (!el) return 0;
+  return el.getBoundingClientRect().left - table.getBoundingClientRect().left + +iconSize.value;
+};
+const cancelFilter = () => {
+  filterValue.value = '';
+  isFilterPopup.value = false;
+};
 </script>
 
 <template>
@@ -88,6 +105,7 @@ const changeColumnSortMode = (index: number) => {
         tableLines: showAllLines,
       }"
       :style="`background-color: ${themeColor}; color: ${color}`"
+      id="table"
     >
       <thead>
         <tr>
@@ -98,16 +116,11 @@ const changeColumnSortMode = (index: number) => {
             v-for="(column, index) of columns"
             :key="column.name"
             class="columnHeader"
-            style="padding: 5px 0 5px 5px"
+            :style="`padding: calc(${initGap} / 2) ${initGap}`"
           >
             <div
-              :style="`justify-content: ${center ? 'center' : 'start'}; padding: ${center ? `0px calc(${gap} / 2 + ${column.padding ?? '0px'} / 2)` : `0 ${column.padding ?? '0px'} 0 0`}`"
-              :class="[
-                'columnFlex',
-                {
-                  columnGap: !center,
-                },
-              ]"
+              :style="`justify-content: ${center ? 'center' : 'start'}; gap: ${center ? '0' : initGap}; padding: ${calcColumnPadding(column, props.center, initGap)}`"
+              class="columnFlex"
             >
               <div class="columnHeader-container">
                 <h3>
@@ -118,32 +131,45 @@ const changeColumnSortMode = (index: number) => {
                   @click.prevent="changeColumnSortMode(index)"
                   style="min-width: 20px; min-height: 20px"
                 >
-                  <SortVerticalIcon
-                    v-show="sortState[index] === 'none'"
-                    :color="textColor"
-                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
-                  />
-                  <SortDownIcon
-                    v-show="sortState[index] === 'down'"
-                    :color="textColor"
-                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
-                  />
-                  <SortUpIcon
-                    v-show="sortState[index] === 'up'"
-                    :color="textColor"
-                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
-                  />
+                  <SortVerticalIcon v-show="sortState[index] === 'none'" :color="color" :size="iconSize" />
+                  <SortDownIcon v-show="sortState[index] === 'down'" :color="color" :size="iconSize" />
+                  <SortUpIcon v-show="sortState[index] === 'up'" :color="color" :size="iconSize" />
                 </button>
-                <button v-if="column.filterable" @click.prevent="">
-                  <FilterIcon
-                    :color="textColor"
-                    :size="isNaN(+fontSize.slice(0, -2)) ? fontSize.slice(0, -3) : fontSize.slice(0, -2)"
-                  />
+                <button
+                  v-if="column.filterable"
+                  @pointerdown="setFilter(index)"
+                  :id="`filter${column.name}`"
+                  style="position: relative"
+                >
+                  <FilterIcon :color="color" :size="iconSize" />
                 </button>
               </div>
               <div v-if="!center"></div>
             </div>
           </th>
+          <Popup
+            v-model:active="isFilterPopup"
+            :parentSelector="`#filter${columnToFilter}`"
+            buttonMenu
+            :theme="theme"
+            :top="+iconSize + 10"
+            :left="calcLeft(`#filter${columnToFilter}`)"
+          >
+            <input
+              v-model="filterValue"
+              type="text"
+              class="filterInput"
+              :style="`background-color: ${themeColor}; color: ${color}`"
+            />
+            <section class="filterButtons">
+              <Button iconOnly size="small" theme="green" @click.prevent="isFilterPopup = false">
+                <CheckMarkIcon color="white" size="20" />
+              </Button>
+              <Button iconOnly size="small" theme="red" @click.prevent="cancelFilter">
+                <CrossIcon color="white" size="20" />
+              </Button>
+            </section>
+          </Popup>
         </tr>
       </thead>
       <tbody>
@@ -155,7 +181,7 @@ const changeColumnSortMode = (index: number) => {
             }"
             v-for="item of row"
             :key="item.value"
-            :style="`padding: 5px; text-align: ${center ? 'center' : 'start'}`"
+            :style="`padding: calc(${initGap} / 2) ${initGap}; text-align: ${center ? 'center' : 'start'}`"
           >
             {{ item.value }}
           </td>
@@ -188,11 +214,9 @@ tr::after {
   display: flex;
   font-weight: bold;
 }
-.columnGap {
-  gap: v-bind(gap);
-}
 .columnHeader-container {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 .tableLines {
@@ -204,5 +228,16 @@ tr::after {
 }
 .darkRow {
   background-color: v-bind(darkCellColor);
+}
+.filterInput {
+  width: 150px;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 2px solid #64748b;
+  border-radius: 5px;
+}
+.filterButtons {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

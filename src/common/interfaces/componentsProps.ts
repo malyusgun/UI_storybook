@@ -116,6 +116,9 @@ export interface IPopupProps {
   maxWidth?: string;
   maxHeight?: string;
   padding?: string;
+  buttonMenu?: boolean;
+  top?: number;
+  left?: number;
 }
 
 export interface ISBProps {

@@ -36,7 +36,7 @@ import ChatIcon from '@stories/icons/Mono/ChatIcon.vue';
 import CrossCircleIcon from '@stories/icons/Mono/CrossCircleIcon.vue';
 import CropIcon from '@stories/icons/Mono/CropIcon.vue';
 import ChatWritingIcon from '@stories/icons/Mono/ChatWritingIcon.vue';
-import CheckmarkIcon from '@stories/icons/Mono/CheckmarkIcon.vue';
+import CheckMarkIcon from '@stories/icons/Mono/CheckMarkIcon.vue';
 import ChemistryFlaskIcon from '@stories/icons/Mono/ChemistryFlaskIcon.vue';
 import CodeIcon from '@stories/icons/Mono/CodeIcon.vue';
 import CoinsIcon from '@stories/icons/Mono/CoinsIcon.vue';
@@ -143,7 +143,7 @@ export const iconsSet: Record<string, Component> = {
   ChartPieIcon: ChartPieIcon,
   ChatIcon: ChatIcon,
   ChatWritingIcon: ChatWritingIcon,
-  CheckmarkIcon: CheckmarkIcon,
+  CheckMarkIcon: CheckMarkIcon,
   ChemistryFlaskIcon: ChemistryFlaskIcon,
   CodeIcon: CodeIcon,
   CoinsIcon: CoinsIcon,

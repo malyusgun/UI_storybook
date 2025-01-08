@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IPopupProps } from '@interfaces/componentsProps';
-import { computed, type Ref, ref } from 'vue';
+import { computed, type Ref, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor } from '@helpers/common';
 import type { CustomWindow } from '@interfaces/common';
 
@@ -21,26 +21,48 @@ const top = ref();
 const left = ref();
 const isOnContainerClick = ref();
 
-const container = document.querySelector(props.parentSelector);
-if (container) {
-  container.addEventListener('pointerdown', (event: Event) => {
-    const e = event as PointerEvent;
-    if (e.button === 2) {
-      isOnContainerClick.value = true;
-      if (!active.value && !(window as CustomWindow).blockPopupActions) active.value = true;
-      top.value = e.pageY;
-      left.value = e.pageX;
-      e.stopPropagation();
-    }
-  });
-  container.addEventListener('contextmenu', (e) => {
-    if (isOnContainerClick.value) e.preventDefault();
-  });
+const parent = computed(() => props.parentSelector);
+const container = ref(document.querySelector(props.parentSelector));
+if (!container.value) {
+  setTimeout(() => {
+    container.value = document.querySelector(props.parentSelector);
+  }, 0);
 }
+watch(parent, () => (container.value = document.querySelector(props.parentSelector)));
+watch(
+  container,
+  () => {
+    if (container.value) {
+      if (props.buttonMenu) {
+        const clientRect = container.value?.getBoundingClientRect();
+        top.value = props.top ?? clientRect.top;
+        left.value = props.left ?? clientRect.left;
+        console.log('left: ', left.value);
+      }
 
-document.addEventListener('pointerdown', (e) => {
-  if (e.button === 0 && !(window as CustomWindow).blockPopupActions) active.value = false;
-});
+      container.value.addEventListener('pointerdown', (event: Event) => {
+        const e = event as PointerEvent;
+        if (e.button === 2 || (props.buttonMenu && e.button === 0)) {
+          isOnContainerClick.value = true;
+          if (!props.buttonMenu) {
+            top.value = e.pageY;
+            left.value = e.pageX;
+          }
+          if (!active.value && !props.buttonMenu && !(window as CustomWindow).blockPopupActions) active.value = true;
+          e.stopPropagation();
+        }
+      });
+      container.value.addEventListener('contextmenu', (e) => {
+        if (isOnContainerClick.value) e.preventDefault();
+      });
+    }
+
+    document.addEventListener('pointerdown', (e) => {
+      if (!props.buttonMenu && e.button === 0 && !(window as CustomWindow).blockPopupActions) active.value = false;
+    });
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -60,6 +82,7 @@ document.addEventListener('pointerdown', (e) => {
 <style scoped>
 #popup {
   position: absolute;
+  z-index: 9999;
   transition: opacity 0.2s ease-in-out;
   background-color: v-bind(themeColor);
   border: 1px solid v-bind(secondaryColor);

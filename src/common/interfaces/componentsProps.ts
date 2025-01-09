@@ -24,6 +24,7 @@ export interface ITableProps {
   data: ITableItem[][];
   multipleSort?: boolean;
   gap?: string;
+  size?: TSize;
   showAllLines?: boolean;
   stripedRows?: boolean;
   center?: boolean;

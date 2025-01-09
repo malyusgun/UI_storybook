@@ -3,10 +3,11 @@ import type { ITableProps } from '@interfaces/componentsProps';
 import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 import type { ITableItem } from '@interfaces/componentsProp';
-import { calcGap, calcRows } from '@stories/components/Table/helpers';
+import { calcAdditionalHeight, calcGap, calcRows } from '@stories/components/Table/helpers';
 import TableHeader from '@stories/components/Table/TableHeader.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
+  size: 'normal',
   theme: 'white',
   darknessTheme: '500',
   fontSize: '16px',
@@ -23,6 +24,7 @@ const isRegisterSensitive = ref<boolean>(false);
 watch(props.columns, () => (columns.value = props.columns));
 
 const initGap = computed(() => calcGap(props.gap, props.fontSize));
+const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
   props.textColor
@@ -44,7 +46,8 @@ const rows = computed<ITableItem[][]>(() =>
     data.value!,
     sortStateActive.value,
     props.multipleSort,
-    props.columns[sortStateActive.value[0] ?? 0].type,
+    columnToFilter.value,
+    props.columns[columnToFilter.value ?? 0].type,
     filterValue.value,
     isRegisterSensitive.value,
   ),
@@ -95,6 +98,7 @@ const cancelFilter = () => {
           :sortState="sortState"
           :columnToFilter="columnToFilter"
           :initGap="initGap"
+          :additionalHeightFromSize="additionalHeightFromSize"
           :theme="theme"
           :themeColor="themeColor"
           :secondaryColor="secondaryColor"
@@ -116,7 +120,7 @@ const cancelFilter = () => {
             }"
             v-for="item of row"
             :key="item.value"
-            :style="`padding: calc(${initGap} / 2) ${initGap}; text-align: ${center ? 'center' : 'start'}`"
+            :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}; text-align: ${center ? 'center' : 'start'}`"
           >
             {{ item.value }}
           </td>

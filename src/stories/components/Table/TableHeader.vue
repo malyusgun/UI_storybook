@@ -17,6 +17,7 @@ interface Props {
   sortState: string[];
   columnToFilter: number;
   initGap: string;
+  additionalHeightFromSize: string;
   theme: TThemeColor;
   themeColor: string;
   secondaryColor: string;
@@ -54,7 +55,7 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
       }"
       v-for="(column, index) of columns"
       :key="column.name"
-      :style="`padding: calc(${initGap} / 2) ${initGap}`"
+      :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
     >
       <div
         :style="`justify-content: ${center ? 'center' : 'start'}; gap: ${center ? '0' : initGap}; padding: ${calcColumnPadding(column, center, initGap)}`"
@@ -67,7 +68,7 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
           <button
             v-if="column.sortable"
             @click.prevent="emit('changeColumnSortMode', index)"
-            style="min-width: 20px; min-height: 20px"
+            :style="`min-width: ${fontSize}; min-height: ${fontSize}; max-height: ${fontSize}`"
           >
             <SortVerticalIcon v-show="sortState[index] === 'none'" :color="color" :size="iconSize" />
             <SortDownIcon v-show="sortState[index] === 'down'" :color="color" :size="iconSize" />
@@ -77,7 +78,7 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
             v-if="column.filterable"
             @pointerdown="emit('setFilter', index)"
             :id="`filter${index}`"
-            style="position: relative"
+            :style="`position: relative; width: ${fontSize}; max-height: ${fontSize}`"
           >
             <FilterIcon :color="color" :size="iconSize" />
           </button>

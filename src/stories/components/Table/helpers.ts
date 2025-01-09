@@ -1,20 +1,21 @@
 import type { ITableColumn, ITableItem, TTableColumnType } from '@interfaces/componentsProp';
+import type { TSize } from '@interfaces/common';
 
 export const calcRows = (
   initRows: ITableItem[][],
   sortStateActive: [number, string] | [],
   multipleSort: boolean,
+  columnToFilter: number,
   columnToFilterType: TTableColumnType,
   filterValue: string,
   isRegisterSensitive: boolean,
 ) => {
   // ['up', 'down', ...]
   let rows = [...initRows];
-  const sortIndex = sortStateActive[0];
 
-  if (filterValue && sortIndex) {
+  if (filterValue) {
     rows = rows.filter((row) => {
-      const item = isRegisterSensitive ? row[sortIndex].value : row[sortIndex].value.toLowerCase();
+      const item = isRegisterSensitive ? row[columnToFilter].value : row[columnToFilter].value.toLowerCase();
       return item.startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
     });
   }
@@ -41,6 +42,7 @@ export const calcRows = (
   } else {
     const index = sortStateActive[0];
     const value = sortStateActive[1];
+    console.log('index, value, columnToFilterType:', index, value, columnToFilterType);
     if (columnToFilterType === 'number')
       return rows.sort((a, b) =>
         value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
@@ -58,6 +60,18 @@ export const calcGap = (gap: string, fontSize: string) =>
     : parseInt(fontSize) < 36
       ? '10px'
       : '15px');
+
+export const calcAdditionalHeight = (size: TSize, fontSize: string) => {
+  if (size === 'normal') return '0px';
+
+  const isTwoLetters = isFinite(+fontSize.at(-3)!);
+  const value = isTwoLetters ? fontSize.slice(0, -2) : fontSize.slice(0, -3);
+  const unit = isTwoLetters ? fontSize.slice(-2) : fontSize.slice(-3);
+
+  if (size === 'large') return +value / 2 + unit;
+  if (size === 'huge') return value + unit;
+  return -+value / 4 + unit;
+};
 
 export const calcColumnPadding = (column: ITableColumn, center: boolean, gap: string) =>
   center ? `0px calc(${gap} / 2 + ${column.padding ?? '0px'} / 2)` : `0 ${column.padding ?? '0px'} 0 0`;

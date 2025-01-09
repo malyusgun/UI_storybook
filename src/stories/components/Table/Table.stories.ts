@@ -18,6 +18,7 @@ const meta: Meta = {
     data: { control: 'text' },
     fontSize: { control: 'text' },
     gap: { control: 'text' },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     showAllLines: { control: 'boolean' },
     stripedRows: { control: 'boolean' },
     center: { control: 'boolean' },
@@ -125,12 +126,14 @@ export const Full: Story = {
         name: 'Name',
         type: 'text',
         sortable: true,
+        initSort: 'none',
       },
       {
         name: 'Age',
         type: 'number',
         sortable: true,
         filterable: true,
+        initSort: 'down',
       },
       {
         name: 'Hobbies',
@@ -138,12 +141,15 @@ export const Full: Story = {
         padding: '30px',
         filterable: true,
         sortable: true,
+        initSort: 'none',
       },
       {
         name: 'Country',
         type: 'text',
+        initSort: 'none',
       },
     ],
+
     data: [
       [
         {
@@ -216,12 +222,14 @@ export const Full: Story = {
         },
       ],
     ],
-    fontSize: '20px',
+
+    fontSize: '24px',
     showAllLines: true,
     border: 'fuchsia',
     theme: 'black',
     stripedRows: true,
     darknessTextColor: '500',
     center: true,
+    size: 'large',
   },
 };

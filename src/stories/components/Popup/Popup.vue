@@ -39,7 +39,7 @@ watch(
         left.value = props.left ?? clientRect.left;
       }
 
-      container.value.addEventListener('pointerdown', (event: Event) => {
+      container.value.addEventListener('pointerdown', (event: MouseEvent) => {
         const e = event as PointerEvent;
         if (e.button === 2 || (props.buttonMenu && e.button === 0)) {
           isOnContainerClick.value = true;
@@ -51,12 +51,12 @@ watch(
           e.stopPropagation();
         }
       });
-      container.value.addEventListener('contextmenu', (e) => {
+      container.value.addEventListener('contextmenu', (e: MouseEvent) => {
         if (isOnContainerClick.value) e.preventDefault();
       });
     }
 
-    document.addEventListener('pointerdown', (e) => {
+    document.addEventListener('pointerdown', (e: MouseEvent) => {
       if (!props.buttonMenu && e.button === 0 && !(window as CustomWindow).blockPopupActions) active.value = false;
     });
   },

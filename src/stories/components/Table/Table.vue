@@ -23,7 +23,7 @@ const isRegisterSensitive = ref<boolean>(false);
 
 watch(props.columns, () => (columns.value = props.columns));
 
-const initGap = computed(() => calcGap(props.gap, props.fontSize));
+const initGap = computed(() => calcGap(props.gap ?? '0px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -31,7 +31,7 @@ const color = computed(() =>
     ? convertThemeToColor(props.textColor, props.darknessTextColor)
     : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const secondaryColor = computed<string>(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
 // ['', 'up', 'none', '', 'none', ...]
 const sortState = computed<string[]>(() => {
@@ -47,7 +47,7 @@ const rows = computed<ITableItem[][]>(() =>
     sortStateActive.value,
     props.multipleSort,
     columnToFilter.value,
-    props.columns[columnToFilter.value ?? 0].type,
+    props.columns[columnToFilter.value ?? 0].type ?? 'text',
     filterValue.value,
     isRegisterSensitive.value,
   ),

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Drawer from '@stories/components/Drawer/Drawer.vue';
-import { ref } from 'vue';
 import Age18Icon from '@stories/icons/Mono/Age18Icon.vue';
 import AlarmIcon from '@stories/icons/Mono/AlarmIcon.vue';
 import AirplaneIcon from '@stories/icons/Mono/AirplaneIcon.vue';

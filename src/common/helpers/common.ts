@@ -36,7 +36,7 @@ export const convertThemeToTextColor = (theme: TThemeColor, darkness: TDarkness 
 /**
  * Convert color of type TThemeColor to shade of black or white
  */
-export const convertWhiteOrBlackToColor = (theme: 'white' | 'black', darkness: TDarkness) => {
+export const convertWhiteOrBlackToColor = (theme: 'white' | 'black', darkness: TDarkness): string => {
   if (theme === 'white') {
     if (darkness === '500' || darkness === '400' || darkness === '600') return '#94a3b8';
     if (darkness === '300' || darkness === '700') return '#cbd5e1';
@@ -47,6 +47,7 @@ export const convertWhiteOrBlackToColor = (theme: 'white' | 'black', darkness: T
   if (darkness === '300' || darkness === '700') return '#374151';
   if (darkness === '200' || darkness === '800') return '#1f2937';
   if (darkness === '100' || darkness === '900') return '#111827';
+  return '#4b5563';
 };
 /**
  * Convert color of type TThemeColor to hex for border or scroll

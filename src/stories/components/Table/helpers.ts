@@ -64,7 +64,7 @@ export const calcGap = (gap: string, fontSize: string) =>
 export const calcAdditionalHeight = (size: TSize, fontSize: string) => {
   if (size === 'normal') return '0px';
 
-  const isTwoLetters = isFinite(+fontSize.at(-3)!);
+  const isTwoLetters = isFinite(+fontSize[fontSize.length - 3]!);
   const value = isTwoLetters ? fontSize.slice(0, -2) : fontSize.slice(0, -3);
   const unit = isTwoLetters ? fontSize.slice(-2) : fontSize.slice(-3);
 

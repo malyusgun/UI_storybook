@@ -6,6 +6,7 @@
 
 ## Список компонентов:
 - TreeList;
+- Table;
 - MenuDial;
 - Popup;
 - Slider;
@@ -18,8 +19,8 @@
 
 ---
 ## Общая информация
-### Components count: 10
-### Bundle size: 254.6KB
+### Components count: 11
+### Bundle size: 272KB
 ---
 ## Важные моменты при разработке
 ### Общее начало шаблона для компонентов:

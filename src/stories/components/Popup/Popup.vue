@@ -22,7 +22,7 @@ const left = ref();
 const isOnContainerClick = ref();
 
 const parent = computed(() => props.parentSelector);
-const container = ref(document.querySelector(props.parentSelector));
+const container: Ref = ref(document.querySelector(props.parentSelector));
 if (!container.value) {
   setTimeout(() => {
     container.value = document.querySelector(props.parentSelector);
@@ -37,7 +37,6 @@ watch(
         const clientRect = container.value?.getBoundingClientRect();
         top.value = props.top ?? clientRect.top;
         left.value = props.left ?? clientRect.left;
-        console.log('left: ', left.value);
       }
 
       container.value.addEventListener('pointerdown', (event: Event) => {
@@ -72,7 +71,7 @@ watch(
     @pointerdown.stop=""
     :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}`"
   >
-    <div :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto; padding-right: 5px`">
+    <div :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto`">
       <slot />
       <p v-if="!$slots.default" style="background-color: black; color: white; padding: 10px">Popup</p>
     </div>

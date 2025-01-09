@@ -91,8 +91,9 @@ const tableColumns: ITableColumn[] = [
   },
   {
     name: 'Age',
-    type: 'text',
+    type: 'number',
     filterable: true,
+    sortable: true,
   },
   {
     name: 'Hobbies',
@@ -126,7 +127,7 @@ const tableData = [
       value: 'John',
     },
     {
-      value: '25',
+      value: '7',
     },
     {
       value: 'Football',
@@ -182,6 +183,15 @@ const tableData = [
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <Table
+    show-all-lines
+    :columns="tableColumns"
+    darknessTextColor="500"
+    :data="tableData"
+    fontSize="36px"
+    theme="black"
+    stripedRows
+  ></Table>
   <Table
     show-all-lines
     :columns="tableColumns"

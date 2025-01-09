@@ -20,7 +20,6 @@ export type TTableColumnType =
   | 'number'
   | 'text'
   | 'date'
-  | 'tag'
   | 'select'
   | 'rating'
   | 'progressBar'

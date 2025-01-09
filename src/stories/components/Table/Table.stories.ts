@@ -84,7 +84,7 @@ export const Simple: Story = {
       },
       {
         name: 'Age',
-        type: 'text',
+        type: 'number',
       },
       {
         name: 'Hobbies',
@@ -128,7 +128,8 @@ export const Full: Story = {
       },
       {
         name: 'Age',
-        type: 'text',
+        type: 'number',
+        sortable: true,
         filterable: true,
       },
       {
@@ -163,7 +164,7 @@ export const Full: Story = {
           value: 'John',
         },
         {
-          value: '25',
+          value: '7',
         },
         {
           value: 'Football',

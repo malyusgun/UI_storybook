@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used as a Table. Can be used with icon.',
+        component: 'A component is used to display data in tabular format.',
       },
     },
   },

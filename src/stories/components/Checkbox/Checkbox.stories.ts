@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used as a Checkbox. Can be used with icon.',
+        component: 'An extension of standard checkbox.',
       },
     },
   },

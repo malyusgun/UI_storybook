@@ -15,13 +15,14 @@
 - SelectButton;
 - Button;
 - ToggleSwitch;
+- Tag;
 - Checkbox;
 - Divider.
 
 ---
 ## Общая информация
-### Components count: 12
-### Bundle size: 276.6KB
+### Components count: 13
+### Bundle size: 278.3KB
 ---
 ## Важные моменты при разработке
 ### Общее начало шаблона для компонентов:

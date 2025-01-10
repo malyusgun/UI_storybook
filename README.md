@@ -5,8 +5,8 @@
 > лёгкости и простоте.
 
 ## Список компонентов:
-- TreeList;
 - Table;
+- TreeList;
 - MenuDial;
 - Popup;
 - Slider;
@@ -15,12 +15,13 @@
 - SelectButton;
 - Button;
 - ToggleSwitch;
+- Checkbox;
 - Divider.
 
 ---
 ## Общая информация
-### Components count: 11
-### Bundle size: 272KB
+### Components count: 12
+### Bundle size: 276.6KB
 ---
 ## Важные моменты при разработке
 ### Общее начало шаблона для компонентов:

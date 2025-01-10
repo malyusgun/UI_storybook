@@ -23,7 +23,7 @@ const isRegisterSensitive = ref<boolean>(false);
 
 watch(props.columns, () => (columns.value = props.columns));
 
-const initGap = computed(() => calcGap(props.gap ?? '0px', props.fontSize));
+const initGap = computed(() => calcGap(props.gap ?? '5px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>

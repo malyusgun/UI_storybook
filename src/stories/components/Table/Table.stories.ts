@@ -176,7 +176,7 @@ export const Full: Story = {
           value: 'Football',
         },
         {
-          value: 'Canada',
+          value: 'Canadaaaaaaaaaaaa',
         },
       ],
       [

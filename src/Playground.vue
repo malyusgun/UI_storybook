@@ -87,7 +87,6 @@ const tableColumns: ITableColumn[] = [
   {
     name: 'Name',
     type: 'text',
-    sortable: true,
   },
   {
     name: 'Age',

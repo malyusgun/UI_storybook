@@ -13,6 +13,7 @@ import Popup from '@stories/components/Popup/Popup.vue';
 import Table from '@stories/components/Table/Table.vue';
 import { ref } from 'vue';
 import type { ISBOption, ISliderOptions, ITableColumn } from '@interfaces/componentsProp';
+import Checkbox from '@stories/components/Checkbox/Checkbox.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -178,10 +179,16 @@ const tableData = [
     },
   ],
 ];
+const activeCheckbox = ref();
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  {{ activeCheckbox }}
+  <Checkbox v-model:active="activeCheckbox" size="small" />
+  <Checkbox v-model:active="activeCheckbox" />
+  <Checkbox v-model:active="activeCheckbox" size="large" />
+  <Checkbox v-model:active="activeCheckbox" size="huge" />
   <Table
     show-all-lines
     :columns="tableColumns"

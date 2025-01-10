@@ -42,7 +42,6 @@ export const calcRows = (
   } else {
     const index = sortStateActive[0];
     const value = sortStateActive[1];
-    console.log('index, value, columnToFilterType:', index, value, columnToFilterType);
     if (columnToFilterType === 'number')
       return rows.sort((a, b) =>
         value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,

@@ -222,7 +222,6 @@ export const Full: Story = {
         },
       ],
     ],
-
     fontSize: '24px',
     showAllLines: true,
     border: 'fuchsia',

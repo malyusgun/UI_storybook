@@ -157,6 +157,23 @@ export interface ITSProps {
   disabled?: boolean;
 }
 
+export interface ICheckboxProps {
+  label?: string;
+  labelPos?: TPosition;
+  name?: string;
+  size?: TSize;
+  disabled?: boolean;
+  invalid?: boolean;
+  theme?: TThemeColor;
+  activeTheme?: TThemeColor;
+  textColor?: TThemeColor;
+  borderColor?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessActiveTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
+  darknessBorderColor?: TDarkness;
+}
+
 export interface IDividerProps {
   height?: number;
   type?: TBorder;

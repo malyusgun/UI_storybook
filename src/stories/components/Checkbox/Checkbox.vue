@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<ICheckboxProps>(), {
   darknessTheme: '500',
   darknessActiveTheme: '500',
   darknessTextColor: '500',
-  darknessBorderColor: '500',
+  darknessBorder: '500',
 });
 const active = defineModel('active');
 // watch(, () => {});
@@ -27,11 +27,7 @@ const iconColor = computed(() =>
 );
 const color = computed(() => convertThemeToColor(props.textColor, props.darknessTextColor));
 const borderColor = computed(() =>
-  props.invalid
-    ? 'red'
-    : props.disabled
-      ? '#62708c'
-      : convertThemeToColor(props.borderColor, props.darknessBorderColor),
+  props.invalid ? 'red' : props.disabled ? '#62708c' : convertThemeToColor(props.borderColor, props.darknessBorder),
 );
 const elSize = computed(() => {
   const size = props.size;

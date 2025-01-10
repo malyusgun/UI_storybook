@@ -14,6 +14,7 @@ import Table from '@stories/components/Table/Table.vue';
 import { ref } from 'vue';
 import type { ISBOption, ISliderOptions, ITableColumn } from '@interfaces/componentsProp';
 import Checkbox from '@stories/components/Checkbox/Checkbox.vue';
+import Tag from '@stories/components/Tag/Tag.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -184,6 +185,10 @@ const activeCheckbox = ref();
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <Tag theme="sky">
+    <template #icon-right><TrashIcon color="#3333aa" size="18" /></template>
+    <template #icon-left><TrashIcon color="sky" size="18" /></template>
+  </Tag>
   {{ activeCheckbox }}
   <Checkbox v-model:active="activeCheckbox" size="small" />
   <Checkbox v-model:active="activeCheckbox" />

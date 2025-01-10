@@ -1,32 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import Checkbox from './Checkbox.vue';
+import Tag from './Tag.vue';
+import { iconsSet } from '@/common/constants/icons';
 
 const meta: Meta = {
-  title: 'Components/Checkbox',
-  component: Checkbox,
+  title: 'Components/Tag',
+  component: Tag,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'An extension of standard checkbox.',
+        component: 'A component is used to categorize content. Can be used with icon.',
       },
     },
   },
   argTypes: {
-    active: { control: 'boolean' },
-    invalid: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-    label: { control: 'text' },
-    name: { control: 'text' },
+    value: { control: 'text' },
+    rounded: { control: 'boolean' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
-    labelPos: { control: 'select', options: ['left', 'top', 'right', 'bottom'] },
-    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
-    darknessActiveTheme: {
+    iconLeft: { control: 'select', options: Object.keys(iconsSet) },
+    iconRight: { control: 'select', options: Object.keys(iconsSet) },
+    darknessTheme: {
       control: 'select',
       options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
-    darknessTextColor: {
+    darknessBackground: {
       control: 'select',
       options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
@@ -54,7 +52,7 @@ const meta: Meta = {
         'black',
       ],
     },
-    activeTheme: {
+    background: {
       control: 'select',
       options: [
         'white',
@@ -74,27 +72,7 @@ const meta: Meta = {
         'black',
       ],
     },
-    textColor: {
-      control: 'select',
-      options: [
-        'white',
-        'blue',
-        'sky',
-        'cyan',
-        'teal',
-        'green',
-        'yellow',
-        'orange',
-        'pink',
-        'fuchsia',
-        'purple',
-        'indigo',
-        'rose',
-        'red',
-        'black',
-      ],
-    },
-    borderColor: {
+    border: {
       control: 'select',
       options: [
         'white',
@@ -116,7 +94,7 @@ const meta: Meta = {
     },
   },
   args: {},
-} satisfies Meta<typeof Checkbox>;
+} satisfies Meta<typeof Tag>;
 
 export default meta;
 
@@ -130,42 +108,40 @@ export const Simple: Story = {
 
 export const Small: Story = {
   args: {
-    active: false,
     size: 'small',
-    theme: 'yellow',
-    activeTheme: 'blue',
-    darknessTheme: '300',
-    darknessActiveTheme: '700',
-    label: 'Are you gay?',
+    theme: 'red',
+    value: 'Dangerous',
+    iconRight: 'Age18Icon',
+  },
+};
+
+export const Normal_rounded: Story = {
+  args: {
+    size: 'normal',
+    theme: 'green',
+    value: 'Be calm',
+    rounded: true,
   },
 };
 
 export const Large: Story = {
   args: {
-    active: true,
     size: 'large',
-    theme: 'green',
-    activeTheme: 'sky',
-    darknessTheme: '700',
-    darknessActiveTheme: '300',
-    label: 'Checkbox',
-    labelPos: 'top',
-    invalid: true,
+    theme: 'sky',
+    value: 'Ice cream',
+    iconLeft: 'CoinsIcon',
   },
 };
 
 export const Huge: Story = {
   args: {
-    active: false,
     size: 'huge',
     theme: 'indigo',
-    activeTheme: 'purple',
-    darknessTheme: '500',
-    darknessActiveTheme: '500',
-    label: 'Checkbox',
-    textColor: 'blue',
-    invalid: false,
-    disabled: true,
-    labelPos: 'left',
+    value: 'Unique',
+    iconLeft: 'BallFootballIcon',
+    iconRight: 'ArrowForwardIcon',
+    darknessBackground: '300',
+    darknessBorder: '500',
+    border: 'indigo',
   },
 };

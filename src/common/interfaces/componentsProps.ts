@@ -157,6 +157,20 @@ export interface ITSProps {
   disabled?: boolean;
 }
 
+export interface ITagProps {
+  value?: string;
+  size?: TSize;
+  rounded?: boolean;
+  iconLeft?: TIcons;
+  iconRight?: TIcons;
+  theme?: TThemeColor;
+  background?: TThemeColor;
+  border?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessBackground?: TDarkness;
+  darknessBorder?: TDarkness;
+}
+
 export interface ICheckboxProps {
   label?: string;
   labelPos?: TPosition;
@@ -171,7 +185,7 @@ export interface ICheckboxProps {
   darknessTheme?: TDarkness;
   darknessActiveTheme?: TDarkness;
   darknessTextColor?: TDarkness;
-  darknessBorderColor?: TDarkness;
+  darknessBorder?: TDarkness;
 }
 
 export interface IDividerProps {

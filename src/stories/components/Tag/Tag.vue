@@ -19,7 +19,9 @@ const backgroundColor = computed(() =>
     props.darknessBackground,
   ),
 );
-const borderColor = computed(() => (props.border ? convertThemeToColor(props.border, props.darknessBorder) : ''));
+const borderColor = computed(() =>
+  props.border ? convertThemeToColor(props.border, props.darknessBorder) : 'transparent',
+);
 const fontSize = computed(() => {
   const size = props.size;
   if (size === 'normal') return '16px';

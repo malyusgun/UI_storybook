@@ -13,6 +13,8 @@ import type {
 import type {
   IMDItemProps,
   ISBOption,
+  ISelectGroup,
+  ISelectOption,
   ISliderOptions,
   ITableColumn,
   ITableItem,
@@ -120,6 +122,21 @@ export interface IPopupProps {
   buttonMenu?: boolean;
   top?: number;
   left?: number;
+}
+
+export interface ISelectProps {
+  options: ISelectOption[];
+  groups?: ISelectGroup[];
+  width?: string;
+  placeholder?: string;
+  openIcon?: TIcons;
+  size?: TSize;
+  name?: string;
+  theme?: TThemeColor;
+  background?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessBackground?: TDarkness;
+  disabled?: boolean;
 }
 
 export interface ISBProps {

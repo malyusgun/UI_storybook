@@ -107,6 +107,7 @@ import UserIcon from '@stories/icons/Mono/UserIcon.vue';
 import ArrowsVerticalIcon from '@stories/icons/Mono/ArrowsVerticalIcon.vue';
 import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 import Playground from '@/Playground.vue';
+import ArrowShortDownIcon from '@stories/icons/Mono/ArrowShortDownIcon.vue';
 
 const gentleIcons = {
   Age18Icon,
@@ -121,6 +122,7 @@ const gentleIcons = {
   ArrowForwardIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  ArrowShortDownIcon,
   ArrowsVerticalIcon,
   AtIcon,
   AwardIcon,

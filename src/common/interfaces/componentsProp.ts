@@ -55,6 +55,25 @@ export interface IMDItemProps {
   onClick?: () => void;
 }
 
+export interface ISelectOption {
+  value: string;
+  label?: string;
+  iconLeft?: TIcons;
+  iconRight?: TIcons;
+  iconColor?: TThemeColor;
+  color?: TThemeColor;
+  darknessColor?: TDarkness;
+  background?: TThemeColor;
+  darknessBackground?: TDarkness;
+}
+
+export interface ISelectGroup {
+  title: string;
+  iconLeft?: TIcons;
+  iconRight?: TIcons;
+  items: string[];
+}
+
 export interface ISBOption {
   label: string;
   value?: never;

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Select from './Select.vue';
+import { iconsSet } from '@/common/constants/icons';
 
 const meta: Meta = {
   title: 'Components/Select',
@@ -18,9 +19,11 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     placeholder: { control: 'text' },
     name: { control: 'text' },
+    openIcon: { control: 'select', options: Object.keys(iconsSet) },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessBackground: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
+    darknessOpenIcon: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
       control: 'select',
       options: [
@@ -42,6 +45,46 @@ const meta: Meta = {
       ],
     },
     background: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    openIconColor: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    placeholderColor: {
       control: 'select',
       options: [
         'white',
@@ -95,7 +138,7 @@ export const Full: Story = {
       },
       {
         value: 'Second',
-        iconColor: 'red',
+        iconRightColor: 'red',
         iconRight: 'Age18',
       },
       {
@@ -112,5 +155,6 @@ export const Full: Story = {
     background: 'sky',
     darknessTheme: '700',
     darknessBackground: '200',
+    openIconColor: 'sky',
   },
 };

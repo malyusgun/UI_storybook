@@ -102,7 +102,7 @@ export const Full: Story = {
   },
 };
 
-export const Down: Story = {
+export const Vertical: Story = {
   args: {
     items: [
       {
@@ -125,7 +125,7 @@ export const Down: Story = {
   },
 };
 
-export const Huge: Story = {
+export const Full2: Story = {
   args: {
     items: [
       {

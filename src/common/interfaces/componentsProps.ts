@@ -134,8 +134,11 @@ export interface ISelectProps {
   name?: string;
   theme?: TThemeColor;
   background?: TThemeColor;
+  placeholderColor?: TThemeColor;
+  openIconColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessBackground?: TDarkness;
+  darknessOpenIcon?: TDarkness;
   disabled?: boolean;
 }
 

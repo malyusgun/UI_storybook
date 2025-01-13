@@ -58,9 +58,11 @@ export interface IMDItemProps {
 export interface ISelectOption {
   value: string;
   label?: string;
+  group?: string;
   iconLeft?: TIcons;
   iconRight?: TIcons;
-  iconColor?: TThemeColor;
+  iconLeftColor?: TThemeColor;
+  iconRightColor?: TThemeColor;
   color?: TThemeColor;
   darknessColor?: TDarkness;
   background?: TThemeColor;
@@ -68,10 +70,12 @@ export interface ISelectOption {
 }
 
 export interface ISelectGroup {
-  title: string;
+  name: string;
+  titleColor?: TThemeColor;
   iconLeft?: TIcons;
   iconRight?: TIcons;
-  items: string[];
+  iconLeftColor?: TThemeColor;
+  iconRightColor?: TThemeColor;
 }
 
 export interface ISBOption {

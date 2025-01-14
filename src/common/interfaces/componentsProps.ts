@@ -68,6 +68,19 @@ export interface IMDProps {
   // direction?: TDirection | 'circle';
 }
 
+export interface IKnobProps {
+  min?: string | number;
+  max?: string | number;
+  step?: string | number;
+  size?: TSize;
+  theme?: TThemeColor;
+  negativeTheme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessNegativeTheme?: TDarkness;
+  buttons?: boolean;
+  showLabel?: boolean;
+}
+
 export interface ISliderProps {
   width?: string | number;
   min?: string | number;

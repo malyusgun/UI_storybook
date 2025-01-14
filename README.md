@@ -12,6 +12,7 @@
 - Slider;
 - Drawer;
 - Modal;
+- Select;
 - SelectButton;
 - Button;
 - ToggleSwitch;
@@ -22,7 +23,7 @@
 ---
 ## Общая информация
 ### Components count: 13
-### Bundle size: 278.3KB
+### Bundle size: 287.4KB
 
 ---
 

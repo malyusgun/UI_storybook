@@ -108,6 +108,7 @@ import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
 import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
 import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
 import ArrowShortDownIcon from '@stories/icons/Mono/ArrowShortDownIcon.vue';
+import SearchIcon from '@stories/icons/Mono/SearchIcon.vue';
 
 export const iconsSet: Record<string, Component> = {
   Age18: Age18Icon,
@@ -209,6 +210,7 @@ export const iconsSet: Record<string, Component> = {
   Plus: PlusIcon,
   Pointer: PointerIcon,
   Save: SaveIcon,
+  SearchIcon,
   Settings: SettingsIcon,
   SortDownIcon,
   SortHorizontalIcon,

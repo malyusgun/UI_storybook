@@ -5,6 +5,8 @@ import { convertThemeToColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
 import SelectItem from '@stories/components/Select/SelectItem.vue';
+import SearchIcon from '@stories/icons/Mono/SearchIcon.vue';
+import { calcFontSize, calcPadding, getOptionsGroups } from '@stories/components/Select/helpers';
 
 const props = withDefaults(defineProps<ISelectProps>(), {
   size: 'normal',
@@ -19,8 +21,20 @@ const props = withDefaults(defineProps<ISelectProps>(), {
 });
 const selected = defineModel('value');
 const isOpen = ref<boolean>(false);
+const filter = ref<string>('');
 
+const optionsGroups = computed(() => getOptionsGroups(props.options, props.groups, filter.value));
+const optionsNoGroup = computed(() =>
+  props.options.filter(
+    (option) =>
+      !option.group &&
+      (filter.value ? (option.label ?? option.value).toLowerCase().startsWith(filter.value.toLowerCase()) : true),
+  ),
+);
 const selectedOption = computed(() => props.options.find((option) => option.value === selected.value));
+const fontSize = computed(() => calcFontSize(props.size));
+const fontSizeNumber = computed(() => fontSize.value.slice(0, -2));
+const padding = computed(() => calcPadding(props.size));
 const textColor = computed(() => (props.disabled ? '#62708c' : convertThemeToColor(props.theme, props.darknessTheme)));
 const backgroundColor = computed(() =>
   convertThemeToColor(
@@ -28,20 +42,6 @@ const backgroundColor = computed(() =>
     (!props.background && props.theme === 'black') || props.background === 'white' ? '500' : props.darknessBackground,
   ),
 );
-const fontSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '16px';
-  if (size === 'large') return '20px';
-  if (size === 'huge') return '24px';
-  return '12px';
-});
-const padding = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '6px';
-  if (size === 'large') return '10px';
-  if (size === 'huge') return '14px';
-  return '4px';
-});
 
 const pickOption = (value: string) => {
   selected.value = value;
@@ -74,7 +74,7 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
           class="selected"
           :style="`color: ${selected ? calcOptionColor(selectedOption?.color, selectedOption?.darknessColor, textColor) : placeholderColor ? convertThemeToColor(placeholderColor, '700') : '#62708c'}; font-weight: 600`"
           :option="selectedOption"
-          :fontSize="fontSize"
+          :fontSizeNumber="fontSizeNumber"
           :textColor="textColor"
         >
           <slot :name="`icon-left-${selectedOption?.value}`"></slot>
@@ -83,7 +83,7 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
         </SelectItem>
         <component
           :is="iconsSet[openIcon]"
-          :size="fontSize.slice(0, -2)"
+          :size="fontSizeNumber"
           :color="openIconColor ? convertThemeToColor(openIconColor, darknessOpenIcon) : '#62708c'"
           :style="`width: ${fontSize}`"
         />
@@ -97,12 +97,56 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
         ]"
       >
         <div style="overflow: hidden">
+          <div class="flex filter" v-if="filtered">
+            <input v-model="filter" type="text" /><SearchIcon :size="fontSizeNumber" color="#62708c" />
+          </div>
+          <div v-for="group of optionsGroups" :key="group.name" class="group">
+            <h3
+              class="flexNoHover groupHeader"
+              :style="`color: ${calcOptionColor(group.nameColor, darknessTheme, textColor)};
+            background-color: ${calcOptionColor(group.background, group.background === 'white' ? '500' : '200', backgroundColor)}; font-size: calc(${fontSize} * 0.8); padding: calc(${padding} * 0.8)`"
+            >
+              <component
+                v-if="group?.iconLeft"
+                :is="iconsSet[group?.iconLeft]"
+                :size="fontSizeNumber"
+                :color="calcOptionColor(group?.iconLeftColor, darknessTheme, textColor)"
+              />{{ group.name }}
+              <component
+                v-if="group?.iconRight"
+                :is="iconsSet[group?.iconRight]"
+                :size="fontSizeNumber"
+                :color="calcOptionColor(group?.iconRightColor, darknessTheme, textColor)"
+              />
+            </h3>
+            <SelectItem
+              @click.prevent="pickOption(option.value)"
+              v-for="option of group.items"
+              :key="option.value"
+              :class="[
+                'flex',
+                {
+                  firstOption: options[0].value === option.value,
+                  lastOption: options[options.length - 1].value === option.value,
+                },
+              ]"
+              :style="`color: ${calcOptionColor(option.color, option.darknessColor, textColor)};
+            background-color: ${calcOptionColor(option.background, option.darknessBackground, backgroundColor)}`"
+              :option="option"
+              :fontSizeNumber="fontSizeNumber"
+              :textColor="textColor"
+            >
+              <slot :name="`icon-left-${option.value}`"></slot>
+              <span :style="`font-size: ${fontSize}`">{{ option.label ?? option.value }}</span>
+              <slot :name="`icon-right-${option.value}`"></slot>
+            </SelectItem>
+          </div>
           <SelectItem
             @click.prevent="pickOption(option.value)"
-            v-for="option of options"
+            v-for="option of optionsNoGroup"
             :key="option.value"
             :class="[
-              'option',
+              'flex',
               {
                 firstOption: options[0].value === option.value,
                 lastOption: options[options.length - 1].value === option.value,
@@ -111,7 +155,7 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
             :style="`color: ${calcOptionColor(option.color, option.darknessColor, textColor)};
             background-color: ${calcOptionColor(option.background, option.darknessBackground, backgroundColor)}`"
             :option="option"
-            :fontSize="fontSize"
+            :fontSizeNumber="fontSizeNumber"
             :textColor="textColor"
           >
             <slot :name="`icon-left-${option.value}`"></slot>
@@ -163,18 +207,35 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
   grid-template-rows: 1fr;
   opacity: 1;
 }
-.option {
+.group {
+  border-top: 1px solid;
+}
+.groupHeader {
+  cursor: auto;
+}
+.flexNoHover {
   display: flex;
   align-items: center;
   gap: 5px;
   padding: v-bind(padding);
 }
-.option:hover {
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: v-bind(padding);
+}
+.flex:hover {
   filter: brightness(90%);
   transition: all 0.1s ease-in-out;
 }
 .group {
   border-top: 1px solid v-bind(textColor);
+  border-bottom: 1px solid v-bind(textColor);
+}
+.filter {
+  cursor: auto;
+  gap: 7px;
 }
 .firstOption {
   border-top-right-radius: 4px;

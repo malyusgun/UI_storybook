@@ -5,7 +5,7 @@ import type { TThemeColor } from '@interfaces/common';
 import { convertThemeToColor } from '@helpers/common';
 interface IProps {
   option: ISelectOption | undefined;
-  fontSize: string;
+  fontSizeNumber: string;
   textColor: string;
 }
 defineProps<IProps>();
@@ -19,14 +19,14 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
     <component
       v-if="option?.iconLeft"
       :is="iconsSet[option?.iconLeft]"
-      :size="fontSize.slice(0, -2)"
+      :size="fontSizeNumber"
       :color="calcOptionColor(option?.iconLeftColor ?? option?.color, option?.darknessColor, textColor)"
     />
     <slot />
     <component
       v-if="option?.iconRight"
       :is="iconsSet[option?.iconRight]"
-      :size="fontSize.slice(0, -2)"
+      :size="fontSizeNumber"
       :color="calcOptionColor(option?.iconRightColor ?? option?.color, option?.darknessColor, textColor)"
     />
     <slot :name="`icon-right-${option?.value}`"></slot>

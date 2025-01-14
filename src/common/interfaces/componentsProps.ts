@@ -139,6 +139,7 @@ export interface ISelectProps {
   darknessTheme?: TDarkness;
   darknessBackground?: TDarkness;
   darknessOpenIcon?: TDarkness;
+  filtered?: boolean;
   disabled?: boolean;
 }
 

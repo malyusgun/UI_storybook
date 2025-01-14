@@ -71,7 +71,9 @@ export interface ISelectOption {
 
 export interface ISelectGroup {
   name: string;
-  titleColor?: TThemeColor;
+  nameColor?: TThemeColor;
+  background?: TThemeColor;
+  items?: ISelectOption[];
   iconLeft?: TIcons;
   iconRight?: TIcons;
   iconLeftColor?: TThemeColor;

@@ -95,6 +95,7 @@ import PlusCircleIcon from '@stories/icons/Mono/PlusCircleIcon.vue';
 import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
 import PointerIcon from '@stories/icons/Mono/PointerIcon.vue';
 import SaveIcon from '@stories/icons/Mono/SaveIcon.vue';
+import SearchIcon from '@stories/icons/Mono/SearchIcon.vue';
 import SettingsIcon from '@stories/icons/Mono/SettingsIcon.vue';
 import SortHorizontalIcon from '@stories/icons/Mono/SortHorizontalIcon.vue';
 import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
@@ -209,6 +210,7 @@ const gentleIcons = {
   PlusIcon,
   PointerIcon,
   SaveIcon,
+  SearchIcon,
   SettingsIcon,
   SortDownIcon,
   SortHorizontalIcon,

@@ -72,7 +72,13 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
       >
         <SelectItem
           class="selected"
-          :style="`color: ${selected ? calcOptionColor(selectedOption?.color, selectedOption?.darknessColor, textColor) : placeholderColor ? convertThemeToColor(placeholderColor, '700') : '#62708c'}; font-weight: 600`"
+          :style="`color: ${
+            selected
+              ? calcOptionColor(selectedOption?.color, selectedOption?.darknessColor, textColor)
+              : placeholderColor
+                ? convertThemeToColor(placeholderColor, '700')
+                : '#62708c'
+          }; font-weight: 600`"
           :option="selectedOption"
           :fontSizeNumber="fontSizeNumber"
           :textColor="textColor"
@@ -104,19 +110,20 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
             <h3
               class="flexNoHover groupHeader"
               :style="`color: ${calcOptionColor(group.nameColor, darknessTheme, textColor)};
-            background-color: ${calcOptionColor(group.background, group.background === 'white' ? '500' : '200', backgroundColor)}; font-size: calc(${fontSize} * 0.8); padding: calc(${padding} * 0.8)`"
+              background-color: ${calcOptionColor(group.background, group.background === 'white' ? '500' : '200', backgroundColor)};
+              font-size: calc(${fontSize} * 0.8); padding: calc(${padding} * 0.8)`"
             >
               <component
                 v-if="group?.iconLeft"
                 :is="iconsSet[group?.iconLeft]"
                 :size="fontSizeNumber"
-                :color="calcOptionColor(group?.iconLeftColor, darknessTheme, textColor)"
+                :color="calcOptionColor(group?.iconLeftColor ?? group.nameColor, darknessTheme, textColor)"
               />{{ group.name }}
               <component
                 v-if="group?.iconRight"
                 :is="iconsSet[group?.iconRight]"
                 :size="fontSizeNumber"
-                :color="calcOptionColor(group?.iconRightColor, darknessTheme, textColor)"
+                :color="calcOptionColor(group?.iconRightColor ?? group.nameColor, darknessTheme, textColor)"
               />
             </h3>
             <SelectItem

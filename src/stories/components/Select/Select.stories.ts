@@ -154,10 +154,12 @@ export const Full: Story = {
         value: 'Sssss',
       },
     ],
+
     groups: [
       { name: 'Group', background: 'white', iconLeft: 'Archive' },
       { name: 'Group 2', background: 'red', iconLeft: 'Badge' },
     ],
+
     placeholder: 'Select a city',
     size: 'normal',
     width: '250px',
@@ -166,5 +168,6 @@ export const Full: Story = {
     darknessTheme: '700',
     darknessBackground: '200',
     openIconColor: 'sky',
+    filtered: true,
   },
 };

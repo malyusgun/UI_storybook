@@ -40,7 +40,7 @@ export const calcStart = (container: Element) => {
 };
 
 export const calcThemeColor = (
-  colorGaps: IKnobColorGap[],
+  colorGaps: IKnobColorGap[] | undefined,
   theme: TThemeColor,
   darknessTheme: TDarkness,
   value: number,

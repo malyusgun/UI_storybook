@@ -59,7 +59,8 @@ const buttonPadding = computed(() => {
         ? '0.5rem 0.75rem'
         : '0.7rem 1rem';
 });
-const backgroundSize = computed(() => `${containerSize.value.slice(0, -2) * 0.71}px`);
+const buttonWidth = computed(() => `${+textSize.value.slice(0, -3) * 0.78}rem`);
+const backgroundSize = computed(() => `${+containerSize.value.slice(0, -2) * 0.71}px`);
 const themeColor = computed(() => calcThemeColor(props.colorGaps, props.theme, props.darknessTheme, value.value));
 const textColor = computed(() => convertThemeToColor(props.color, props.darknessColor));
 const backgroundCircle = computed(() => {
@@ -78,7 +79,7 @@ const conicGradient = computed(() => {
   return `conic-gradient(transparent 0deg 225deg, ${themeColor.value} 225deg ${valueDeg}deg, transparent ${valueDeg}deg 360deg)`;
 });
 
-const setNewValue = ($event) => {
+const setNewValue = ($event: MouseEvent) => {
   value.value = calcNewValue(
     $event,
     center.value,
@@ -89,7 +90,7 @@ const setNewValue = ($event) => {
     value.value,
   );
 };
-const onPointerDown = ($event) => {
+const onPointerDown = ($event: MouseEvent) => {
   isClickHold.value = true;
   setNewValue($event);
 };
@@ -114,7 +115,7 @@ const onPointerDown = ($event) => {
     <div class="circle containerSize">
       <div class="circle containerSize selected"></div>
     </div>
-    <div v-if="buttons" class="buttons" :style="`gap: ${textSize.slice(0, -3) * 3}px`">
+    <div v-if="buttons" class="buttons" :style="`gap: ${+textSize.slice(0, -3) * 3}px`">
       <Button
         @click="value++"
         :theme="negativeTheme"
@@ -123,7 +124,7 @@ const onPointerDown = ($event) => {
         label="+"
         textStyle="bold"
         :padding="buttonPadding"
-        :width="`${textSize.slice(0, -3) * 0.78}rem`"
+        :width="buttonWidth"
       ></Button>
       <Button
         @click="value--"
@@ -133,7 +134,7 @@ const onPointerDown = ($event) => {
         label="-"
         textStyle="bold"
         :padding="buttonPadding"
-        :width="`${textSize.slice(0, -3) * 0.78}rem`"
+        :width="buttonWidth"
       ></Button>
     </div>
   </section>

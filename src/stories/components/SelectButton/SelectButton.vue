@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<ISBProps>(), {
   darknessActiveBackgroundColor: '500',
 });
 const emit = defineEmits(['onClick']);
-const value = defineModel<never>('value');
+const value = defineModel<never>();
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>

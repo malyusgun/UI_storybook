@@ -10,7 +10,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component is used to categorize content. Can be used with icon.',
+        component: 'A component is used to categorize content. Can be used with icons.',
       },
     },
   },

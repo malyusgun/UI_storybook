@@ -29,9 +29,7 @@ const props = withDefaults(defineProps<IKnobProps>(), {
   colorAsTheme: false,
   textBold: false,
 });
-const value = defineModel<number>('value', {
-  default: 0,
-}) as Ref<number>;
+const value = defineModel<number>() as Ref<number>;
 
 const isClickHold = ref<boolean>(false);
 

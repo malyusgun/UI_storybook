@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<IPopupProps>(), {
   padding: '5px',
   darknessTheme: '500',
 });
-const active = defineModel<boolean>('active') as Ref<boolean>;
+const active = defineModel<boolean>() as Ref<boolean>;
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 

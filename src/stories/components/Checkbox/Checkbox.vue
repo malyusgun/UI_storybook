@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<ICheckboxProps>(), {
   darknessTextColor: '500',
   darknessBorder: '500',
 });
-const active = defineModel('active');
+const active = defineModel();
 // watch(, () => {});
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const activeThemeColor = computed(() => convertThemeToColor(props.activeTheme, props.darknessActiveTheme));

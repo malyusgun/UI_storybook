@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<ISliderProps>(), {
   darknessTheme: '500',
   darknessBackgroundColor: '500',
 });
-const value = defineModel('value');
+const value = defineModel();
 const optionValue = computed({
   get() {
     return typeof value.value === 'string' && props.options

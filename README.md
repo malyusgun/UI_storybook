@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<IProps>(), {
    
 });    
 const emit = defineEmits(['']);  
-const visible = defineModel('');  
+const visible = defineModel();  
 // watch(, () => {});
 // const computed1 = computed(() => );
 ```

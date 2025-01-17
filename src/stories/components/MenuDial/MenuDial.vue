@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<IMDProps>(), {
   size: 'normal',
   direction: 'right',
 });
-const active = defineModel('active');
+const active = defineModel();
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>

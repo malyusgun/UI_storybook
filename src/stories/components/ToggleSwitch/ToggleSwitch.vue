@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<ITSProps>(), {
   darknessTheme: '500',
   darknessNegativeTheme: '500',
 });
-const active = defineModel<boolean>('active');
+const active = defineModel<boolean>();
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const inactiveColor = computed(() => convertThemeToColor(props.negativeTheme, props.darknessNegativeTheme));

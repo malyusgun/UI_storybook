@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component that is used as a Knob. Can be used with icon.',
+        component: 'A component to define number inputs with a dial.',
       },
     },
   },

@@ -193,6 +193,12 @@ export interface IButtonProps {
   darknessTextColor?: TDarkness;
 }
 
+export interface IRatingProps {
+  count?: number;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
 export interface ITSProps {
   size?: TSize;
   theme?: TThemeColorNoWhite;

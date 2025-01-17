@@ -192,12 +192,13 @@ const selectOptions = [
     value: 'Second',
   },
 ];
-const knob = ref();
+const knob = ref(0);
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
-  <Knob v-model:value="knob" />
+  {{ knob }}
+  <Knob v-model="knob" />
   <Select :options="selectOptions" theme="sky">
     <template #icon-left-First>
       <AtIcon color="#3aa" size="20" />

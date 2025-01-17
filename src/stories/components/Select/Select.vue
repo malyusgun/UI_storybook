@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<ISelectProps>(), {
   placeholder: 'Nothing selected',
   openIcon: 'ArrowShortDown',
 });
-const selected = defineModel('value');
+const selected = defineModel();
 const isOpen = ref<boolean>(false);
 const filter = ref<string>('');
 

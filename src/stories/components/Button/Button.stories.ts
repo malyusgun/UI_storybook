@@ -15,6 +15,7 @@ const meta: Meta = {
   },
   argTypes: {
     label: { control: 'text' },
+    padding: { control: 'text' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     textStyle: { control: 'select', options: ['bold', 'italic'] },
     iconPos: { control: 'select', options: ['left', 'top', 'right', 'bottom'] },

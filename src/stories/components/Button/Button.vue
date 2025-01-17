@@ -18,7 +18,7 @@ const color = computed(() =>
     : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
 const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
-const width = computed(() => (props.width ? `${props.width}px` : 'max-content'));
+const width = computed(() => (props.width ? props.width : 'max-content'));
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -31,15 +31,16 @@ const textSize = computed(() => {
   return '16px';
 });
 const buttonPadding = computed(() => {
+  if (props.padding) return props.padding;
   switch (props.size) {
     case 'small':
-      return '0.5rem 0.375rem';
+      return '0.5rem';
     case 'large':
-      return '1.2rem 0.8rem';
+      return '1.2rem';
     case 'huge':
-      return '1.8rem 1.2rem';
+      return '1.8rem';
   }
-  return '0.75rem 0.5rem';
+  return '0.75rem';
 });
 </script>
 

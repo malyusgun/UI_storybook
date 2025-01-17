@@ -3,7 +3,7 @@ import type {
   TDarkness,
   TDirection,
   TExpandedPosition,
-  TIcons,
+  TIcon,
   TPosition,
   TSize,
   TTextStyle,
@@ -115,7 +115,7 @@ export interface IDrawerProps {
   darknessTextColor?: TDarkness;
   modal?: boolean;
   dismissible?: boolean;
-  closeIcon?: TIcons;
+  closeIcon?: TIcon;
   headerDivider?: boolean;
   footerDivider?: boolean;
 }
@@ -129,7 +129,7 @@ export interface IModalProps {
   height?: string;
   position?: TExpandedPosition;
   dismissible?: boolean;
-  closeIcon?: TIcons;
+  closeIcon?: TIcon;
   headerDivider?: boolean;
 }
 
@@ -152,7 +152,7 @@ export interface ISelectProps {
   groups?: ISelectGroup[];
   width?: string;
   placeholder?: string;
-  openIcon?: TIcons;
+  openIcon?: TIcon;
   size?: TSize;
   name?: string;
   theme?: TThemeColor;
@@ -195,6 +195,7 @@ export interface IButtonProps {
 
 export interface IRatingProps {
   count?: number;
+  icon?: TIcon;
   theme?: TThemeColor;
   darknessTheme?: TDarkness;
 }
@@ -212,8 +213,8 @@ export interface ITagProps {
   value?: string;
   size?: TSize;
   rounded?: boolean;
-  iconLeft?: TIcons;
-  iconRight?: TIcons;
+  iconLeft?: TIcon;
+  iconRight?: TIcon;
   theme?: TThemeColor;
   background?: TThemeColor;
   border?: TThemeColor;

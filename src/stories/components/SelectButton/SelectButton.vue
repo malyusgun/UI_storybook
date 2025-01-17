@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, type Ref } from 'vue';
 import type { ISBProps } from '@interfaces/componentsProps';
 import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import type { ISBOption } from '@interfaces/componentsProp';
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<ISBProps>(), {
   darknessActiveBackgroundColor: '500',
 });
 const emit = defineEmits(['onClick']);
-const value = defineModel<never>();
+const value = defineModel() as Ref<string | number | boolean | never>;
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>

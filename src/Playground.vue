@@ -216,7 +216,7 @@ const knob = ref(0);
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
-    :data="tableData"
+    v-model="tableData"
     fontSize="36px"
     theme="black"
     stripedRows
@@ -225,7 +225,7 @@ const knob = ref(0);
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
-    :data="tableData"
+    v-model="tableData"
     fontSize="20px"
     theme="black"
     stripedRows

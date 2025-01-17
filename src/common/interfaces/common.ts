@@ -1,6 +1,6 @@
 import type { iconsSet } from '@/common/constants/icons';
 
-export type TIcons = keyof typeof iconsSet;
+export type TIcon = keyof typeof iconsSet;
 
 export type TThemeColor =
   | 'white'

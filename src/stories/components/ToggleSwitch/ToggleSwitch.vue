@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, type Ref } from 'vue';
 import type { ITSProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 
@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<ITSProps>(), {
   darknessTheme: '500',
   darknessNegativeTheme: '500',
 });
-const active = defineModel<boolean>();
+const active = defineModel() as Ref<boolean>;
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const inactiveColor = computed(() => convertThemeToColor(props.negativeTheme, props.darknessNegativeTheme));

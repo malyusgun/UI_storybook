@@ -15,7 +15,7 @@ const meta: Meta = {
   },
   argTypes: {
     active: { control: 'boolean' },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     negativeTheme: {
       control: 'select',
       options: [
@@ -56,10 +56,10 @@ const meta: Meta = {
         'black',
       ],
     },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessNegativeTheme: {
       control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
     disabled: { control: 'boolean' },
   },
@@ -70,7 +70,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     active: false,
   },

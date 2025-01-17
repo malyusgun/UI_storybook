@@ -5,22 +5,29 @@
 > лёгкости и простоте.
 
 ## Список компонентов:
+- Table;
 - TreeList;
 - MenuDial;
 - Popup;
 - Slider;
 - Drawer;
 - Modal;
+- Knob;
+- Select;
 - SelectButton;
 - Button;
 - ToggleSwitch;
+- Tag;
+- Checkbox;
 - Divider.
 
 ---
 ## Общая информация
-### Components count: 10
-### Bundle size: 254.6KB
+### Components count: 15
+### Bundle size: 292.7KB
+
 ---
+
 ## Важные моменты при разработке
 ### Общее начало шаблона для компонентов:
 ```  
@@ -29,8 +36,8 @@ const props = withDefaults(defineProps<IProps>(), {
 });    
 const emit = defineEmits(['']);  
 const visible = defineModel('');  
-watch(, () => {});  
-const computed = computed(() => );  
+// watch(, () => {});
+// const computed1 = computed(() => );
 ```
 - I*Componentname*Props вместо ```IProps```;
 - watchers после defineModel;

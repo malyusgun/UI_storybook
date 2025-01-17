@@ -20,7 +20,7 @@ const meta: Meta = {
     maxWidth: { control: 'text' },
     maxHeight: { control: 'text' },
     padding: { control: 'text' },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
       control: 'select',
       options: [
@@ -42,14 +42,13 @@ const meta: Meta = {
       ],
     },
   },
-  args: {},
 } satisfies Meta<typeof Popup>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     default:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat\n    soluta, vel velit voluptas. Accusamus aut, error et minima neque praesentium, ratione,\n    reprehenderit repudiandae saepe ut vero! Lorem ipsum dolor sit amet, consectetur adipisicing\n    elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas. Accusamus aut, error et\n    minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero!',

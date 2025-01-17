@@ -15,10 +15,31 @@ const meta: Meta = {
   },
   argTypes: {
     items: { control: 'object' },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     direction: { control: 'select', options: ['up', 'down', 'left', 'right'] },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
+    darknessIconColor: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    iconColor: {
       control: 'select',
       options: [
         'white',
@@ -46,7 +67,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     items: [
       {
@@ -81,7 +102,7 @@ export const Full: Story = {
   },
 };
 
-export const Down: Story = {
+export const Vertical: Story = {
   args: {
     items: [
       {
@@ -104,7 +125,7 @@ export const Down: Story = {
   },
 };
 
-export const Huge: Story = {
+export const Full2: Story = {
   args: {
     items: [
       {
@@ -125,6 +146,6 @@ export const Huge: Story = {
     theme: 'red',
     darknessTheme: 700,
     direction: 'right',
-    size: 'medium',
+    size: 'normal',
   },
 };

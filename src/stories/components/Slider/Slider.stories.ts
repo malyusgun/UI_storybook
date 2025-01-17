@@ -19,13 +19,13 @@ const meta: Meta = {
     min: { control: 'text' },
     max: { control: 'text' },
     step: { control: 'text' },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     isSmooth: { control: 'boolean' },
-    darknessTheme: { control: 'select', options: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessBackgroundColor: {
       control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
     theme: {
       control: 'select',
@@ -75,7 +75,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {},
 };
 
@@ -156,7 +156,7 @@ export const Smooth: Story = {
     max: '1000',
     isSmooth: true,
     width: '300',
-    size: 'medium',
+    size: 'normal',
     backgroundColor: 'blue',
     theme: 'black',
   },

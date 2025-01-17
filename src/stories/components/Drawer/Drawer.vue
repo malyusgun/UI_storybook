@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, type Ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
-import { convertWhiteOrBlackToColor } from '@helpers/colors';
 import type { IDrawerProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
+import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IDrawerProps>(), {
-  visible: false,
   position: 'left',
   width: 400,
   modal: true,
   dismissible: true,
   theme: 'white',
-  darknessTheme: 500,
+  darknessTheme: '500',
   closeIcon: 'CrossIcon',
   headerDivider: false,
   footerDivider: false,
@@ -22,28 +21,28 @@ const emit = defineEmits(['onClose']);
 const visible = defineModel<boolean>('visible', {
   set(value) {
     if (!value) {
+      (window as CustomWindow).blockPopupActions = false;
       body.style.overflow = 'auto';
+      body.style.paddingRight = '0';
       emit('onClose');
     }
     return value;
   },
-});
+}) as Ref<boolean>;
 watch(visible, () => {
   if (visible.value) {
+    (window as CustomWindow).blockPopupActions = true;
     body.style.overflow = 'hidden';
+    body.style.paddingRight = '14px';
   }
 });
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const scrollAndBorderColor = computed(() =>
-  props.theme === 'white' || props.theme === 'black'
-    ? convertWhiteOrBlackToColor(props.theme, props.darknessTheme)
-    : convertThemeToColor(props.theme, 100 + ((props.darknessTheme + 600) % 900)),
+const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const textColor = computed(() => {
-  if (props.theme === 'white' || (props.darknessTheme <= 600 && props.theme !== 'black'))
-    return '#000000';
-  return '#ffffff';
-});
 const drawerWidth = computed(() => {
   if (+props.width < 200) return '200px';
   return `${props.width}px`;
@@ -59,10 +58,10 @@ const drawerWidth = computed(() => {
           drawerBackgroundOpened: visible,
         },
       ]"
-      @pointerdown.stop="dismissible ? (visible = false) : ''"
+      @pointerdown="() => (dismissible ? (visible = false) : '')"
     ></section>
     <section
-      :style="`color: ${textColor}; background-color: ${themeColor}`"
+      :style="`color: ${color}; background-color: ${themeColor}`"
       :class="[
         'drawer',
         {
@@ -78,7 +77,7 @@ const drawerWidth = computed(() => {
       <header class="drawerHeader">
         <slot name="header" />
         <button class="buttonClose" @click.prevent="visible = false">
-          <component :is="iconsSet[closeIcon]" :color="textColor" />
+          <component :is="iconsSet[closeIcon]" :color="color" />
         </button>
       </header>
       <div v-if="headerDivider" class="divider divider-header"></div>
@@ -121,7 +120,7 @@ const drawerWidth = computed(() => {
   justify-content: space-between;
   padding: 20px;
   transition: transform ease-out 0.2s;
-  border-right: 2px solid v-bind(scrollAndBorderColor);
+  border-right: 2px solid v-bind(secondaryColor);
 }
 .drawerVertical {
   width: 100vw !important;
@@ -171,7 +170,7 @@ const drawerWidth = computed(() => {
 }
 .divider {
   height: 2px;
-  background-color: v-bind(scrollAndBorderColor);
+  background-color: v-bind(secondaryColor);
 }
 .divider-header {
   position: absolute;
@@ -189,6 +188,6 @@ const drawerWidth = computed(() => {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: v-bind(scrollAndBorderColor);
+  background-color: v-bind(secondaryColor);
 }
 </style>

@@ -17,17 +17,15 @@ const meta: Meta = {
     options: {
       control: 'object',
     },
-    size: { control: 'select', options: ['small', 'medium', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     rounded: { control: 'boolean' },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
+    darknessTextColor: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessActiveBackgroundColor: {
       control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     },
-    darknessBorder: {
-      control: 'select',
-      options: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-    },
-    activeBackgroundColor: {
+    theme: {
       control: 'select',
       options: [
         'white',
@@ -47,7 +45,27 @@ const meta: Meta = {
         'black',
       ],
     },
-    border: {
+    textColor: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    activeBackgroundColor: {
       control: 'select',
       options: [
         'white',
@@ -76,7 +94,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
     options: [
       {
@@ -98,22 +116,23 @@ export const LargeFull: Story = {
       {
         label: 'First',
         color: 'white',
+        darknessColor: '900',
         backgroundColor: 'black',
       },
       {
         label: 'Second',
         color: 'red',
         activeColor: 'blue',
+        darknessColor: '700',
         backgroundColor: 'yellow',
       },
       {
         label: 'Third',
         activeColor: 'green',
+        darknessColor: '700',
         backgroundColor: 'purple',
       },
     ],
-
-    border: 'sky',
     activeBackgroundColor: 'red',
     rounded: true,
     disabled: false,

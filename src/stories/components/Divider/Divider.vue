@@ -7,13 +7,13 @@ const props = withDefaults(defineProps<IDividerProps>(), {
   height: 1,
   type: 'solid',
   color: 'black',
-  darknessColor: 500,
+  darknessColor: '500',
 });
 const colorConverted = computed(() => convertThemeToColor(props.color, props.darknessColor));
 </script>
 
 <template>
-  <div :style="`border-bottom: ${height}px ${type} ${colorConverted}`" class="w-full"></div>
+  <div :style="`border-bottom: ${height}px ${type} ${colorConverted}`"></div>
 </template>
 
 <style scoped></style>

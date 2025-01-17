@@ -11,17 +11,40 @@ import type {
   TThemeColorNoWhite,
 } from '@interfaces/common';
 import type {
+  IKnobColorGap,
   IMDItemProps,
   ISBOption,
+  ISelectGroup,
+  ISelectOption,
   ISliderOptions,
+  ITableColumn,
+  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
+
+export interface ITableProps {
+  columns: ITableColumn[];
+  data: ITableItem[][];
+  multipleSort?: boolean;
+  gap?: string;
+  size?: TSize;
+  showAllLines?: boolean;
+  stripedRows?: boolean;
+  center?: boolean;
+  fontSize?: string;
+  theme?: TThemeColor;
+  textColor?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
+}
 
 export interface ITLProps {
   items: ITreeItem[];
   maxWidth?: number;
   expand?: boolean;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
+  darknessTextColor?: TDarkness;
   darknessTheme?: TDarkness;
 }
 
@@ -31,7 +54,7 @@ export interface ITIProps {
     label: string;
   }[];
   items: ITreeItem[];
-  textColor: string;
+  color: string;
   themeColor: string;
 }
 
@@ -39,9 +62,33 @@ export interface IMDProps {
   items: IMDItemProps[];
   size?: TSize;
   theme?: TThemeColor;
+  iconColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessIconColor?: TDarkness;
   direction?: TDirection;
   // direction?: TDirection | 'circle';
+}
+
+export interface IKnobProps {
+  min?: number;
+  max?: number;
+  step?: number;
+  size?: TSize;
+  theme?: TThemeColor;
+  colorGaps?: IKnobColorGap[];
+  negativeTheme?: TThemeColor;
+  color?: TThemeColor;
+  background?: string;
+  darknessTheme?: TDarkness;
+  darknessNegativeTheme?: TDarkness;
+  darknessColor?: TDarkness;
+  buttons?: boolean;
+  showLabel?: boolean;
+  colorAsTheme?: boolean;
+  fontSize?: string;
+  textBold?: boolean;
+  textBefore?: string;
+  textAfter?: string;
 }
 
 export interface ISliderProps {
@@ -63,7 +110,9 @@ export interface IDrawerProps {
   position?: TPosition;
   width?: string | number;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   modal?: boolean;
   dismissible?: boolean;
   closeIcon?: TIcons;
@@ -73,7 +122,9 @@ export interface IDrawerProps {
 
 export interface IModalProps {
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   width?: string;
   height?: string;
   position?: TExpandedPosition;
@@ -85,20 +136,46 @@ export interface IModalProps {
 export interface IPopupProps {
   parentSelector?: string;
   theme?: TThemeColor;
+  textColor?: TThemeColor;
   darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   maxWidth?: string;
   maxHeight?: string;
   padding?: string;
+  buttonMenu?: boolean;
+  top?: number;
+  left?: number;
+}
+
+export interface ISelectProps {
+  options: ISelectOption[];
+  groups?: ISelectGroup[];
+  width?: string;
+  placeholder?: string;
+  openIcon?: TIcons;
+  size?: TSize;
+  name?: string;
+  theme?: TThemeColor;
+  background?: TThemeColor;
+  placeholderColor?: TThemeColor;
+  openIconColor?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessBackground?: TDarkness;
+  darknessOpenIcon?: TDarkness;
+  filtered?: boolean;
+  disabled?: boolean;
 }
 
 export interface ISBProps {
   options: ISBOption[];
   size?: TSize;
   rounded?: boolean;
+  theme?: TThemeColor;
+  textColor?: TThemeColor;
   activeBackgroundColor?: TThemeColor;
-  border?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
   darknessActiveBackgroundColor?: TDarkness;
-  darknessBorder?: TDarkness;
   disabled?: boolean;
 }
 
@@ -108,13 +185,12 @@ export interface IButtonProps {
   textStyle?: TTextStyle;
   iconPos?: TPosition;
   width?: string | number;
+  padding?: string;
   iconOnly?: boolean;
   theme?: TThemeColor;
   textColor?: TThemeColor;
-  border?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
-  darknessBorder?: TDarkness;
 }
 
 export interface ITSProps {
@@ -124,6 +200,37 @@ export interface ITSProps {
   darknessTheme?: TDarkness;
   darknessNegativeTheme?: TDarkness;
   disabled?: boolean;
+}
+
+export interface ITagProps {
+  value?: string;
+  size?: TSize;
+  rounded?: boolean;
+  iconLeft?: TIcons;
+  iconRight?: TIcons;
+  theme?: TThemeColor;
+  background?: TThemeColor;
+  border?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessBackground?: TDarkness;
+  darknessBorder?: TDarkness;
+}
+
+export interface ICheckboxProps {
+  label?: string;
+  labelPos?: TPosition;
+  name?: string;
+  size?: TSize;
+  disabled?: boolean;
+  invalid?: boolean;
+  theme?: TThemeColor;
+  activeTheme?: TThemeColor;
+  textColor?: TThemeColor;
+  borderColor?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessActiveTheme?: TDarkness;
+  darknessTextColor?: TDarkness;
+  darknessBorder?: TDarkness;
 }
 
 export interface IDividerProps {

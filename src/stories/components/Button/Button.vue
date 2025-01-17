@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IButtonProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IButtonProps>(), {
-  size: 'medium',
+  size: 'normal',
   theme: 'white',
-  textColor: 'black',
   iconPos: 'left',
-  darknessTheme: 500,
-  darknessTextColor: 500,
-  darknessBorder: 500,
+  darknessTheme: '500',
+  darknessTextColor: '500',
 });
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const textColorComputed = computed(() =>
-  convertThemeToColor(props.textColor, props.darknessTextColor),
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
 );
-const borderColor = computed(() =>
-  !props.border ? '' : convertThemeToColor(props.border, props.darknessBorder),
-);
+const borderColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const width = computed(() => (props.width ? props.width : 'max-content'));
 const textSize = computed(() => {
   switch (props.size) {
     case 'small':
@@ -32,17 +31,17 @@ const textSize = computed(() => {
   return '16px';
 });
 const buttonPadding = computed(() => {
+  if (props.padding) return props.padding;
   switch (props.size) {
     case 'small':
-      return '0.5rem 0.375rem';
+      return '0.5rem';
     case 'large':
-      return '1.2rem 0.8rem';
+      return '1.2rem';
     case 'huge':
-      return '1.8rem 1.2rem';
+      return '1.8rem';
   }
-  return '0.75rem 0.5rem';
+  return '0.75rem';
 });
-const width = computed(() => (props.width ? `${props.width}px` : 'max-content'));
 </script>
 
 <template>
@@ -59,7 +58,7 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
     <span :style="`background-color: ${themeColor}`" class="background"></span>
     <span
       v-if="label || !iconOnly"
-      :style="`color: ${textColorComputed}; font-size: ${textSize}`"
+      :style="`color: ${color}; font-size: ${textSize}`"
       :class="[
         'text',
         {
@@ -92,11 +91,12 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   justify-content: center;
   align-items: center;
   user-select: none;
+  transition: filter 0.2s ease-in-out;
 }
-.button:hover .background {
+.button:hover {
   filter: brightness(90%);
 }
-.button:active .background {
+.button:active {
   filter: brightness(75%);
 }
 .background {
@@ -106,7 +106,6 @@ const width = computed(() => (props.width ? `${props.width}px` : 'max-content'))
   top: 0;
   left: 0;
   border-radius: 5px;
-  transition: filter 0.2s ease-in-out;
 }
 .text {
   position: relative;

@@ -11,6 +11,7 @@ import type {
   TThemeColorNoWhite,
 } from '@interfaces/common';
 import type {
+  IKnobColorGap,
   IMDItemProps,
   ISBOption,
   ISelectGroup,
@@ -69,16 +70,25 @@ export interface IMDProps {
 }
 
 export interface IKnobProps {
-  min?: string | number;
-  max?: string | number;
-  step?: string | number;
+  min?: number;
+  max?: number;
+  step?: number;
   size?: TSize;
   theme?: TThemeColor;
+  colorGaps?: IKnobColorGap[];
   negativeTheme?: TThemeColor;
+  color?: TThemeColor;
+  background?: string;
   darknessTheme?: TDarkness;
   darknessNegativeTheme?: TDarkness;
+  darknessColor?: TDarkness;
   buttons?: boolean;
   showLabel?: boolean;
+  colorAsTheme?: boolean;
+  fontSize?: string;
+  textBold?: boolean;
+  textBefore?: string;
+  textAfter?: string;
 }
 
 export interface ISliderProps {
@@ -175,6 +185,7 @@ export interface IButtonProps {
   textStyle?: TTextStyle;
   iconPos?: TPosition;
   width?: string | number;
+  padding?: string;
   iconOnly?: boolean;
   theme?: TThemeColor;
   textColor?: TThemeColor;

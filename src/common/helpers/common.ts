@@ -1,4 +1,4 @@
-import type { TDarkness, TThemeColor } from '@interfaces/common';
+import { EThemeColor, type TDarkness, type TThemeColor } from '@interfaces/common';
 import {
   convert100ThemeToColor,
   convert200ThemeToColor,
@@ -15,6 +15,7 @@ import {
  * Convert color of type TThemeColor to hex
  */
 export const convertThemeToColor = (theme: TThemeColor, darkness: TDarkness | string = '500'): string => {
+  if (!(theme in EThemeColor)) return theme;
   if (darkness === '500') return convert500ThemeToColor(theme);
   if (darkness === '100') return convert100ThemeToColor(theme);
   if (darkness === '200') return convert200ThemeToColor(theme);

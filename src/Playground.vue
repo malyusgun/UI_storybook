@@ -17,6 +17,7 @@ import Checkbox from '@stories/components/Checkbox/Checkbox.vue';
 import Tag from '@stories/components/Tag/Tag.vue';
 import Select from '@stories/components/Select/Select.vue';
 import AtIcon from '@stories/icons/Mono/AtIcon.vue';
+import Knob from '@stories/components/Knob/Knob.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -191,10 +192,12 @@ const selectOptions = [
     value: 'Second',
   },
 ];
+const knob = ref();
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <Knob v-model:value="knob" />
   <Select :options="selectOptions" theme="sky">
     <template #icon-left-First>
       <AtIcon color="#3aa" size="20" />

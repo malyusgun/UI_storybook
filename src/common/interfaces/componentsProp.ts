@@ -55,6 +55,13 @@ export interface IMDItemProps {
   onClick?: () => void;
 }
 
+export interface IKnobColorGap {
+  start: number;
+  end: number;
+  color: TThemeColor;
+  darknessColor?: TDarkness;
+}
+
 export interface ISelectOption {
   value: string;
   label?: string;

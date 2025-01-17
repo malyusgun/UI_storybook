@@ -21,6 +21,26 @@ export type TThemeColor =
   | 'red'
   | 'black';
 
+export enum EThemeColor {
+  'white',
+  'blue',
+  'sky',
+  'cyan',
+  'teal',
+  'lime',
+  'green',
+  'yellow',
+  'amber',
+  'orange',
+  'pink',
+  'fuchsia',
+  'purple',
+  'indigo',
+  'rose',
+  'red',
+  'black',
+}
+
 export type TDarkness = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
 
 export type TThemeColorNoWhite = Exclude<TThemeColor, 'white'>;

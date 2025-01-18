@@ -151,6 +151,7 @@ const onPointerDown = ($event: MouseEvent) => {
   border-radius: 50%;
   background: v-bind(backgroundCircle);
   clip-path: polygon(0 0, 0 100%, 50% 50%, 50% 50%, 100% 100%, 100% 0);
+  cursor: pointer;
 }
 .selected {
   position: absolute;

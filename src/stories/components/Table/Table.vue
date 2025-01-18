@@ -12,7 +12,9 @@ const props = withDefaults(defineProps<ITableProps>(), {
   darknessTheme: '500',
   fontSize: '16px',
 });
-const data = defineModel<ITableItem[][]>();
+const data = defineModel<ITableItem[][]>({
+  required: false,
+});
 
 const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);

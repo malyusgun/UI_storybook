@@ -24,7 +24,6 @@ import type {
 
 export interface ITableProps {
   columns: ITableColumn[];
-  data: ITableItem[][];
   multipleSort?: boolean;
   gap?: string;
   size?: TSize;
@@ -195,7 +194,8 @@ export interface IButtonProps {
 
 export interface IRatingProps {
   count?: number;
-  icon?: TIcon;
+  size?: TSize;
+  gap?: string;
   theme?: TThemeColor;
   darknessTheme?: TDarkness;
 }

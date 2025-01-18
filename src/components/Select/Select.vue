@@ -4,9 +4,9 @@ import { computed, ref } from 'vue';
 import { convertThemeToColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
-import SelectItem from '@stories/components/Select/SelectItem.vue';
-import SearchIcon from '@stories/icons/Mono/SearchIcon.vue';
-import { calcFontSize, calcPadding, getOptionsGroups } from '@stories/components/Select/helpers';
+import SelectItem from '@components/Select/SelectItem.vue';
+import SearchIcon from '@icons/Mono/SearchIcon.vue';
+import { calcFontSize, calcPadding, getOptionsGroups } from '@components/Select/helpers';
 
 const props = withDefaults(defineProps<ISelectProps>(), {
   size: 'normal',

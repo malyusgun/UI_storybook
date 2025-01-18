@@ -3,8 +3,8 @@ import type { ITableProps } from '@interfaces/componentsProps';
 import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 import type { ITableItem } from '@interfaces/componentsProp';
-import { calcAdditionalHeight, calcGap, calcRows } from '@stories/components/Table/helpers';
-import TableHeader from '@stories/components/Table/TableHeader.vue';
+import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
+import TableHeader from '@components/Table/TableHeader.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',

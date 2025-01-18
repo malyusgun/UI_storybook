@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IMDProps } from '@interfaces/componentsProps';
-import PlusIcon from '@stories/icons/Mono/PlusIcon.vue';
+import PlusIcon from '@icons/Mono/PlusIcon.vue';
 import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import type { IMDItemProps } from '@interfaces/componentsProp';
 

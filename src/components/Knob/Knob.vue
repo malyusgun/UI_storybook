@@ -2,14 +2,8 @@
 import type { IKnobProps } from '@interfaces/componentsProps';
 import { computed, ref, type Ref } from 'vue';
 import { convertThemeToColor } from '@helpers/common';
-import {
-  calcCenter,
-  calcStart,
-  calcNewValue,
-  calcThemeColor,
-  calcContainerSize,
-} from '@stories/components/Knob/helpers';
-import Button from '@stories/components/Button/Button.vue';
+import { calcCenter, calcStart, calcNewValue, calcThemeColor, calcContainerSize } from '@components/Knob/helpers';
+import Button from '@components/Button/Button.vue';
 
 const props = withDefaults(defineProps<IKnobProps>(), {
   value: 0,

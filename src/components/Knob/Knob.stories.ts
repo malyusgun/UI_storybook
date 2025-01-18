@@ -18,7 +18,6 @@ const meta: Meta = {
     showLabel: { control: 'boolean' },
     colorAsTheme: { control: 'boolean' },
     textBold: { control: 'boolean' },
-    value: { control: 'number' },
     min: { control: 'number' },
     max: { control: 'number' },
     step: { control: 'number' },

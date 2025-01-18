@@ -15,7 +15,6 @@ const meta: Meta = {
   },
   argTypes: {
     columns: { control: 'text' },
-    data: { control: 'text' },
     fontSize: { control: 'text' },
     gap: { control: 'text' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },

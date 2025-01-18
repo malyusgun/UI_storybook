@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { iconsSet } from '@/common/constants/icons';
-import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
+import TriangleIcon from '@icons/Mono/TriangleIcon.vue';
 import type { ITIProps } from '@interfaces/componentsProps';
 import { convertThemeToColor } from '@helpers/common';
 

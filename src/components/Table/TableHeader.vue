@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import FilterIcon from '@stories/icons/Mono/FilterIcon.vue';
-import SortDownIcon from '@stories/icons/Mono/SortDownIcon.vue';
-import SortUpIcon from '@stories/icons/Mono/SortUpIcon.vue';
-import SortVerticalIcon from '@stories/icons/Mono/SortVerticalIcon.vue';
-import { calcColumnPadding } from '@stories/components/Table/helpers';
-import Popup from '@stories/components/Popup/Popup.vue';
-import Button from '@stories/components/Button/Button.vue';
-import CheckMarkIcon from '@stories/icons/Mono/CheckMarkIcon.vue';
-import CrossIcon from '@stories/icons/Mono/CrossIcon.vue';
+import FilterIcon from '@icons/Mono/FilterIcon.vue';
+import SortDownIcon from '@icons/Mono/SortDownIcon.vue';
+import SortUpIcon from '@icons/Mono/SortUpIcon.vue';
+import SortVerticalIcon from '@icons/Mono/SortVerticalIcon.vue';
+import { calcColumnPadding } from '@components/Table/helpers';
+import Popup from '@components/Popup/Popup.vue';
+import Button from '@components/Button/Button.vue';
+import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
+import CrossIcon from '@icons/Mono/CrossIcon.vue';
 import type { TThemeColor } from '@interfaces/common';
 import type { ITableColumn } from '@interfaces/componentsProp';
 import { computed } from 'vue';

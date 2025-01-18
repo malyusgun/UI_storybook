@@ -2,7 +2,7 @@
 import type { IRatingProps } from '@interfaces/componentsProps';
 import { computed, type Ref, ref } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
-import StarFilledIcon from '@stories/icons/Mono/StarFilledIcon.vue';
+import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
 import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IRatingProps>(), {

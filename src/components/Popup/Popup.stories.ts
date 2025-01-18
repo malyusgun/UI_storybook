@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Popup from './Popup.vue';
-import Button from '@stories/components/Button/Button.vue';
+import Button from '@components/Button/Button.vue';
 
 const meta: Meta = {
   title: 'Components/Popup',

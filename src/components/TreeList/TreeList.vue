@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { ITreeItem } from '@interfaces/componentsProp';
-import TreeItems from '@stories/components/TreeList/TreeItems.vue';
+import TreeItems from '@components/TreeList/TreeItems.vue';
 import type { ITLProps } from '@interfaces/componentsProps';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 

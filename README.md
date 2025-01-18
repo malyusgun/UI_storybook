@@ -10,12 +10,15 @@
 - MenuDial;
 - Popup;
 - Slider;
+
 - Drawer;
 - Modal;
 - Knob;
 - Select;
 - SelectButton;
+
 - Button;
+- Rating;
 - ToggleSwitch;
 - Tag;
 - Checkbox;
@@ -23,8 +26,8 @@
 
 ---
 ## Общая информация
-### Components count: 15
-### Bundle size: 292.7KB
+### Components count: 16
+### Bundle size: 291.5KB
 
 ---
 

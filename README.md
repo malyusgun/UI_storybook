@@ -18,6 +18,7 @@
 - SelectButton;
 
 - Button;
+- ProgressBar;
 - Rating;
 - ToggleSwitch;
 - Tag;
@@ -26,8 +27,8 @@
 
 ---
 ## Общая информация
-### Components count: 16
-### Bundle size: 291.5KB
+### Components count: 17
+### Bundle size: 291.7KB
 
 ---
 

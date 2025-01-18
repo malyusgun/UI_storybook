@@ -56,6 +56,13 @@ export interface ITIProps {
   themeColor: string;
 }
 
+export interface IPaginatorProps {
+  value?: number;
+  total?: number;
+  itemsPerPage?: number;
+  size?: TSize;
+}
+
 export interface IMDProps {
   items: IMDItemProps[];
   size?: TSize;

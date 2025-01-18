@@ -108,9 +108,11 @@ import UserIcon from '@icons/Mono/UserIcon.vue';
 import ArrowsVerticalIcon from '@icons/Mono/ArrowsVerticalIcon.vue';
 import TriangleIcon from '@icons/Mono/TriangleIcon.vue';
 import Playground from '@/Playground.vue';
-import ArrowShortDownIcon from '@icons/Mono/ArrowShortDownIcon.vue';
+import ArrowShortDownIcon from '@icons/Mono/ArrowDownShortIcon.vue';
 import StarIcon from '@icons/Mono/StarIcon.vue';
 import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
+import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
+import ArrowDoubleLeftShortIcon from '@icons/Mono/ArrowDoubleLeftShortIcon.vue';
 
 const gentleIcons = {
   Age18Icon,
@@ -122,6 +124,8 @@ const gentleIcons = {
   AnchorIcon,
   AnchorLinkIcon,
   ArchiveIcon,
+  ArrowLeftShortIcon,
+  ArrowDoubleLeftShortIcon,
   ArrowForwardIcon,
   ArrowLeftIcon,
   ArrowRightIcon,

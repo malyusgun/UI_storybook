@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import ProgressBar from './ProgressBar.vue';
+import Paginator from './Paginator.vue';
 
 const meta: Meta = {
-  title: 'Components/ProgressBar',
-  component: ProgressBar,
+  title: 'Components/Paginator',
+  component: Paginator,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'A process status indicator.',
+        component: 'A component to display data in paged format and provide navigation between pages.',
       },
     },
   },
@@ -73,68 +73,12 @@ const meta: Meta = {
     },
   },
   args: {},
-} satisfies Meta<typeof ProgressBar>;
+} satisfies Meta<typeof Paginator>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {
-  args: {
-    value: 40,
-  },
-};
-
-export const Small: Story = {
-  args: {
-    size: 'small',
-    value: 40,
-    theme: 'red',
-    inactiveTheme: 'red',
-    labelAfter: '/100',
-    width: '500px',
-  },
-};
-
-export const Full: Story = {
-  args: {
-    colorGaps: [
-      {
-        start: 0,
-        end: 10,
-        color: 'purple',
-        darknessColor: '700',
-      },
-      {
-        start: 10,
-        end: 20,
-        color: 'red',
-      },
-      {
-        start: 20,
-        end: 30,
-        color: 'orange',
-      },
-      {
-        start: 30,
-        end: 40,
-        color: 'yellow',
-      },
-      {
-        start: 40,
-        end: 50,
-        color: 'green',
-      },
-    ],
-
-    size: 'huge',
-    value: 35,
-    max: 50,
-    labelAfter: '',
-    showLabel: true,
-    labelBefore: '$',
-    inactiveTheme: 'white',
-    darknessInactiveTheme: '400',
-    noBorder: true,
-  },
+  args: {},
 };

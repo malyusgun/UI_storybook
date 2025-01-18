@@ -107,7 +107,7 @@ import SortHorizontalIcon from '@icons/Mono/SortHorizontalIcon.vue';
 import SortDownIcon from '@icons/Mono/SortDownIcon.vue';
 import SortUpIcon from '@icons/Mono/SortUpIcon.vue';
 import SortVerticalIcon from '@icons/Mono/SortVerticalIcon.vue';
-import ArrowShortDownIcon from '@icons/Mono/ArrowShortDownIcon.vue';
+import ArrowShortDownIcon from '@icons/Mono/ArrowDownShortIcon.vue';
 import SearchIcon from '@icons/Mono/SearchIcon.vue';
 import StarIcon from '@icons/Mono/StarIcon.vue';
 import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';

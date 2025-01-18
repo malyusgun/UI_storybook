@@ -6,7 +6,6 @@ import { calcCenter, calcStart, calcNewValue, calcThemeColor, calcContainerSize 
 import Button from '@components/Button/Button.vue';
 
 const props = withDefaults(defineProps<IKnobProps>(), {
-  value: 0,
   min: 0,
   max: 5,
   step: 1,
@@ -23,7 +22,9 @@ const props = withDefaults(defineProps<IKnobProps>(), {
   colorAsTheme: false,
   textBold: false,
 });
-const value = defineModel<number>() as Ref<number>;
+const value = defineModel<number>({
+  default: 0,
+}) as Ref<number>;
 
 const isClickHold = ref<boolean>(false);
 

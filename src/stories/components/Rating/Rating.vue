@@ -1,39 +1,79 @@
 <script setup lang="ts">
 import type { IRatingProps } from '@interfaces/componentsProps';
-import { ref } from 'vue';
+import { computed, type Ref, ref } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
+import StarFilledIcon from '@stories/icons/Mono/StarFilledIcon.vue';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IRatingProps>(), {
   count: 5,
+  gap: '5px',
+  size: 'normal',
+  theme: 'black',
+  darknessTheme: '500',
 });
 
-const value = defineModel();
+const value = defineModel({
+  default: 0,
+}) as Ref<number>;
 const onHoverIndex = ref();
 
-// const textColor = computed(() => {});
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const themeColorOnHover = computed(() => convertThemeToColor(props.theme, '200'));
+const iconSize = computed(() => {
+  const size = props.size;
+  if (size === 'normal') return '20px';
+  if (size === 'large') return '30px';
+  if (size === 'huge') return '40px';
+  return '10px';
+});
+const onActiveClick = (index: number) => {
+  if (value.value > index) {
+    value.value = index;
+    return;
+  }
+  value.value = 0;
+};
 </script>
 
 <template>
-  {{ value }}
-  <ul class="list">
-    <li v-for="index of Array(count).keys()" :key="index" class="item">
-      <component
-        class="icon"
-        :is="iconsSet[icon ?? 'Star']"
-        color="black"
-        @pointerenter="onHoverIndex = index"
-        @pointerleave="onHoverIndex = null"
-      />
-      <Transition>
+  <ul class="list" :style="`gap: ${gap}`">
+    <li v-for="index of Array(count).keys()" :key="index" class="item iconSize">
+      <div v-show="value < index + 1 && !$slots.offIcon" class="iconSize iconContainer">
         <component
-          class="hoverIcon"
-          v-show="onHoverIndex === index"
-          :is="iconsSet[icon ?? 'Star']"
-          color="gray"
+          class="icon absoluteIcon"
+          :is="iconsSet['Star']"
+          :color="themeColor"
           @pointerenter="onHoverIndex = index"
           @pointerleave="onHoverIndex = null"
-          @click="value = index + 1"
-      /></Transition>
+          :size="iconSize"
+        />
+        <Transition>
+          <component
+            class="absoluteIcon"
+            v-show="onHoverIndex === index"
+            :is="iconsSet['Star']"
+            :color="themeColorOnHover"
+            @pointerenter="onHoverIndex = index"
+            @pointerleave="onHoverIndex = null"
+            @click="value = index + 1"
+            :size="iconSize"
+          />
+        </Transition>
+      </div>
+      <div v-show="value < index + 1" @click="value = index + 1">
+        <slot name="offIcon" :size="iconSize"></slot>
+      </div>
+      <StarFilledIcon
+        v-show="value >= index + 1 && !$slots.onIcon"
+        :color="themeColor"
+        :size="iconSize"
+        class="absoluteIcon"
+        @click="onActiveClick(index + 1)"
+      />
+      <div class="iconSize" v-show="value >= index + 1" @click="onActiveClick(index + 1)">
+        <slot name="onIcon" :size="iconSize"></slot>
+      </div>
     </li>
   </ul>
 </template>
@@ -45,7 +85,6 @@ const onHoverIndex = ref();
 .item {
   position: relative;
   cursor: pointer;
-  transition: all 1s ease-in-out;
 }
 .icon {
   opacity: 1;
@@ -54,10 +93,14 @@ const onHoverIndex = ref();
     opacity: 0;
   }
 }
-.hoverIcon {
+.absoluteIcon {
   position: absolute;
   top: 0;
   left: 0;
+}
+.iconSize {
+  width: v-bind(iconSize);
+  height: v-bind(iconSize);
 }
 .v-enter-active,
 .v-leave-active {

@@ -18,6 +18,8 @@ import Tag from '@stories/components/Tag/Tag.vue';
 import Select from '@stories/components/Select/Select.vue';
 import AtIcon from '@stories/icons/Mono/AtIcon.vue';
 import Knob from '@stories/components/Knob/Knob.vue';
+import Rating from '@stories/components/Rating/Rating.vue';
+import HomeIcon from '@stories/icons/Mono/HomeIcon.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -197,7 +199,14 @@ const knob = ref(0);
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
-  {{ knob }}
+  <Rating theme="red">
+    <template #offIcon>
+      <CrossIcon color="red" />
+    </template>
+    <template #onIcon>
+      <HomeIcon color="blue" />
+    </template>
+  </Rating>
   <Knob v-model="knob" />
   <Select :options="selectOptions" theme="sky">
     <template #icon-left-First>

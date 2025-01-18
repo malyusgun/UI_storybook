@@ -110,6 +110,7 @@ import TriangleIcon from '@stories/icons/Mono/TriangleIcon.vue';
 import Playground from '@/Playground.vue';
 import ArrowShortDownIcon from '@stories/icons/Mono/ArrowShortDownIcon.vue';
 import StarIcon from '@stories/icons/Mono/StarIcon.vue';
+import StarFilledIcon from '@stories/icons/Mono/StarFilledIcon.vue';
 
 const gentleIcons = {
   Age18Icon,
@@ -214,6 +215,7 @@ const gentleIcons = {
   SearchIcon,
   SettingsIcon,
   StarIcon,
+  StarFilledIcon,
   SortDownIcon,
   SortHorizontalIcon,
   SortUpIcon,

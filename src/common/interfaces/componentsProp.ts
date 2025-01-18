@@ -55,7 +55,7 @@ export interface IMDItemProps {
   onClick?: () => void;
 }
 
-export interface IKnobColorGap {
+export interface IColorGap {
   start: number;
   end: number;
   color: TThemeColor;

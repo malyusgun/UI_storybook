@@ -11,14 +11,13 @@ import type {
   TThemeColorNoWhite,
 } from '@interfaces/common';
 import type {
-  IKnobColorGap,
+  IColorGap,
   IMDItemProps,
   ISBOption,
   ISelectGroup,
   ISelectOption,
   ISliderOptions,
   ITableColumn,
-  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
 
@@ -74,7 +73,7 @@ export interface IKnobProps {
   step?: number;
   size?: TSize;
   theme?: TThemeColor;
-  colorGaps?: IKnobColorGap[];
+  colorGaps?: IColorGap[];
   negativeTheme?: TThemeColor;
   color?: TThemeColor;
   background?: string;
@@ -190,6 +189,25 @@ export interface IButtonProps {
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
+}
+
+export interface IProgressBarProps {
+  value: number;
+  max?: number;
+  width?: string;
+  height?: string;
+  size?: TSize;
+  fontSize?: string;
+  colorGaps?: IColorGap[];
+  colorInactiveGaps?: IColorGap[];
+  theme?: TThemeColor;
+  inactiveTheme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessInactiveTheme?: TDarkness;
+  showLabel?: boolean;
+  labelBefore?: string;
+  labelAfter?: string;
+  noBorder?: boolean;
 }
 
 export interface IRatingProps {

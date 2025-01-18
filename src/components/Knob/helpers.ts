@@ -1,6 +1,6 @@
 import { convertThemeToColor } from '@helpers/common';
 import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '@interfaces/common';
-import type { IKnobColorGap } from '@interfaces/componentsProp';
+import type { IColorGap } from '@interfaces/componentsProp';
 
 export const calcNewValue = (
   event: MouseEvent,
@@ -40,7 +40,7 @@ export const calcStart = (container: Element) => {
 };
 
 export const calcThemeColor = (
-  colorGaps: IKnobColorGap[] | undefined,
+  colorGaps: IColorGap[] | undefined,
   theme: TThemeColor,
   darknessTheme: TDarkness,
   value: number,

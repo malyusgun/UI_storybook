@@ -8,16 +8,15 @@ defineProps<Props>();
 
 <template>
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     :width="`${size ?? 40}px`"
     :height="`${size ?? 40}px`"
     viewBox="0 0 532.153 532.153"
-    xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <line
-      x1="155"
+      x1="180"
       y1="-100"
-      x2="-50"
+      x2="385"
       y2="100"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
@@ -26,31 +25,9 @@ defineProps<Props>();
       stroke-linecap="round"
     />
     <line
-      x1="-50"
+      x1="385"
       y1="100"
-      x2="155"
-      y2="300"
-      transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
-      fill="none"
-      :stroke="color ?? '#000000'"
-      stroke-width="50"
-      stroke-linecap="round"
-    />
-    <line
-      x1="335"
-      y1="-100"
-      x2="130"
-      y2="100"
-      transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
-      fill="none"
-      :stroke="color ?? '#000000'"
-      stroke-width="50"
-      stroke-linecap="round"
-    />
-    <line
-      x1="130"
-      y1="100"
-      x2="335"
+      x2="180"
       y2="300"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"

@@ -60,7 +60,11 @@ export interface IPaginatorProps {
   value?: number;
   total?: number;
   itemsPerPage?: number;
+  itemsPerPageOptions?: number[];
   size?: TSize;
+  fontSize?: string;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
 }
 
 export interface IMDProps {

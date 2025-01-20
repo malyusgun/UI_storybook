@@ -38,6 +38,26 @@ const meta: Meta = {
         'black',
       ],
     },
+    offTheme: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
   },
   args: {},
 } satisfies Meta<typeof Rating>;
@@ -53,6 +73,8 @@ export const Simple: Story = {
 export const Small: Story = {
   args: {
     size: 'small',
+    theme: 'yellow',
+    offTheme: 'black',
   },
 };
 

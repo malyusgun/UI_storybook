@@ -16,10 +16,12 @@ const props = withDefaults(defineProps<IRatingProps>(), {
 const value = defineModel({
   default: 0,
 }) as Ref<number>;
+
 const onHoverIndex = ref();
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const themeColorOnHover = computed(() => convertThemeToColor(props.theme, '200'));
+const offColor = computed(() => (props.offTheme ? convertThemeToColor(props.offTheme, props.darknessTheme) : null));
+const themeColorOnHover = computed(() => convertThemeToColor(props.offTheme ?? props.theme, '200'));
 const iconSize = computed(() => {
   const size = props.size;
   if (size === 'normal') return '20px';
@@ -43,7 +45,7 @@ const onActiveClick = (index: number) => {
         <component
           class="icon absoluteIcon"
           :is="iconsSet['Star']"
-          :color="themeColor"
+          :color="offColor ?? themeColor"
           @pointerenter="onHoverIndex = index"
           @pointerleave="onHoverIndex = null"
           :size="iconSize"

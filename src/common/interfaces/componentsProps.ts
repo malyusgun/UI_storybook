@@ -222,6 +222,7 @@ export interface IRatingProps {
   size?: TSize;
   gap?: string;
   theme?: TThemeColor;
+  offTheme?: TThemeColor;
   darknessTheme?: TDarkness;
 }
 

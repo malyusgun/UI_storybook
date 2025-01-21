@@ -18,6 +18,7 @@ const meta: Meta = {
     width: { control: 'text' },
     filtered: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    noHighlight: { control: 'boolean' },
     placeholder: { control: 'text' },
     name: { control: 'text' },
     openIcon: { control: 'select', options: Object.keys(iconsSet) },

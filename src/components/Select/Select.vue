@@ -49,6 +49,10 @@ const pickOption = (value: string) => {
 };
 const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string | undefined, defaultColor: string) =>
   color ? convertThemeToColor(color, darknessColor ?? '500') : defaultColor;
+
+document.querySelector('body').addEventListener('pointerup', (e: MouseEvent) => {
+  if (isOpen.value && e.button === 0) isOpen.value = false;
+});
 </script>
 
 <template>
@@ -59,9 +63,17 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
         {{ option.label ?? option.value }}
       </option>
     </select>
-    <div class="list" :style="`background-color: ${backgroundColor}`">
+    <div
+      :class="[
+        'list',
+        {
+          noHighlight,
+        },
+      ]"
+      :style="`background-color: ${backgroundColor}`"
+    >
       <button
-        @click.prevent="!disabled ? (isOpen = !isOpen) : ''"
+        @click="!disabled ? (isOpen = !isOpen) : ''"
         :class="[
           'button',
           {
@@ -256,5 +268,8 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
   cursor: auto;
   background-color: #e1e7f1 !important;
   border-radius: 4px;
+}
+.noHighlight * {
+  user-select: none;
 }
 </style>

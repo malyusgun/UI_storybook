@@ -2,6 +2,7 @@
 defineProps<{
   active?: boolean;
   disable?: boolean;
+  color?: string;
 }>();
 </script>
 
@@ -36,12 +37,23 @@ defineProps<{
   cursor: pointer;
   line-height: 1.2;
 }
+.item::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: v-bind(color);
+}
 .item:hover > .bg {
   opacity: 1;
 }
 .item:active > .bg {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0.2;
+  background-color: black;
 }
 .bg {
   width: 120%;
@@ -51,9 +63,9 @@ defineProps<{
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
-  z-index: -1;
+  z-index: -2;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: transparent;
   opacity: 0;
   transition: all 0.2s ease;
 }

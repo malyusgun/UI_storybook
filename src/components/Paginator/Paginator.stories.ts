@@ -14,7 +14,6 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    value: { control: 'number' },
     total: { control: 'number' },
     itemsPerPage: { control: 'number' },
     itemsPerPageOptions: { control: 'object' },
@@ -56,5 +55,8 @@ export const Simple: Story = {
 export const Full: Story = {
   args: {
     itemsPerPageOptions: ['10', '20', '30'],
+    total: 50,
+    size: 'large',
+    theme: 'black',
   },
 };

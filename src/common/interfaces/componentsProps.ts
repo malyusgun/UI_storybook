@@ -57,7 +57,6 @@ export interface ITIProps {
 }
 
 export interface IPaginatorProps {
-  value?: number;
   total?: number;
   itemsPerPage?: number;
   itemsPerPageOptions?: number[];
@@ -163,16 +162,16 @@ export interface ISelectProps {
   placeholder?: string;
   openIcon?: TIcon;
   size?: TSize;
+  fontSize?: string;
   name?: string;
   theme?: TThemeColor;
-  background?: TThemeColor;
   placeholderColor?: TThemeColor;
   openIconColor?: TThemeColor;
   darknessTheme?: TDarkness;
-  darknessBackground?: TDarkness;
   darknessOpenIcon?: TDarkness;
   filtered?: boolean;
   disabled?: boolean;
+  noHighlight?: boolean;
 }
 
 export interface ISBProps {

@@ -5,14 +5,15 @@ import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
 import type { IPaginatorProps } from '@interfaces/componentsProps';
 import PaginatorItem from '@components/Paginator/PaginatorItem.vue';
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, type Ref, watch } from 'vue';
 import Select from '@components/Select/Select.vue';
 import type { ISelectOption } from '@interfaces/componentsProp';
+import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IPaginatorProps>(), {
   total: 10,
   size: 'normal',
-  theme: 'black',
+  theme: 'white',
   darknessTheme: '500',
   itemsPerPage: 1,
 });
@@ -21,46 +22,56 @@ const current = defineModel({
   default: 1,
 }) as Ref<number>;
 
-const perPage = ref(props.itemsPerPage);
+const perPage = ref(props.itemsPerPageOptions?.[0] ?? props.itemsPerPage);
 
-const itemsLength = computed(() => Math.floor(props.total / perPage.value));
+const itemsLength = computed(() => Math.ceil(props.total / perPage.value));
+const initArray = computed(() => Array.from({ length: itemsLength.value }, (_, i) => i + 1));
 const selectOptions = computed(() =>
   !props.itemsPerPageOptions ? [{ value: '1' }] : props.itemsPerPageOptions.map((item) => ({ value: String(item) })),
 ) as unknown as ISelectOption[];
 const isStartDisabled = computed(() => current.value === 1);
 const isEndDisabled = computed(() => current.value === itemsLength.value);
 const items = computed(() => {
-  if (!current.value) return [1, 2, 3, 4, 5];
-  const center = current.value;
   const length = itemsLength.value;
-  if (center - 2 < 2) return [1, 2, 3, 4, 5];
-  if (center + 2 > length) return [length - 5, length - 4, length - 3, length - 1, length];
-  return [center - 2, center - 1, center, center + 1, center + 2];
+  const itemsPerView = Math.min(length, 5);
+  const cur = current.value;
+  if (cur - 2 < 2) return initArray.value.slice(0, itemsPerView + 1);
+  if (cur + 2 > length) return initArray.value.slice(-itemsPerView);
+  if (itemsPerView === 5) return [cur - 2, cur - 1, cur, cur + 1, cur + 2];
+  return initArray.value;
 });
 const iconSize = computed(() => {
   const size = props.size;
   if (size === 'normal') return '10';
-  if (size === 'large') return '25';
-  if (size === 'huge') return '30';
-  return '15';
+  if (size === 'large') return '15';
+  if (size === 'huge') return '18';
+  return '7';
 });
 const fontSize = computed(() => {
+  if (props.fontSize) return props.fontSize;
   const size = props.size;
   if (size === 'normal') return '16px';
   if (size === 'large') return '26px';
   if (size === 'huge') return '32px';
-  return '36px';
+  return '12px';
 });
 const itemSize = computed(() => `${+iconSize.value * 2.5}px`);
+const color = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
+
+watch(perPage, (cur, prev) => {
+  if (cur > prev) current.value = Math.ceil((current.value * prev) / cur);
+  else current.value = Math.ceil((prev * (current.value - 1) + +cur) / cur);
+});
 </script>
 
 <template>
   <section class="container">
-    <PaginatorItem @click="current = 1" :disable="isStartDisabled" class="paginatorItem">
-      <ArrowDoubleLeftShortIcon :color="isStartDisabled ? '#aaa' : 'black'" :size="iconSize" />
+    <PaginatorItem @click="current = 1" :color="color" :disable="isStartDisabled" class="paginatorItem">
+      <ArrowDoubleLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
-    <PaginatorItem @click="current--" :disable="isStartDisabled" class="paginatorItem">
-      <ArrowLeftShortIcon :color="isStartDisabled ? '#aaa' : 'black'" :size="iconSize" />
+    <PaginatorItem @click="current--" :color="color" :disable="isStartDisabled" class="paginatorItem">
+      <ArrowLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
     <PaginatorItem
       v-for="item of items"
@@ -71,20 +82,40 @@ const itemSize = computed(() => `${+iconSize.value * 2.5}px`);
     >
       <span class="digital">{{ item }}</span>
     </PaginatorItem>
-    <PaginatorItem @click="isEndDisabled ? '' : current++" :disable="isEndDisabled" class="paginatorItem">
-      <ArrowRightShortIcon :color="isEndDisabled ? '#aaa' : 'black'" :size="iconSize" />
+    <PaginatorItem
+      @click="isEndDisabled ? '' : current++"
+      :color="color"
+      :disable="isEndDisabled"
+      class="paginatorItem"
+    >
+      <ArrowRightShortIcon :color="isEndDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
-    <PaginatorItem @click="isEndDisabled ? '' : (current = total)" :disable="isEndDisabled" class="paginatorItem">
-      <ArrowDoubleRightShortIcon :color="isEndDisabled ? '#aaa' : 'black'" :size="iconSize" />
+    <PaginatorItem
+      @click="isEndDisabled ? '' : (current = itemsLength)"
+      :color="color"
+      :disable="isEndDisabled"
+      class="paginatorItem"
+    >
+      <ArrowDoubleRightShortIcon :color="isEndDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
-    <Select v-if="itemsPerPageOptions" v-model="perPage" :options="selectOptions"></Select>
+    <Select
+      v-if="itemsPerPageOptions"
+      v-model="perPage"
+      :theme="theme"
+      :size="size"
+      width="max-width"
+      no-highlight
+      :font-size="fontSize"
+      :options="selectOptions"
+    ></Select>
   </section>
 </template>
 
 <style scoped>
 .container {
   display: flex;
-  gap: 5px;
+  gap: calc(v-bind(fontSize) * 0.25);
+  align-items: center;
 }
 .paginatorItem {
   width: v-bind(itemSize);

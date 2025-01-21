@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ISelectProps } from '@interfaces/componentsProps';
 import { computed, ref } from 'vue';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
 import SelectItem from '@components/Select/SelectItem.vue';
@@ -11,8 +11,7 @@ import { calcFontSize, calcPadding, getOptionsGroups } from '@components/Select/
 const props = withDefaults(defineProps<ISelectProps>(), {
   size: 'normal',
   width: '200px',
-  theme: 'black',
-  darknessTheme: '700',
+  theme: 'white',
   darknessBackground: '200',
   darknessOpenIcon: '700',
   name: 'select',
@@ -32,15 +31,18 @@ const optionsNoGroup = computed(() =>
   ),
 );
 const selectedOption = computed(() => props.options.find((option) => option.value === selected.value));
-const fontSize = computed(() => calcFontSize(props.size));
+const fontSize = computed(() => props.fontSize ?? calcFontSize(props.size));
 const fontSizeNumber = computed(() => fontSize.value.slice(0, -2));
 const padding = computed(() => calcPadding(props.size));
-const textColor = computed(() => (props.disabled ? '#62708c' : convertThemeToColor(props.theme, props.darknessTheme)));
+const textColor = computed(() =>
+  props.disabled ? '#62708c' : convertThemeToTextColor(props.theme, props.darknessTheme ?? '700'),
+);
 const backgroundColor = computed(() =>
-  convertThemeToColor(
-    props.background ?? (props.theme === 'white' ? 'black' : props.theme === 'black' ? 'white' : props.theme),
-    (!props.background && props.theme === 'black') || props.background === 'white' ? '500' : props.darknessBackground,
-  ),
+  // convertThemeToColor(
+  //   props.background ?? (props.theme === 'white' ? 'black' : props.theme === 'black' ? 'white' : props.theme),
+  //   (!props.background && props.theme === 'black') || props.background === 'white' ? '500' : props.darknessBackground,
+  // ),
+  convertThemeToColor(props.theme, props.theme === 'white' && !props.darknessTheme ? '500' : props.darknessTheme),
 );
 
 const pickOption = (value: string) => {
@@ -73,7 +75,7 @@ document.querySelector('body').addEventListener('pointerup', (e: MouseEvent) => 
       :style="`background-color: ${backgroundColor}`"
     >
       <button
-        @click="!disabled ? (isOpen = !isOpen) : ''"
+        @pointerup.stop="!disabled ? (isOpen = !isOpen) : ''"
         :class="[
           'button',
           {
@@ -115,13 +117,13 @@ document.querySelector('body').addEventListener('pointerup', (e: MouseEvent) => 
         ]"
       >
         <div style="overflow: hidden">
-          <div class="flex filter" v-if="filtered">
+          <div class="flex filter" v-if="filtered" @click="isOpen = true">
             <input v-model="filter" type="text" /><SearchIcon :size="fontSizeNumber" color="#62708c" />
           </div>
           <div v-for="group of optionsGroups" :key="group.name" class="group">
             <h3
               class="flexNoHover groupHeader"
-              :style="`color: ${calcOptionColor(group.nameColor, darknessTheme, textColor)};
+              :style="`color: ${calcOptionColor(group.nameColor, darknessTheme ?? '700', textColor)};
               background-color: ${calcOptionColor(group.background, group.background === 'white' ? '500' : '200', backgroundColor)};
               font-size: calc(${fontSize} * 0.8); padding: calc(${padding} * 0.8)`"
             >
@@ -129,13 +131,13 @@ document.querySelector('body').addEventListener('pointerup', (e: MouseEvent) => 
                 v-if="group?.iconLeft"
                 :is="iconsSet[group?.iconLeft]"
                 :size="fontSizeNumber"
-                :color="calcOptionColor(group?.iconLeftColor ?? group.nameColor, darknessTheme, textColor)"
+                :color="calcOptionColor(group?.iconLeftColor ?? group.nameColor, darknessTheme ?? '700', textColor)"
               />{{ group.name }}
               <component
                 v-if="group?.iconRight"
                 :is="iconsSet[group?.iconRight]"
                 :size="fontSizeNumber"
-                :color="calcOptionColor(group?.iconRightColor ?? group.nameColor, darknessTheme, textColor)"
+                :color="calcOptionColor(group?.iconRightColor ?? group.nameColor, darknessTheme ?? '700', textColor)"
               />
             </h3>
             <SelectItem

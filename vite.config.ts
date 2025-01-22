@@ -12,7 +12,7 @@ export default defineConfig({
       '@icons': fileURLToPath(new URL('./src/icons', import.meta.url)),
       '@helpers': fileURLToPath(new URL('./src/common/helpers', import.meta.url)),
       '@interfaces': fileURLToPath(new URL('./src/common/interfaces', import.meta.url)),
-      '@stories': fileURLToPath(new URL('./src/stories', import.meta.url)),
+      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
     },
   },
 });

@@ -1,4 +1,4 @@
-import type { TDarkness, TIcons, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
+import type { TDarkness, TIcon, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
 
 export interface ITableColumn {
   name: string;
@@ -34,8 +34,8 @@ export interface ITreeItem {
   color?: TThemeColor;
   textStyle?: TTextStyle;
   isTriangleToColor?: boolean;
-  iconBefore?: TIcons;
-  iconAfter?: TIcons;
+  iconBefore?: TIcon;
+  iconAfter?: TIcon;
   iconColor?: TThemeColor;
   children?: ITreeItem[];
   darknessColor?: TDarkness;
@@ -55,7 +55,7 @@ export interface IMDItemProps {
   onClick?: () => void;
 }
 
-export interface IKnobColorGap {
+export interface IColorGap {
   start: number;
   end: number;
   color: TThemeColor;
@@ -66,8 +66,8 @@ export interface ISelectOption {
   value: string;
   label?: string;
   group?: string;
-  iconLeft?: TIcons;
-  iconRight?: TIcons;
+  iconLeft?: TIcon;
+  iconRight?: TIcon;
   iconLeftColor?: TThemeColor;
   iconRightColor?: TThemeColor;
   color?: TThemeColor;
@@ -81,8 +81,8 @@ export interface ISelectGroup {
   nameColor?: TThemeColor;
   background?: TThemeColor;
   items?: ISelectOption[];
-  iconLeft?: TIcons;
-  iconRight?: TIcons;
+  iconLeft?: TIcon;
+  iconRight?: TIcon;
   iconLeftColor?: TThemeColor;
   iconRightColor?: TThemeColor;
 }

@@ -13,7 +13,7 @@
       "@icons/*": ["./src/icons/*"],
       "@helpers/*": ["src/common/helpers/*"],
       "@interfaces/*": ["src/common/interfaces/*"],
-      "@stories/*": ["./src/stories/*"]
+      "@components/*": ["./src/components/*"]
     }
   }
 }

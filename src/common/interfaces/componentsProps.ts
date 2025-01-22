@@ -3,7 +3,7 @@ import type {
   TDarkness,
   TDirection,
   TExpandedPosition,
-  TIcons,
+  TIcon,
   TPosition,
   TSize,
   TTextStyle,
@@ -11,7 +11,7 @@ import type {
   TThemeColorNoWhite,
 } from '@interfaces/common';
 import type {
-  IKnobColorGap,
+  IColorGap,
   IMDItemProps,
   ISBOption,
   ISelectGroup,
@@ -23,8 +23,8 @@ import type {
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
+  data?: ITableItem[][];
   columns: ITableColumn[];
-  data: ITableItem[][];
   multipleSort?: boolean;
   gap?: string;
   size?: TSize;
@@ -58,6 +58,16 @@ export interface ITIProps {
   themeColor: string;
 }
 
+export interface IPaginatorProps {
+  total?: number;
+  itemsPerPage?: number;
+  itemsPerPageOptions?: number[];
+  size?: TSize;
+  fontSize?: string;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
 export interface IMDProps {
   items: IMDItemProps[];
   size?: TSize;
@@ -75,7 +85,7 @@ export interface IKnobProps {
   step?: number;
   size?: TSize;
   theme?: TThemeColor;
-  colorGaps?: IKnobColorGap[];
+  colorGaps?: IColorGap[];
   negativeTheme?: TThemeColor;
   color?: TThemeColor;
   background?: string;
@@ -115,7 +125,7 @@ export interface IDrawerProps {
   darknessTextColor?: TDarkness;
   modal?: boolean;
   dismissible?: boolean;
-  closeIcon?: TIcons;
+  closeIcon?: TIcon;
   headerDivider?: boolean;
   footerDivider?: boolean;
 }
@@ -129,7 +139,7 @@ export interface IModalProps {
   height?: string;
   position?: TExpandedPosition;
   dismissible?: boolean;
-  closeIcon?: TIcons;
+  closeIcon?: TIcon;
   headerDivider?: boolean;
 }
 
@@ -152,18 +162,18 @@ export interface ISelectProps {
   groups?: ISelectGroup[];
   width?: string;
   placeholder?: string;
-  openIcon?: TIcons;
+  openIcon?: TIcon;
   size?: TSize;
+  fontSize?: string;
   name?: string;
   theme?: TThemeColor;
-  background?: TThemeColor;
   placeholderColor?: TThemeColor;
   openIconColor?: TThemeColor;
   darknessTheme?: TDarkness;
-  darknessBackground?: TDarkness;
   darknessOpenIcon?: TDarkness;
   filtered?: boolean;
   disabled?: boolean;
+  noHighlight?: boolean;
 }
 
 export interface ISBProps {
@@ -193,6 +203,34 @@ export interface IButtonProps {
   darknessTextColor?: TDarkness;
 }
 
+export interface IProgressBarProps {
+  value: number;
+  max?: number;
+  width?: string;
+  height?: string;
+  size?: TSize;
+  fontSize?: string;
+  colorGaps?: IColorGap[];
+  colorInactiveGaps?: IColorGap[];
+  theme?: TThemeColor;
+  inactiveTheme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  darknessInactiveTheme?: TDarkness;
+  showLabel?: boolean;
+  labelBefore?: string;
+  labelAfter?: string;
+  noBorder?: boolean;
+}
+
+export interface IRatingProps {
+  count?: number;
+  size?: TSize;
+  gap?: string;
+  theme?: TThemeColor;
+  offTheme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
 export interface ITSProps {
   size?: TSize;
   theme?: TThemeColorNoWhite;
@@ -206,8 +244,8 @@ export interface ITagProps {
   value?: string;
   size?: TSize;
   rounded?: boolean;
-  iconLeft?: TIcons;
-  iconRight?: TIcons;
+  iconLeft?: TIcon;
+  iconRight?: TIcon;
   theme?: TThemeColor;
   background?: TThemeColor;
   border?: TThemeColor;

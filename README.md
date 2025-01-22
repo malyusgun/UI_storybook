@@ -10,12 +10,17 @@
 - MenuDial;
 - Popup;
 - Slider;
+
+- Paginator;
 - Drawer;
 - Modal;
 - Knob;
 - Select;
 - SelectButton;
+
 - Button;
+- ProgressBar;
+- Rating;
 - ToggleSwitch;
 - Tag;
 - Checkbox;
@@ -23,8 +28,8 @@
 
 ---
 ## Общая информация
-### Components count: 15
-### Bundle size: 292.7KB
+### Components count: 18
+### Bundle size: 296.4KB
 
 ---
 
@@ -35,7 +40,7 @@ const props = withDefaults(defineProps<IProps>(), {
    
 });    
 const emit = defineEmits(['']);  
-const visible = defineModel('');  
+const visible = defineModel();  
 // watch(, () => {});
 // const computed1 = computed(() => );
 ```

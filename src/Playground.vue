@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import Modal from '@stories/components/Modal/Modal.vue';
-import ToggleSwitch from '@stories/components/ToggleSwitch/ToggleSwitch.vue';
-import AnchorLinkIcon from '@stories/icons/Mono/AnchorLinkIcon.vue';
-import SelectButton from '@stories/components/SelectButton/SelectButton.vue';
-import Drawer from '@stories/components/Drawer/Drawer.vue';
-import Slider from '@stories/components/Slider/Slider.vue';
-import TrashIcon from '@stories/icons/Mono/TrashIcon.vue';
-import CrossIcon from '@stories/icons/Mono/CrossIcon.vue';
-import Button from '@stories/components/Button/Button.vue';
-import MenuDial from '@stories/components/MenuDial/MenuDial.vue';
-import Popup from '@stories/components/Popup/Popup.vue';
-import Table from '@stories/components/Table/Table.vue';
+import Modal from '@components/Modal/Modal.vue';
+import ToggleSwitch from '@components/ToggleSwitch/ToggleSwitch.vue';
+import AnchorLinkIcon from '@icons/Mono/AnchorLinkIcon.vue';
+import SelectButton from '@components/SelectButton/SelectButton.vue';
+import Drawer from '@components/Drawer/Drawer.vue';
+import Slider from '@components/Slider/Slider.vue';
+import TrashIcon from '@icons/Mono/TrashIcon.vue';
+import CrossIcon from '@icons/Mono/CrossIcon.vue';
+import Button from '@components/Button/Button.vue';
+import MenuDial from '@components/MenuDial/MenuDial.vue';
+import Popup from '@components/Popup/Popup.vue';
+import Table from '@components/Table/Table.vue';
 import { ref } from 'vue';
 import type { ISBOption, ISliderOptions, ITableColumn } from '@interfaces/componentsProp';
-import Checkbox from '@stories/components/Checkbox/Checkbox.vue';
-import Tag from '@stories/components/Tag/Tag.vue';
-import Select from '@stories/components/Select/Select.vue';
-import AtIcon from '@stories/icons/Mono/AtIcon.vue';
-import Knob from '@stories/components/Knob/Knob.vue';
+import Checkbox from '@components/Checkbox/Checkbox.vue';
+import Tag from '@components/Tag/Tag.vue';
+import Select from '@components/Select/Select.vue';
+import AtIcon from '@icons/Mono/AtIcon.vue';
+import Knob from '@components/Knob/Knob.vue';
+import Rating from '@components/Rating/Rating.vue';
+import HomeIcon from '@icons/Mono/HomeIcon.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -111,7 +113,7 @@ const tableColumns: ITableColumn[] = [
     type: 'text',
   },
 ];
-const tableData = [
+const tableData = ref([
   [
     {
       value: 'Pete',
@@ -182,7 +184,7 @@ const tableData = [
       value: 'Russia',
     },
   ],
-];
+]);
 const activeCheckbox = ref();
 const selectOptions = [
   {
@@ -192,12 +194,20 @@ const selectOptions = [
     value: 'Second',
   },
 ];
-const knob = ref();
+const knob = ref(0);
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
-  <Knob v-model:value="knob" />
+  <Rating theme="red">
+    <template #offIcon>
+      <CrossIcon color="red" />
+    </template>
+    <template #onIcon>
+      <HomeIcon color="blue" />
+    </template>
+  </Rating>
+  <Knob v-model="knob" />
   <Select :options="selectOptions" theme="sky">
     <template #icon-left-First>
       <AtIcon color="#3aa" size="20" />
@@ -215,7 +225,7 @@ const knob = ref();
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
-    :data="tableData"
+    v-model="tableData"
     fontSize="36px"
     theme="black"
     stripedRows
@@ -224,7 +234,7 @@ const knob = ref();
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
-    :data="tableData"
+    v-model="tableData"
     fontSize="20px"
     theme="black"
     stripedRows

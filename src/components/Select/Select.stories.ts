@@ -19,6 +19,7 @@ const meta: Meta = {
     filtered: { control: 'boolean' },
     disabled: { control: 'boolean' },
     noHighlight: { control: 'boolean' },
+    selected: { control: 'text' },
     fontSize: { control: 'text' },
     placeholder: { control: 'text' },
     name: { control: 'text' },

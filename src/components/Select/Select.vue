@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISelectProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
@@ -54,6 +54,11 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
 
 document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) => {
   if (isOpen.value && e.button === 0) isOpen.value = false;
+});
+
+const selectedProp = computed(() => props.selected);
+watch(selectedProp, () => (selected.value = selectedProp.value), {
+  immediate: true,
 });
 </script>
 

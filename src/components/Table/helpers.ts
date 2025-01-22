@@ -5,18 +5,18 @@ export const calcRows = (
   initRows: ITableItem[][] | undefined,
   sortStateActive: [number, string] | [],
   multipleSort: boolean,
-  columnToFilter: number,
-  columnToFilterType: TTableColumnType,
+  indexColumnToFilter: number,
+  columnToSortType: TTableColumnType,
   filterValue: string,
   isRegisterSensitive: boolean,
 ) => {
   if (!initRows?.length) return [];
   // ['up', 'down', ...]
   let rows = [...initRows];
-
   if (filterValue) {
+    console.log('oh...');
     rows = rows.filter((row) => {
-      const item = isRegisterSensitive ? row[columnToFilter].value : row[columnToFilter].value.toLowerCase();
+      const item = isRegisterSensitive ? row[indexColumnToFilter].value : row[indexColumnToFilter].value.toLowerCase();
       return item.startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
     });
   }
@@ -43,7 +43,8 @@ export const calcRows = (
   } else {
     const index = sortStateActive[0];
     const value = sortStateActive[1];
-    if (columnToFilterType === 'number')
+    console.log(value, index, columnToSortType);
+    if (columnToSortType === 'number')
       return rows.sort((a, b) =>
         value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
       );

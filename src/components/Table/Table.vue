@@ -12,13 +12,11 @@ const props = withDefaults(defineProps<ITableProps>(), {
   darknessTheme: '500',
   fontSize: '16px',
 });
-const data = defineModel<ITableItem[][]>({
-  required: false,
-});
+const data = defineModel<ITableItem[][]>();
 
 const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);
-const columnToFilter = ref<number>(0);
+const indexColumnToFilter = ref<number>(0);
 const isFilterPopup = ref<boolean>(false);
 const filterValue = ref<string>('');
 const isRegisterSensitive = ref<boolean>(false);
@@ -48,8 +46,8 @@ const rows = computed<ITableItem[][]>(() =>
     data.value ?? props.data,
     sortStateActive.value,
     props.multipleSort,
-    columnToFilter.value,
-    props.columns[columnToFilter.value ?? 0].type ?? 'text',
+    indexColumnToFilter.value,
+    props.columns[sortStateActive.value?.[0] ?? -1]?.type ?? 'text',
     filterValue.value,
     isRegisterSensitive.value,
   ),
@@ -57,6 +55,7 @@ const rows = computed<ITableItem[][]>(() =>
 
 const changeColumnSortMode = (index: number) => {
   const cur = sortState.value[index];
+  console.log(index, cur);
   const newValue = cur === 'none' ? 'down' : cur === 'down' ? 'up' : 'none';
   if (cur === 'up') {
     sortStateActive.value = [];
@@ -68,12 +67,12 @@ const changeColumnSortMode = (index: number) => {
   columns.value[index].initSort = newValue;
 };
 const setFilter = (column: number) => {
-  if (columnToFilter.value === column || !isFilterPopup.value) {
+  if (indexColumnToFilter.value === column || !isFilterPopup.value) {
     isFilterPopup.value = !isFilterPopup.value;
   }
-  if (columnToFilter.value !== column) {
+  if (indexColumnToFilter.value !== column) {
     filterValue.value = '';
-    columnToFilter.value = column;
+    indexColumnToFilter.value = column;
   }
 };
 const cancelFilter = () => {
@@ -98,7 +97,7 @@ const cancelFilter = () => {
           v-model:isRegisterSensitive="isRegisterSensitive"
           :columns="columns"
           :sortState="sortState"
-          :columnToFilter="columnToFilter"
+          :indexColumnToFilter="indexColumnToFilter"
           :initGap="initGap"
           :additionalHeightFromSize="additionalHeightFromSize"
           :theme="theme"

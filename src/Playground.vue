@@ -241,7 +241,7 @@ const knob = ref(0);
   ></Table>
   <button class="testButton" @click="visibleDrawer = !visibleDrawer">Нажми меня</button>
   <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
-  <Popup v-model:active="popupActive" parentSelector=".hui" theme="sky">
+  <Popup v-model="popupActive" parentSelector=".hui" theme="sky">
     <Button
       @click="
         () => {
@@ -252,7 +252,7 @@ const knob = ref(0);
       label="Открыть модальное окно"
     />
   </Popup>
-  <Popup v-model:active="popupActive2" theme="sky"
+  <Popup v-model="popupActive2" theme="sky"
     >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
     voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero! Lorem
     ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas.

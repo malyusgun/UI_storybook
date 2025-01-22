@@ -15,7 +15,7 @@ import { computed } from 'vue';
 interface Props {
   columns: ITableColumn[];
   sortState: string[];
-  columnToFilter: number;
+  indexColumnToFilter: number;
   initGap: string;
   additionalHeightFromSize: string;
   theme: TThemeColor;
@@ -44,7 +44,7 @@ const calcLeft = (selector: string) => {
   if (!el) return 0;
   return el.getBoundingClientRect().left - table.getBoundingClientRect().left + +iconSize.value;
 };
-const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type === 'text');
+const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter].type === 'text');
 </script>
 
 <template>
@@ -87,12 +87,12 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
       </div>
     </th>
     <Popup
-      v-model:active="isFilterPopup"
-      :parentSelector="`#filter${columnToFilter}`"
+      v-model="isFilterPopup"
+      :parentSelector="`#filter${indexColumnToFilter}`"
       buttonMenu
       :theme="theme"
       :top="+iconSize + 10"
-      :left="calcLeft(`#filter${columnToFilter}`)"
+      :left="calcLeft(`#filter${indexColumnToFilter}`)"
       maxHeight="200px"
     >
       <article style="padding: 2px">

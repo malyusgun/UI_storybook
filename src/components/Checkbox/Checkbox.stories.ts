@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    active: { control: 'boolean' },
     invalid: { control: 'boolean' },
     disabled: { control: 'boolean' },
     label: { control: 'text' },

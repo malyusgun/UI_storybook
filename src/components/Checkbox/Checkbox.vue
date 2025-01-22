@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ICheckboxProps } from '@interfaces/componentsProps';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
 
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<ICheckboxProps>(), {
   darknessBorder: '500',
 });
 const active = defineModel();
-// watch(, () => {});
+
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const activeThemeColor = computed(() => convertThemeToColor(props.activeTheme, props.darknessActiveTheme));
 const iconColor = computed(() =>
@@ -46,6 +46,12 @@ const gap = computed(() => {
 });
 const borderWidth = computed(() => (props.size === 'large' || props.size === 'huge' ? 2 : 1));
 const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`);
+
+const activeProp = computed(() => props.active);
+
+watch(activeProp, () => (active.value = activeProp.value), {
+  immediate: true,
+});
 </script>
 
 <template>
@@ -60,7 +66,7 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
   >
     <div class="main" :style="`width: ${elSize}px; height: ${elSize}px; border: ${borderWidth}px solid ${borderColor}`">
       <input
-        :style="`width: ${elSize}px; height: ${elSize}px; position: absolute; z-index: 100; cursor: ${disabled ? 'initial' : 'pointer'}`"
+        :style="`width: ${elSize}px; height: ${elSize}px; position: absolute; top: 0; left: 0; z-index: 100; cursor: ${disabled ? 'initial' : 'pointer'}`"
         v-model="active"
         type="checkbox"
         :name="name"
@@ -77,7 +83,7 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
         ]"
       >
         <CheckMarkIcon
-          :style="`transition: all 0.3s ease-in-out; opacity: ${active ? 1 : 0}; position: absolute;`"
+          :style="`transition: all 0.3s ease-in-out; opacity: ${active ? 1 : 0}; position: absolute; top: 0; left: 0`"
           :color="iconColor"
           :size="elSize"
         />

@@ -11,6 +11,7 @@
 - Popup;
 - Slider;
 
+- Paginator;
 - Drawer;
 - Modal;
 - Knob;
@@ -27,8 +28,8 @@
 
 ---
 ## Общая информация
-### Components count: 17
-### Bundle size: 291.7KB
+### Components count: 18
+### Bundle size: 296.4KB
 
 ---
 

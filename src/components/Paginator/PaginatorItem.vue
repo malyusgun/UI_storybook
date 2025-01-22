@@ -2,7 +2,8 @@
 defineProps<{
   active?: boolean;
   disable?: boolean;
-  color?: string;
+  textColor: string;
+  color: string;
 }>();
 </script>
 
@@ -36,6 +37,7 @@ defineProps<{
   align-items: center;
   cursor: pointer;
   line-height: 1.2;
+  color: v-bind(textColor);
 }
 .item::before {
   content: '';
@@ -43,17 +45,15 @@ defineProps<{
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  top: 0;
-  left: 0;
   z-index: -1;
   background-color: v-bind(color);
 }
-.item:hover > .bg {
-  opacity: 1;
+.item:hover > .bg:not(.active) {
+  background-color: v-bind(textColor);
+  opacity: 0.1;
 }
-.item:active > .bg {
+.item:active > .bg:not(.active) {
   opacity: 0.2;
-  background-color: black;
 }
 .bg {
   width: 120%;
@@ -63,18 +63,18 @@ defineProps<{
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
-  z-index: -2;
+  z-index: -1;
   border-radius: 50%;
   background-color: transparent;
   opacity: 0;
   transition: all 0.2s ease;
 }
 .item > .active {
-  background-color: black !important;
+  background-color: v-bind(textColor) !important;
   opacity: 1;
 }
 .active + * {
-  color: white;
+  color: v-bind(color);
 }
 .disable {
   cursor: auto;

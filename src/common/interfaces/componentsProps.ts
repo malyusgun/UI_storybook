@@ -18,10 +18,12 @@ import type {
   ISelectOption,
   ISliderOptions,
   ITableColumn,
+  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
+  data?: ITableItem[][];
   columns: ITableColumn[];
   multipleSort?: boolean;
   gap?: string;

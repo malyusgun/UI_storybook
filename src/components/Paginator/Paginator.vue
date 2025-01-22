@@ -67,16 +67,30 @@ watch(perPage, (cur, prev) => {
 
 <template>
   <section class="container">
-    <PaginatorItem @click="current = 1" :color="color" :disable="isStartDisabled" class="paginatorItem">
+    <PaginatorItem
+      @click="current = 1"
+      :textColor="textColor"
+      :color="color"
+      :disable="isStartDisabled"
+      class="paginatorItem"
+    >
       <ArrowDoubleLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
-    <PaginatorItem @click="current--" :color="color" :disable="isStartDisabled" class="paginatorItem">
+    <PaginatorItem
+      @click="current--"
+      :textColor="textColor"
+      :color="color"
+      :disable="isStartDisabled"
+      class="paginatorItem"
+    >
       <ArrowLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
     </PaginatorItem>
     <PaginatorItem
       v-for="item of items"
       :key="item"
       @click="current = item"
+      :textColor="textColor"
+      :color="color"
       :active="current === item"
       class="paginatorItem"
     >
@@ -84,6 +98,7 @@ watch(perPage, (cur, prev) => {
     </PaginatorItem>
     <PaginatorItem
       @click="isEndDisabled ? '' : current++"
+      :textColor="textColor"
       :color="color"
       :disable="isEndDisabled"
       class="paginatorItem"
@@ -92,6 +107,7 @@ watch(perPage, (cur, prev) => {
     </PaginatorItem>
     <PaginatorItem
       @click="isEndDisabled ? '' : (current = itemsLength)"
+      :textColor="textColor"
       :color="color"
       :disable="isEndDisabled"
       class="paginatorItem"
@@ -102,6 +118,7 @@ watch(perPage, (cur, prev) => {
       v-if="itemsPerPageOptions"
       v-model="perPage"
       :theme="theme"
+      :darknessTheme="darknessTheme"
       :size="size"
       width="max-width"
       no-highlight

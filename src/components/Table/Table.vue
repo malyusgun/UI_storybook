@@ -45,7 +45,7 @@ const sortState = computed<string[]>(() => {
 });
 const rows = computed<ITableItem[][]>(() =>
   calcRows(
-    data.value!,
+    data.value ?? props.data,
     sortStateActive.value,
     props.multipleSort,
     columnToFilter.value,

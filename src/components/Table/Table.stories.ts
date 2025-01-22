@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    data: { control: 'object' },
     columns: { control: 'text' },
     fontSize: { control: 'text' },
     gap: { control: 'text' },

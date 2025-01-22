@@ -2,7 +2,7 @@ import type { ITableColumn, ITableItem, TTableColumnType } from '@interfaces/com
 import type { TSize } from '@interfaces/common';
 
 export const calcRows = (
-  initRows: ITableItem[][],
+  initRows: ITableItem[][] | undefined,
   sortStateActive: [number, string] | [],
   multipleSort: boolean,
   columnToFilter: number,
@@ -10,6 +10,7 @@ export const calcRows = (
   filterValue: string,
   isRegisterSensitive: boolean,
 ) => {
+  if (!initRows?.length) return [];
   // ['up', 'down', ...]
   let rows = [...initRows];
 

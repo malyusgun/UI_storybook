@@ -7,23 +7,23 @@
 ## Список компонентов:
 - Table;
 - TreeList;
-- MenuDial;
 - Popup;
-- Slider;
-
-- Paginator;
-- Drawer;
 - Modal;
+- Drawer;
+
+- MenuDial;
+- Paginator;
+- Slider;
 - Knob;
 - Select;
 - SelectButton;
-
 - Button;
-- ProgressBar;
 - Rating;
 - ToggleSwitch;
-- Tag;
 - Checkbox;
+
+- ProgressBar;
+- Tag;
 - Divider.
 
 ---

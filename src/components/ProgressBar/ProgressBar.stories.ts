@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar.vue';
 const meta: Meta = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
-  tags: ['autodocs'],
+  tags: ['small_data'],
   parameters: {
     docs: {
       description: {

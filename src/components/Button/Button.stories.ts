@@ -5,7 +5,7 @@ import Button from './Button.vue';
 const meta: Meta = {
   title: 'Components/Button',
   component: Button,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

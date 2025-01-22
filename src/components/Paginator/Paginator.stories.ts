@@ -5,7 +5,7 @@ import Paginator from './Paginator.vue';
 const meta: Meta = {
   title: 'Components/Paginator',
   component: Paginator,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

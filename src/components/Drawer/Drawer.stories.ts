@@ -6,7 +6,7 @@ import { iconsSet } from '@/common/constants/icons';
 const meta: Meta = {
   title: 'Components/Drawer',
   component: Drawer,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {

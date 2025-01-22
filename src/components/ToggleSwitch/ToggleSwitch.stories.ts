@@ -5,7 +5,7 @@ import ToggleSwitch from './ToggleSwitch.vue';
 const meta: Meta = {
   title: 'Components/ToggleSwitch',
   component: ToggleSwitch,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

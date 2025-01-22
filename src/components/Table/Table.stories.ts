@@ -5,7 +5,7 @@ import Table from './Table.vue';
 const meta: Meta = {
   title: 'Components/Table',
   component: Table,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {

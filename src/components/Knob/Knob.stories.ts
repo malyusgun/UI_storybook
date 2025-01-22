@@ -5,7 +5,7 @@ import Knob from './Knob.vue';
 const meta: Meta = {
   title: 'Components/Knob',
   component: Knob,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

@@ -5,7 +5,7 @@ import Checkbox from './Checkbox.vue';
 const meta: Meta = {
   title: 'Components/Checkbox',
   component: Checkbox,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

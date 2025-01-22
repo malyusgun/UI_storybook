@@ -5,7 +5,7 @@ import Rating from './Rating.vue';
 const meta: Meta = {
   title: 'Components/Rating',
   component: Rating,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

@@ -52,7 +52,7 @@ const pickOption = (value: string) => {
 const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string | undefined, defaultColor: string) =>
   color ? convertThemeToColor(color, darknessColor ?? '500') : defaultColor;
 
-document.querySelector('body').addEventListener('pointerup', (e: MouseEvent) => {
+document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) => {
   if (isOpen.value && e.button === 0) isOpen.value = false;
 });
 </script>

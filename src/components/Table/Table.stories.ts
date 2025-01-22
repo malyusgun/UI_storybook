@@ -133,7 +133,6 @@ export const Full: Story = {
         type: 'number',
         sortable: true,
         filterable: true,
-        initSort: 'down',
       },
       {
         name: 'Hobbies',
@@ -146,7 +145,12 @@ export const Full: Story = {
       {
         name: 'Country',
         type: 'text',
-        initSort: 'none',
+      },
+      {
+        name: 'Is gay',
+        type: 'checkbox',
+        sortable: true,
+        initSort: 'up',
       },
     ],
 
@@ -164,6 +168,9 @@ export const Full: Story = {
         {
           value: 'USA',
         },
+        {
+          value: false,
+        },
       ],
       [
         {
@@ -176,7 +183,10 @@ export const Full: Story = {
           value: 'Football',
         },
         {
-          value: 'Canadaaaaaaaaaaaa',
+          value: 'USA',
+        },
+        {
+          value: true,
         },
       ],
       [
@@ -192,6 +202,9 @@ export const Full: Story = {
         {
           value: 'Russia',
         },
+        {
+          value: false,
+        },
       ],
       [
         {
@@ -206,6 +219,9 @@ export const Full: Story = {
         {
           value: 'Russia',
         },
+        {
+          value: false,
+        },
       ],
       [
         {
@@ -219,6 +235,9 @@ export const Full: Story = {
         },
         {
           value: 'Russia',
+        },
+        {
+          value: false,
         },
       ],
     ],

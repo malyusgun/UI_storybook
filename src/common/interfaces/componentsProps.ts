@@ -160,6 +160,7 @@ export interface IPopupProps {
 export interface ISelectProps {
   options: ISelectOption[];
   groups?: ISelectGroup[];
+  selected?: string;
   width?: string;
   placeholder?: string;
   openIcon?: TIcon;
@@ -255,6 +256,7 @@ export interface ITagProps {
 }
 
 export interface ICheckboxProps {
+  active?: boolean;
   label?: string;
   labelPos?: TPosition;
   name?: string;

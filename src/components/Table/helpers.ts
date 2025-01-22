@@ -14,7 +14,6 @@ export const calcRows = (
   // ['up', 'down', ...]
   let rows = [...initRows];
   if (filterValue) {
-    console.log('oh...');
     rows = rows.filter((row) => {
       const item = isRegisterSensitive ? row[indexColumnToFilter].value : row[indexColumnToFilter].value.toLowerCase();
       return item.startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
@@ -43,14 +42,18 @@ export const calcRows = (
   } else {
     const index = sortStateActive[0];
     const value = sortStateActive[1];
-    console.log(value, index, columnToSortType);
-    if (columnToSortType === 'number')
+    if (~['text', 'select'].indexOf(columnToSortType))
+      return rows.sort((a, b) => {
+        if (typeof a[index].value === 'string' && typeof b[index].value === 'string')
+          return value === 'down'
+            ? a[index].value.localeCompare(b[index].value)
+            : b[index].value.localeCompare(a[index].value);
+        return 0;
+      });
+    if (~['number', 'checkbox', 'rating', 'progressBar', 'knob'].indexOf(columnToSortType))
       return rows.sort((a, b) =>
         value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
       );
-    return rows.sort((a, b) =>
-      value === 'down' ? a[index].value.localeCompare(b[index].value) : b[index].value.localeCompare(a[index].value),
-    );
   }
 };
 

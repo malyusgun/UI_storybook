@@ -5,6 +5,7 @@ import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextCo
 import type { ITableItem } from '@interfaces/componentsProp';
 import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
 import TableHeader from '@components/Table/TableHeader.vue';
+import Checkbox from '@components/Checkbox/Checkbox.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
@@ -23,16 +24,12 @@ const isRegisterSensitive = ref<boolean>(false);
 
 watch(props.columns, () => (columns.value = props.columns));
 
+const columnToSortIndex = props.columns.findIndex((column) => column.initSort && column.initSort !== 'none');
+if (columnToSortIndex) sortStateActive.value = [columnToSortIndex, props.columns[columnToSortIndex].initSort];
+
 const initGap = computed(() => calcGap(props.gap ?? '5px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
-const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
-const color = computed(() =>
-  props.textColor
-    ? convertThemeToColor(props.textColor, props.darknessTextColor)
-    : convertThemeToTextColor(props.theme, props.darknessTheme),
-);
-const secondaryColor = computed<string>(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
-const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
+const types = computed(() => props.columns.map((column) => column.type));
 // ['', 'up', 'none', '', 'none', ...]
 const sortState = computed<string[]>(() => {
   const result = [];
@@ -53,9 +50,17 @@ const rows = computed<ITableItem[][]>(() =>
   ),
 );
 
+const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
+const color = computed(() =>
+  props.textColor
+    ? convertThemeToColor(props.textColor, props.darknessTextColor)
+    : convertThemeToTextColor(props.theme, props.darknessTheme),
+);
+const secondaryColor = computed<string>(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
+const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
+
 const changeColumnSortMode = (index: number) => {
   const cur = sortState.value[index];
-  console.log(index, cur);
   const newValue = cur === 'none' ? 'down' : cur === 'down' ? 'up' : 'none';
   if (cur === 'up') {
     sortStateActive.value = [];
@@ -113,17 +118,24 @@ const cancelFilter = () => {
         />
       </thead>
       <tbody>
-        <tr v-for="(row, index) of rows" :key="index">
+        <tr v-for="(row, rowIndex) of rows" :key="rowIndex">
           <td
             :class="{
               leftBorder: showAllLines,
-              darkRow: stripedRows && index % 2,
+              darkRow: stripedRows && rowIndex % 2,
             }"
-            v-for="item of row"
+            v-for="(item, columnIndex) of row"
             :key="item.value"
-            :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}; text-align: ${center ? 'center' : 'start'}`"
+            :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
           >
-            {{ item.value }}
+            <div :class="['cell', { cellCenter: center }]">
+              <span v-if="~['text', 'number'].indexOf(types[columnIndex] ?? '')">{{ item.value }}</span>
+              <Checkbox
+                v-else-if="types[columnIndex] === 'checkbox'"
+                :active="item.value as boolean"
+                v-bind="columns[columnIndex].options"
+              />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -153,6 +165,16 @@ tr::after {
 .tableLines {
   border-top: 1px solid v-bind(secondaryColor);
   border-right: 1px solid v-bind(secondaryColor);
+}
+.cell {
+  display: inline-flex;
+
+  width: 100%;
+  height: 100%;
+}
+.cellCenter {
+  justify-content: center;
+  align-items: center;
 }
 .leftBorder {
   border-left: 1px solid v-bind(secondaryColor);

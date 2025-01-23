@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISelectProps } from '@interfaces/componentsProps';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
@@ -9,6 +9,7 @@ import SearchIcon from '@icons/Mono/SearchIcon.vue';
 import { calcFontSize, calcPadding, getOptionsGroups } from '@components/Select/helpers';
 
 const props = withDefaults(defineProps<ISelectProps>(), {
+  options: [{ value: 'One' }, { value: 'Two' }],
   size: 'normal',
   width: '200px',
   theme: 'white',
@@ -21,6 +22,10 @@ const props = withDefaults(defineProps<ISelectProps>(), {
 const selected = defineModel();
 const isOpen = ref<boolean>(false);
 const filter = ref<string>('');
+
+if (props.selected) {
+  selected.value = props.selected;
+}
 
 const optionsGroups = computed(() => getOptionsGroups(props.options, props.groups, filter.value));
 const optionsNoGroup = computed(() =>
@@ -54,11 +59,6 @@ const calcOptionColor = (color: TThemeColor | undefined, darknessColor: string |
 
 document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) => {
   if (isOpen.value && e.button === 0) isOpen.value = false;
-});
-
-const selectedProp = computed(() => props.selected);
-watch(selectedProp, () => (selected.value = selectedProp.value), {
-  immediate: true,
 });
 </script>
 

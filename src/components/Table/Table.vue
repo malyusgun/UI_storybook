@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import type { ITableProps } from '@interfaces/componentsProps';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
 import type { ITableItem } from '@interfaces/componentsProp';
-import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
+import {
+  calcAdditionalHeight,
+  calcGap,
+  calcRows,
+  filterCheckboxProps,
+  filterSelectProps,
+} from '@components/Table/helpers';
 import TableHeader from '@components/Table/TableHeader.vue';
 import Checkbox from '@components/Checkbox/Checkbox.vue';
+import Select from '@components/Select/Select.vue';
+import Rating from '@components/Rating/Rating.vue';
+import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
@@ -22,10 +31,12 @@ const isFilterPopup = ref<boolean>(false);
 const filterValue = ref<string>('');
 const isRegisterSensitive = ref<boolean>(false);
 
-watch(props.columns, () => (columns.value = props.columns));
+if (props.columns) {
+  columns.value = props.columns;
+}
 
 const columnToSortIndex = props.columns.findIndex((column) => column.initSort && column.initSort !== 'none');
-if (columnToSortIndex) sortStateActive.value = [columnToSortIndex, props.columns[columnToSortIndex].initSort];
+if (~columnToSortIndex) sortStateActive.value = [columnToSortIndex, props.columns[columnToSortIndex].initSort!];
 
 const initGap = computed(() => calcGap(props.gap ?? '5px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
@@ -125,15 +136,31 @@ const cancelFilter = () => {
               darkRow: stripedRows && rowIndex % 2,
             }"
             v-for="(item, columnIndex) of row"
-            :key="item.value"
+            :key="String(item.value)"
             :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
           >
             <div :class="['cell', { cellCenter: center }]">
               <span v-if="~['text', 'number'].indexOf(types[columnIndex] ?? '')">{{ item.value }}</span>
               <Checkbox
                 v-else-if="types[columnIndex] === 'checkbox'"
-                :active="item.value as boolean"
+                v-bind="filterCheckboxProps(columns[columnIndex].options)"
+                v-model="item.value as boolean"
+              />
+              <Select
+                v-else-if="types[columnIndex] === 'select'"
+                v-bind="filterSelectProps(columns[columnIndex].options)"
+                v-model="item.value"
+                width="100px"
+              />
+              <Rating
+                v-else-if="types[columnIndex] === 'rating'"
                 v-bind="columns[columnIndex].options"
+                v-model="item.value"
+              />
+              <ProgressBar
+                v-else-if="types[columnIndex] === 'progressBar'"
+                v-bind="columns[columnIndex].options"
+                :value="item.value as number"
               />
             </div>
           </td>
@@ -167,8 +194,7 @@ tr::after {
   border-right: 1px solid v-bind(secondaryColor);
 }
 .cell {
-  display: inline-flex;
-
+  display: flex;
   width: 100%;
   height: 100%;
 }

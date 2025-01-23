@@ -112,6 +112,34 @@ const tableColumns: ITableColumn[] = [
     name: 'Country',
     type: 'text',
   },
+  {
+    name: 'Is gay?',
+    type: 'checkbox',
+  },
+  {
+    name: 'Status',
+    type: 'select',
+    options: {
+      options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
+      theme: 'sky',
+    },
+  },
+  {
+    name: 'Children',
+    type: 'rating',
+    options: {
+      theme: 'yellow',
+    },
+  },
+  {
+    name: 'Job progress',
+    type: 'progressBar',
+    options: {
+      theme: 'red',
+      width: '150px',
+      size: 'small',
+    },
+  },
 ];
 const tableData = ref([
   [
@@ -127,6 +155,18 @@ const tableData = ref([
     {
       value: 'USA',
     },
+    {
+      value: false,
+    },
+    {
+      value: 'Married',
+    },
+    {
+      value: 0,
+    },
+    {
+      value: 30,
+    },
   ],
   [
     {
@@ -140,6 +180,18 @@ const tableData = ref([
     },
     {
       value: 'Canada',
+    },
+    {
+      value: true,
+    },
+    {
+      value: 'Married',
+    },
+    {
+      value: 0,
+    },
+    {
+      value: 30,
     },
   ],
   [
@@ -155,6 +207,18 @@ const tableData = ref([
     {
       value: 'Russia',
     },
+    {
+      value: false,
+    },
+    {
+      value: 'Married',
+    },
+    {
+      value: 0,
+    },
+    {
+      value: 30,
+    },
   ],
   [
     {
@@ -169,6 +233,18 @@ const tableData = ref([
     {
       value: 'Russia',
     },
+    {
+      value: false,
+    },
+    {
+      value: 'Married',
+    },
+    {
+      value: 0,
+    },
+    {
+      value: 30,
+    },
   ],
   [
     {
@@ -182,6 +258,18 @@ const tableData = ref([
     },
     {
       value: 'Russia',
+    },
+    {
+      value: false,
+    },
+    {
+      value: 'Married',
+    },
+    {
+      value: 0,
+    },
+    {
+      value: 30,
     },
   ],
 ]);
@@ -217,25 +305,19 @@ const knob = ref(0);
     <template #icon-right><TrashIcon color="#3333aa" size="18" /></template>
   </Tag>
   {{ activeCheckbox }}
-  <Checkbox v-model:active="activeCheckbox" size="small" />
-  <Checkbox v-model:active="activeCheckbox" />
-  <Checkbox v-model:active="activeCheckbox" size="large" />
-  <Checkbox v-model:active="activeCheckbox" size="huge" />
+  <Checkbox v-model="activeCheckbox" size="small" />
+  <Checkbox v-model="activeCheckbox" />
+  <Checkbox v-model="activeCheckbox" size="large" />
+  <Checkbox v-model="activeCheckbox" size="huge" />
+  {{ tableData[1] }}
   <Table
+    center
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
     v-model="tableData"
-    fontSize="36px"
-    theme="black"
-    stripedRows
-  ></Table>
-  <Table
-    show-all-lines
-    :columns="tableColumns"
-    darknessTextColor="500"
-    v-model="tableData"
-    fontSize="20px"
+    size="large"
+    font-size="36px"
     theme="black"
     stripedRows
   ></Table>

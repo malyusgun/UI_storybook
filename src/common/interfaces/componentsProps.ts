@@ -158,7 +158,7 @@ export interface IPopupProps {
 }
 
 export interface ISelectProps {
-  options: ISelectOption[];
+  options?: ISelectOption[];
   groups?: ISelectGroup[];
   selected?: string;
   width?: string;
@@ -205,7 +205,7 @@ export interface IButtonProps {
 }
 
 export interface IProgressBarProps {
-  value: number;
+  value?: number;
   max?: number;
   width?: string;
   height?: string;

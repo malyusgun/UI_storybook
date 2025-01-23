@@ -19,7 +19,7 @@ export interface ITableColumn {
 }
 
 export interface ITableItem {
-  value: string | boolean;
+  value: string | number | boolean;
   editable?: boolean;
 }
 

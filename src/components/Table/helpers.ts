@@ -1,5 +1,6 @@
 import type { ITableColumn, ITableItem, TTableColumnType } from '@interfaces/componentsProp';
 import type { TSize } from '@interfaces/common';
+import type { ICheckboxProps, ISelectProps } from '@interfaces/componentsProps';
 
 export const calcRows = (
   initRows: ITableItem[][] | undefined,
@@ -15,8 +16,10 @@ export const calcRows = (
   let rows = [...initRows];
   if (filterValue) {
     rows = rows.filter((row) => {
-      const item = isRegisterSensitive ? row[indexColumnToFilter].value : row[indexColumnToFilter].value.toLowerCase();
-      return item.startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
+      const item = isRegisterSensitive
+        ? row[indexColumnToFilter].value
+        : (row[indexColumnToFilter].value as string).toLowerCase();
+      return (item as string).startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
     });
   }
 
@@ -50,10 +53,10 @@ export const calcRows = (
             : b[index].value.localeCompare(a[index].value);
         return 0;
       });
-    if (~['number', 'checkbox', 'rating', 'progressBar', 'knob'].indexOf(columnToSortType))
-      return rows.sort((a, b) =>
-        value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
-      );
+    // 'number', 'checkbox', 'rating', 'progressBar', 'knob'
+    return rows.sort((a, b) =>
+      value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
+    );
   }
 };
 
@@ -79,3 +82,18 @@ export const calcAdditionalHeight = (size: TSize, fontSize: string) => {
 
 export const calcColumnPadding = (column: ITableColumn, center: boolean, gap: string) =>
   center ? `0px calc(${gap} / 2 + ${column.padding ?? '0px'} / 2)` : `0 ${column.padding ?? '0px'} 0 0`;
+
+export const filterCheckboxProps = (props: ICheckboxProps | undefined) => {
+  if (!props) return null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { active, ...res } = props;
+  return res;
+};
+
+export const filterSelectProps = (props: ISelectProps | undefined) => {
+  if (!props || !props.options)
+    return {
+      options: [{ value: 'One' }, { value: 'Two' }],
+    };
+  return props;
+};

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ICheckboxProps } from '@interfaces/componentsProps';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
 
@@ -47,11 +47,9 @@ const gap = computed(() => {
 const borderWidth = computed(() => (props.size === 'large' || props.size === 'huge' ? 2 : 1));
 const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`);
 
-const activeProp = computed(() => props.active);
-
-watch(activeProp, () => (active.value = activeProp.value), {
-  immediate: true,
-});
+if (props.active) {
+  active.value = props.active;
+}
 </script>
 
 <template>

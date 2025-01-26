@@ -9,13 +9,15 @@ import Button from '@components/Button/Button.vue';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
 import CrossIcon from '@icons/Mono/CrossIcon.vue';
 import type { TThemeColor } from '@interfaces/common';
-import type { ITableColumn } from '@interfaces/componentsProp';
+import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
 import { computed } from 'vue';
 
 interface Props {
+  table: Element;
   columns: ITableColumn[];
   sortState: string[];
   indexColumnToFilter: number;
+  types: (TTableColumnType | undefined)[];
   initGap: string;
   additionalHeightFromSize: string;
   theme: TThemeColor;
@@ -40,9 +42,8 @@ const iconSize = computed(() => {
 
 const calcLeft = (selector: string) => {
   const el = document.querySelector(selector);
-  const table = document.querySelector('#table')!;
   if (!el) return 0;
-  return el.getBoundingClientRect().left - table.getBoundingClientRect().left + +iconSize.value;
+  return el.getBoundingClientRect().left - props.table.getBoundingClientRect().left + +iconSize.value;
 };
 const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter].type === 'text');
 </script>
@@ -50,12 +51,16 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
 <template>
   <tr>
     <th
-      :class="{
-        leftBorder: showAllLines,
-      }"
       v-for="(column, index) of columns"
       :key="column.name"
-      :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
+      :style="`position: relative; padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
+      :class="[
+        `column`,
+        {
+          leftBorder: showAllLines,
+          textMinWidth: types[index] === 'text',
+        },
+      ]"
     >
       <div
         :style="`justify-content: ${center ? 'center' : 'start'}; gap: ${center ? '0' : initGap}; padding: ${calcColumnPadding(column, center, initGap)}`"
@@ -132,7 +137,12 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
 .columnHeader-container {
   display: flex;
   align-items: center;
+  padding: 5px 0;
   gap: 10px;
+  > h3 {
+    user-select: none;
+    white-space: nowrap;
+  }
 }
 .filterInput {
   width: 150px;
@@ -147,5 +157,8 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
 }
 .leftBorder {
   border-left: 1px solid v-bind(secondaryColor);
+}
+.textMinWidth {
+  min-width: 230px;
 }
 </style>

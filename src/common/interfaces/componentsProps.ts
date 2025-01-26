@@ -18,12 +18,11 @@ import type {
   ISelectOption,
   ISliderOptions,
   ITableColumn,
-  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
-  data?: ITableItem[][];
+  data?: unknown[][];
   columns: ITableColumn[];
   multipleSort?: boolean;
   gap?: string;
@@ -36,6 +35,12 @@ export interface ITableProps {
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
+  editable?: boolean;
+  noEditingSettings?: {
+    columns: number[];
+    rows: number[];
+    cells: [number, number][];
+  };
 }
 
 export interface ITLProps {
@@ -80,10 +85,12 @@ export interface IMDProps {
 }
 
 export interface IKnobProps {
+  value?: number;
   min?: number;
   max?: number;
   step?: number;
   size?: TSize;
+  width?: string;
   theme?: TThemeColor;
   colorGaps?: IColorGap[];
   negativeTheme?: TThemeColor;
@@ -217,6 +224,7 @@ export interface IProgressBarProps {
   inactiveTheme?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessInactiveTheme?: TDarkness;
+  gradient?: string[];
   showLabel?: boolean;
   labelBefore?: string;
   labelAfter?: string;
@@ -224,6 +232,7 @@ export interface IProgressBarProps {
 }
 
 export interface IRatingProps {
+  value?: number;
   count?: number;
   size?: TSize;
   gap?: string;

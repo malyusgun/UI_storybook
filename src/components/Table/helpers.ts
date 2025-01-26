@@ -1,9 +1,9 @@
-import type { ITableColumn, ITableItem, TTableColumnType } from '@interfaces/componentsProp';
+import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
 import type { TSize } from '@interfaces/common';
 import type { ICheckboxProps, ISelectProps } from '@interfaces/componentsProps';
 
 export const calcRows = (
-  initRows: ITableItem[][] | undefined,
+  initRows: unknown[][] | undefined,
   sortStateActive: [number, string] | [],
   multipleSort: boolean,
   indexColumnToFilter: number,
@@ -16,9 +16,7 @@ export const calcRows = (
   let rows = [...initRows];
   if (filterValue) {
     rows = rows.filter((row) => {
-      const item = isRegisterSensitive
-        ? row[indexColumnToFilter].value
-        : (row[indexColumnToFilter].value as string).toLowerCase();
+      const item = isRegisterSensitive ? row[indexColumnToFilter] : (row[indexColumnToFilter] as string).toLowerCase();
       return (item as string).startsWith(isRegisterSensitive ? filterValue : filterValue.toLowerCase());
     });
   }
@@ -47,16 +45,12 @@ export const calcRows = (
     const value = sortStateActive[1];
     if (~['text', 'select'].indexOf(columnToSortType))
       return rows.sort((a, b) => {
-        if (typeof a[index].value === 'string' && typeof b[index].value === 'string')
-          return value === 'down'
-            ? a[index].value.localeCompare(b[index].value)
-            : b[index].value.localeCompare(a[index].value);
+        if (typeof a[index] === 'string' && typeof b[index] === 'string')
+          return value === 'down' ? a[index].localeCompare(b[index]) : b[index].localeCompare(a[index]);
         return 0;
       });
     // 'number', 'checkbox', 'rating', 'progressBar', 'knob'
-    return rows.sort((a, b) =>
-      value === 'down' ? +a[index].value - +b[index].value : +b[index].value - +a[index].value,
-    );
+    return rows.sort((a, b) => (value === 'down' ? +a[index] - +b[index] : +b[index] - +a[index]));
   }
 };
 

@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import type { ITableProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, type Ref, ref } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
-import type { ITableItem } from '@interfaces/componentsProp';
-import {
-  calcAdditionalHeight,
-  calcGap,
-  calcRows,
-  filterCheckboxProps,
-  filterSelectProps,
-} from '@components/Table/helpers';
-import TableHeader from '@components/Table/TableHeader.vue';
-import Checkbox from '@components/Checkbox/Checkbox.vue';
-import Select from '@components/Select/Select.vue';
-import Rating from '@components/Rating/Rating.vue';
-import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
+import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
+import TableHeader from '@components/Table/components/TableHeader.vue';
+import TableCell from '@components/Table/components/TableCell.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
   theme: 'white',
   darknessTheme: '500',
   fontSize: '16px',
+  editable: false,
 });
-const data = defineModel<ITableItem[][]>();
+const data = defineModel<unknown[][]>();
+const emit = defineEmits(['updateData']);
 
+const table = ref();
 const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);
 const indexColumnToFilter = ref<number>(0);
@@ -31,6 +24,9 @@ const isFilterPopup = ref<boolean>(false);
 const filterValue = ref<string>('');
 const isRegisterSensitive = ref<boolean>(false);
 
+if (props.data) {
+  data.value = props.data;
+}
 if (props.columns) {
   columns.value = props.columns;
 }
@@ -40,7 +36,6 @@ if (~columnToSortIndex) sortStateActive.value = [columnToSortIndex, props.column
 
 const initGap = computed(() => calcGap(props.gap ?? '5px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
-const types = computed(() => props.columns.map((column) => column.type));
 // ['', 'up', 'none', '', 'none', ...]
 const sortState = computed<string[]>(() => {
   const result = [];
@@ -49,9 +44,9 @@ const sortState = computed<string[]>(() => {
   }
   return result;
 });
-const rows = computed<ITableItem[][]>(() =>
+const rows = computed<unknown[][]>(() =>
   calcRows(
-    data.value ?? props.data,
+    data.value,
     sortStateActive.value,
     props.multipleSort,
     indexColumnToFilter.value,
@@ -60,6 +55,7 @@ const rows = computed<ITableItem[][]>(() =>
     isRegisterSensitive.value,
   ),
 );
+const types = computed(() => props.columns.map((column) => column.type));
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -69,6 +65,11 @@ const color = computed(() =>
 );
 const secondaryColor = computed<string>(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const darkCellColor = computed(() => convertThemeToSecondaryColor(props.theme, String(+props.darknessTheme + 300)));
+const knobWidth = computed(() => {
+  if (!isNaN(+props.fontSize[props.fontSize.length - 3]))
+    return +props.fontSize.slice(0, -2) * 2.5 + props.fontSize.slice(-2);
+  return +props.fontSize.slice(0, -3) * 2.5 + props.fontSize.slice(-3);
+});
 
 const changeColumnSortMode = (index: number) => {
   const cur = sortState.value[index];
@@ -95,6 +96,12 @@ const cancelFilter = () => {
   filterValue.value = '';
   isFilterPopup.value = false;
 };
+const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: number) => {
+  if (data.value?.[rowIndex]?.[columnIndex] !== undefined) {
+    data.value[rowIndex][columnIndex] = newValue.value ?? newValue;
+    emit('updateData', data.value);
+  }
+};
 </script>
 
 <template>
@@ -104,16 +111,19 @@ const cancelFilter = () => {
         tableLines: showAllLines,
       }"
       :style="`background-color: ${themeColor}; color: ${color}`"
-      id="table"
+      class="table"
+      ref="table"
     >
       <thead>
         <TableHeader
           v-model:filterValue="filterValue"
           v-model:isFilterPopup="isFilterPopup"
           v-model:isRegisterSensitive="isRegisterSensitive"
+          :table="table"
           :columns="columns"
           :sortState="sortState"
           :indexColumnToFilter="indexColumnToFilter"
+          :types="types"
           :initGap="initGap"
           :additionalHeightFromSize="additionalHeightFromSize"
           :theme="theme"
@@ -129,40 +139,38 @@ const cancelFilter = () => {
         />
       </thead>
       <tbody>
-        <tr v-for="(row, rowIndex) of rows" :key="rowIndex">
+        <tr
+          v-for="(row, rowIndex) of rows"
+          :key="rowIndex"
+          :class="{
+            noEdit:
+              !editable ||
+              (noEditingSettings?.rows && noEditingSettings?.rows.find((i) => data?.[i]?.join('') === row.join(''))),
+          }"
+        >
           <td
+            v-for="(item, columnIndex) of row"
+            :key="columnIndex"
             :class="{
               leftBorder: showAllLines,
               darkRow: stripedRows && rowIndex % 2,
+              noEdit: !editable || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
             }"
-            v-for="(item, columnIndex) of row"
-            :key="String(item.value)"
             :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
           >
-            <div :class="['cell', { cellCenter: center }]">
-              <span v-if="~['text', 'number'].indexOf(types[columnIndex] ?? '')">{{ item.value }}</span>
-              <Checkbox
-                v-else-if="types[columnIndex] === 'checkbox'"
-                v-bind="filterCheckboxProps(columns[columnIndex].options)"
-                v-model="item.value as boolean"
-              />
-              <Select
-                v-else-if="types[columnIndex] === 'select'"
-                v-bind="filterSelectProps(columns[columnIndex].options)"
-                v-model="item.value"
-                width="100px"
-              />
-              <Rating
-                v-else-if="types[columnIndex] === 'rating'"
-                v-bind="columns[columnIndex].options"
-                v-model="item.value"
-              />
-              <ProgressBar
-                v-else-if="types[columnIndex] === 'progressBar'"
-                v-bind="columns[columnIndex].options"
-                :value="item.value as number"
-              />
-            </div>
+            <TableCell
+              :item="item"
+              :types="types"
+              :columns="columns"
+              :rowIndex="rowIndex"
+              :columnIndex="columnIndex"
+              :center="center"
+              :editable="editable"
+              :noEditingSettings="noEditingSettings?.cells"
+              :fontSize="fontSize"
+              :knobWidth="knobWidth"
+              @updateData="updateData"
+            />
           </td>
         </tr>
       </tbody>
@@ -171,7 +179,7 @@ const cancelFilter = () => {
 </template>
 
 <style scoped>
-table {
+.table {
   border-collapse: collapse;
 }
 table * {
@@ -207,5 +215,8 @@ tr::after {
 }
 .darkRow {
   background-color: v-bind(darkCellColor);
+}
+.noEdit {
+  pointer-events: none;
 }
 </style>

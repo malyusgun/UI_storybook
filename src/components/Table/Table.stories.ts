@@ -23,6 +23,8 @@ const meta: Meta = {
     stripedRows: { control: 'boolean' },
     center: { control: 'boolean' },
     multipleSort: { control: 'boolean' },
+    editable: { control: 'boolean' },
+    noEditingSettings: { control: 'object' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -125,14 +127,12 @@ export const Full: Story = {
       {
         name: 'Name',
         type: 'text',
-        sortable: true,
-        initSort: 'none',
       },
       {
         name: 'Age',
         type: 'number',
-        sortable: true,
         filterable: true,
+        sortable: true,
       },
       {
         name: 'Hobbies',
@@ -140,107 +140,58 @@ export const Full: Story = {
         padding: '30px',
         filterable: true,
         sortable: true,
-        initSort: 'none',
       },
       {
         name: 'Country',
         type: 'text',
       },
       {
-        name: 'Is gay',
+        name: 'Is gay?',
         type: 'checkbox',
-        sortable: true,
-        initSort: 'up',
+      },
+      {
+        name: 'Status',
+        type: 'select',
+        options: {
+          options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
+          theme: 'sky',
+        },
+      },
+      {
+        name: 'Children',
+        type: 'rating',
+        options: {
+          theme: 'yellow',
+        },
+      },
+      {
+        name: 'Job progress',
+        type: 'progressBar',
+        options: {
+          theme: 'red',
+          width: '150px',
+          size: 'small',
+        },
+      },
+      {
+        name: 'Strength',
+        type: 'knob',
+        options: {},
       },
     ],
 
     data: [
-      [
-        {
-          value: 'Pete',
-        },
-        {
-          value: '30',
-        },
-        {
-          value: 'Chess',
-        },
-        {
-          value: 'USA',
-        },
-        {
-          value: false,
-        },
-      ],
-      [
-        {
-          value: 'John',
-        },
-        {
-          value: '7',
-        },
-        {
-          value: 'Football',
-        },
-        {
-          value: 'USA',
-        },
-        {
-          value: true,
-        },
-      ],
-      [
-        {
-          value: 'Дима',
-        },
-        {
-          value: '22',
-        },
-        {
-          value: 'Frontend',
-        },
-        {
-          value: 'Russia',
-        },
-        {
-          value: false,
-        },
-      ],
-      [
-        {
-          value: 'Ксюша',
-        },
-        {
-          value: '32',
-        },
-        {
-          value: 'Frontend',
-        },
-        {
-          value: 'Russia',
-        },
-        {
-          value: false,
-        },
-      ],
-      [
-        {
-          value: 'Ксюша',
-        },
-        {
-          value: '32',
-        },
-        {
-          value: 'Backend',
-        },
-        {
-          value: 'Russia',
-        },
-        {
-          value: false,
-        },
-      ],
+      ['Pete', '30', 'Chess', 'USA', false, 'Married', 0, 30, 2],
+      ['John', '7', 'Football', 'Canada', true, 'Married', 0, 30, 2],
+      ['Дима', '22', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+      ['Ксюша', '32', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+      ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
     ],
+    noEditingSettings: {
+      columns: [5],
+      rows: [3],
+      cells: [[0, 6]],
+    },
     fontSize: '24px',
     showAllLines: true,
     border: 'fuchsia',
@@ -249,5 +200,6 @@ export const Full: Story = {
     darknessTextColor: '500',
     center: true,
     size: 'large',
+    editable: true,
   },
 };

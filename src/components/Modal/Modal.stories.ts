@@ -98,7 +98,7 @@ export const Full: Story = {
     theme: 'black',
     position: 'topRight',
     dismissible: true,
-    closeIcon: 'CodeIcon',
+    closeIcon: 'Code',
     headerDivider: true,
   },
 };

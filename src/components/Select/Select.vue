@@ -9,7 +9,7 @@ import SearchIcon from '@icons/Mono/SearchIcon.vue';
 import { calcFontSize, calcPadding, getOptionsGroups } from '@components/Select/helpers';
 
 const props = withDefaults(defineProps<ISelectProps>(), {
-  options: [{ value: 'One' }, { value: 'Two' }],
+  options: () => [{ value: 'One' }, { value: 'Two' }],
   size: 'normal',
   width: '200px',
   theme: 'white',

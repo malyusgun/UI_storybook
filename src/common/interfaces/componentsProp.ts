@@ -18,11 +18,6 @@ export interface ITableColumn {
   padding?: string;
 }
 
-export interface ITableItem {
-  value: string | number | boolean;
-  editable?: boolean;
-}
-
 export interface ITableColumnOptions
   extends ICheckboxProps,
     ISelectProps,

@@ -39,7 +39,7 @@ const degreesTotal = computed(() => 360 - 90);
 const length = computed(() => props.max - props.min);
 const center = computed(() => calcCenter(container.value));
 const start = computed(() => calcStart(container.value));
-const containerSize = computed(() => calcContainerSize(props.size));
+const containerSize = computed(() => props.width ?? calcContainerSize(props.size));
 const buttonSize = computed(() => {
   const size = props.size;
   return size === 'normal' || size === 'small' ? 'small' : size === 'large' ? 'large' : 'huge';

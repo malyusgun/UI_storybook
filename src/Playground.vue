@@ -20,6 +20,7 @@ import AtIcon from '@icons/Mono/AtIcon.vue';
 import Knob from '@components/Knob/Knob.vue';
 import Rating from '@components/Rating/Rating.vue';
 import HomeIcon from '@icons/Mono/HomeIcon.vue';
+import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -121,7 +122,7 @@ const tableColumns: ITableColumn[] = [
     type: 'select',
     options: {
       options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
-      theme: 'sky',
+      theme: 'black',
     },
   },
   {
@@ -140,138 +141,18 @@ const tableColumns: ITableColumn[] = [
       size: 'small',
     },
   },
+  {
+    name: 'Strength',
+    type: 'knob',
+    options: {},
+  },
 ];
 const tableData = ref([
-  [
-    {
-      value: 'Pete',
-    },
-    {
-      value: '30',
-    },
-    {
-      value: 'Chess',
-    },
-    {
-      value: 'USA',
-    },
-    {
-      value: false,
-    },
-    {
-      value: 'Married',
-    },
-    {
-      value: 0,
-    },
-    {
-      value: 30,
-    },
-  ],
-  [
-    {
-      value: 'John',
-    },
-    {
-      value: '7',
-    },
-    {
-      value: 'Football',
-    },
-    {
-      value: 'Canada',
-    },
-    {
-      value: true,
-    },
-    {
-      value: 'Married',
-    },
-    {
-      value: 0,
-    },
-    {
-      value: 30,
-    },
-  ],
-  [
-    {
-      value: 'Дима',
-    },
-    {
-      value: '22',
-    },
-    {
-      value: 'Frontend',
-    },
-    {
-      value: 'Russia',
-    },
-    {
-      value: false,
-    },
-    {
-      value: 'Married',
-    },
-    {
-      value: 0,
-    },
-    {
-      value: 30,
-    },
-  ],
-  [
-    {
-      value: 'Ксюша',
-    },
-    {
-      value: '32',
-    },
-    {
-      value: 'Frontend',
-    },
-    {
-      value: 'Russia',
-    },
-    {
-      value: false,
-    },
-    {
-      value: 'Married',
-    },
-    {
-      value: 0,
-    },
-    {
-      value: 30,
-    },
-  ],
-  [
-    {
-      value: 'Ксюша',
-    },
-    {
-      value: '32',
-    },
-    {
-      value: 'Backend',
-    },
-    {
-      value: 'Russia',
-    },
-    {
-      value: false,
-    },
-    {
-      value: 'Married',
-    },
-    {
-      value: 0,
-    },
-    {
-      value: 30,
-    },
-  ],
+  ['Pete', '30', 'Chess', 'USA', false, 'Married', 0, 30, 2],
+  ['John', '7', 'Football', 'Canada', true, 'Married', 0, 30, 2],
+  ['Дима', '22', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+  ['Ксюша', '32', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+  ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
 ]);
 const activeCheckbox = ref();
 const selectOptions = [
@@ -283,6 +164,7 @@ const selectOptions = [
   },
 ];
 const knob = ref(0);
+const pbValue = ref(0);
 </script>
 
 <template>
@@ -309,6 +191,7 @@ const knob = ref(0);
   <Checkbox v-model="activeCheckbox" />
   <Checkbox v-model="activeCheckbox" size="large" />
   <Checkbox v-model="activeCheckbox" size="huge" />
+  <ProgressBar v-model="pbValue" />
   {{ tableData[1] }}
   <Table
     center
@@ -316,10 +199,9 @@ const knob = ref(0);
     :columns="tableColumns"
     darknessTextColor="500"
     v-model="tableData"
-    size="large"
-    font-size="36px"
     theme="black"
     stripedRows
+    editable
   ></Table>
   <button class="testButton" @click="visibleDrawer = !visibleDrawer">Нажми меня</button>
   <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
@@ -402,7 +284,7 @@ const knob = ref(0);
     </template>
   </SelectButton>
   <ToggleSwitch />
-  <Drawer v-model:visible="visibleDrawer" theme="sky" :dismissible="false" closeIcon="CropIcon">
+  <Drawer v-model:visible="visibleDrawer" theme="sky" :dismissible="false" closeIcon="Crop">
     <template #header>Это - Drawer</template>
     <p>
       pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur

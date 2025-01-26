@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISelectProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 import type { TThemeColor } from '@interfaces/common';
@@ -20,12 +20,16 @@ const props = withDefaults(defineProps<ISelectProps>(), {
   openIcon: 'ArrowShortDown',
 });
 const selected = defineModel();
-const isOpen = ref<boolean>(false);
-const filter = ref<string>('');
+const emit = defineEmits(['update']);
 
 if (props.selected) {
   selected.value = props.selected;
 }
+
+watch(selected, () => emit('update', selected));
+
+const isOpen = ref<boolean>(false);
+const filter = ref<string>('');
 
 const optionsGroups = computed(() => getOptionsGroups(props.options, props.groups, filter.value));
 const optionsNoGroup = computed(() =>

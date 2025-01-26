@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IKnobProps } from '@interfaces/componentsProps';
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor } from '@helpers/common';
 import { calcCenter, calcStart, calcNewValue, calcThemeColor, calcContainerSize } from '@components/Knob/helpers';
 import Button from '@components/Button/Button.vue';
@@ -25,13 +25,20 @@ const props = withDefaults(defineProps<IKnobProps>(), {
 const value = defineModel<number>({
   default: 0,
 }) as Ref<number>;
+const emit = defineEmits(['update']);
+
+if (props.value) {
+  value.value = props.value;
+}
+watch(value, () => emit('update', value));
 
 const isClickHold = ref<boolean>(false);
+const container = ref();
 
 const degreesTotal = computed(() => 360 - 90);
 const length = computed(() => props.max - props.min);
-const center = computed(() => calcCenter(document.querySelector('.container')!));
-const start = computed(() => calcStart(document.querySelector('.container')!));
+const center = computed(() => calcCenter(container.value));
+const start = computed(() => calcStart(container.value));
 const containerSize = computed(() => calcContainerSize(props.size));
 const buttonSize = computed(() => {
   const size = props.size;
@@ -95,6 +102,7 @@ const onPointerDown = ($event: MouseEvent) => {
     @pointermove="isClickHold ? setNewValue($event) : ''"
     @pointerup="isClickHold = false"
     class="container containerSize"
+    ref="container"
   >
     <div class="background"></div>
     <span

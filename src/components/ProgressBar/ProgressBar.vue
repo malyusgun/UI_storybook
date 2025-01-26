@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IProgressBarProps } from '@interfaces/componentsProps';
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IProgressBarProps>(), {
@@ -15,10 +15,13 @@ const props = withDefaults(defineProps<IProgressBarProps>(), {
   labelAfter: '%',
 });
 const value = defineModel() as Ref<number>;
+const emit = defineEmits(['update']);
 
 if (props.value) {
   value.value = props.value;
 }
+watch(value, () => emit('update', value));
+
 const active = computed(() => `${(value.value / props.max) * 100}%`);
 const activeColor = computed(() => {
   if (props.gradient) return `linear-gradient(to right, ${props.gradient.join(',')})`;

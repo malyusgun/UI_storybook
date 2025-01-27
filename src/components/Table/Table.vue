@@ -151,10 +151,12 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
           <td
             v-for="(item, columnIndex) of row"
             :key="columnIndex"
+            @click="handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler"
             :class="{
               leftBorder: showAllLines,
               darkRow: stripedRows && rowIndex % 2,
               noEdit: !editable || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
+              pointer: handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex),
             }"
             :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
           >
@@ -169,6 +171,7 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
               :noEditingSettings="noEditingSettings?.cells"
               :fontSize="fontSize"
               :knobWidth="knobWidth"
+              :noEdit="!!handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)"
               @updateData="updateData"
             />
           </td>
@@ -218,5 +221,8 @@ tr::after {
 }
 .noEdit {
   pointer-events: none;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

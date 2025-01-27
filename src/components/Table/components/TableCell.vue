@@ -15,9 +15,10 @@ interface IProps {
   columnIndex: number;
   center: boolean | undefined;
   editable: boolean;
-  noEditingSettings: [number, number][] | undefined;
   fontSize: string;
   knobWidth: string;
+  noEditingSettings: [number, number][] | undefined;
+  noEdit: boolean;
 }
 defineProps<IProps>();
 defineEmits(['updateData']);
@@ -30,9 +31,9 @@ defineEmits(['updateData']);
       {
         cellCenter: center,
         noEdit:
+          noEdit ||
           !editable ||
-          (noEditingSettings &&
-            noEditingSettings.find((i: [number, number]) => i[0] === rowIndex && i[1] === columnIndex)),
+          noEditingSettings?.find((i: [number, number]) => i[0] === rowIndex && i[1] === columnIndex),
       },
     ]"
   >

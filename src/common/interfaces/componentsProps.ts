@@ -37,10 +37,14 @@ export interface ITableProps {
   darknessTextColor?: TDarkness;
   editable?: boolean;
   noEditingSettings?: {
-    columns: number[];
-    rows: number[];
-    cells: [number, number][];
+    columns?: number[];
+    rows?: number[];
+    cells?: [number, number][];
   };
+  handlers?: {
+    cell: [number, number];
+    handler?: unknown;
+  }[];
 }
 
 export interface ITLProps {

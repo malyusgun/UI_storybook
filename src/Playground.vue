@@ -202,6 +202,15 @@ const pbValue = ref(0);
     theme="black"
     stripedRows
     editable
+    :no-editing-settings="{
+      cells: [[0, 0]],
+    }"
+    :handlers="[
+      {
+        cell: [0, 0],
+        handler: () => (visibleDrawer = true),
+      },
+    ]"
   ></Table>
   <button class="testButton" @click="visibleDrawer = !visibleDrawer">Нажми меня</button>
   <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>

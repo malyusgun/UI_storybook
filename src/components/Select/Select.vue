@@ -40,20 +40,19 @@ const optionsNoGroup = computed(() =>
   ),
 );
 const fontSize = computed(() => props.fontSize ?? calcFontSize(props.size));
-
+const padding = computed(() => calcPadding(props.size));
 const selectedOption = computed(() => props.options.find((option) => option.value === selected.value));
 const selectedTextWidth = computed(() => {
   const numberString = String(parseInt(props.width));
   if (numberString.length + 2 === props.width.length) {
-    return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-2);
+    return +numberString - parseInt(fontSize.value) - parseInt(padding.value) * 2 - 10 + props.width.slice(-2);
   }
   if (numberString.length + 3 === props.width.length) {
-    return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-3);
+    return +numberString - parseInt(fontSize.value) - parseInt(padding.value) * 2 - 10 + props.width.slice(-3);
   }
-  return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-1);
+  return +numberString - parseInt(fontSize.value) - parseInt(padding.value) * 2 - 10 + props.width.slice(-1);
 });
 const fontSizeNumber = computed(() => fontSize.value.slice(0, -2));
-const padding = computed(() => calcPadding(props.size));
 const textColor = computed(() =>
   props.disabled ? '#62708c' : convertThemeToTextColor(props.theme, props.darknessTheme ?? '700'),
 );
@@ -235,7 +234,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
 }
 .options {
   position: absolute;
-  z-index: 5000;
+  z-index: 1;
   top: 101%;
   width: 100%;
   border: 1px solid v-bind(borderColor);
@@ -250,6 +249,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
 .optionsOpened {
   grid-template-rows: 1fr;
   opacity: 1;
+  z-index: 5000;
 }
 .group {
   border-top: 1px solid;

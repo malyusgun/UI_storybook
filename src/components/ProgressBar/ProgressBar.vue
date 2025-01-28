@@ -57,7 +57,7 @@ const isClickHold = ref<boolean>(false);
 
 const setNewValue = (event: MouseEvent) => {
   const layerX = event.layerX;
-  value.value = Math.round((layerX / (props.width ? parseInt(props.width) : 300)) * props.max);
+  value.value = Math.round((layerX / (props.width ? parseInt(props.width) - 1 : 299)) * props.max);
 };
 const onPointerDown = (event: MouseEvent) => {
   isClickHold.value = true;

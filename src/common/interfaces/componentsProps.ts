@@ -36,6 +36,7 @@ export interface ITableProps {
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
   paginator?: boolean;
+  paginatorOptions?: IPaginatorProps;
   editable?: boolean;
   noEditingSettings?: {
     columns?: number[];

@@ -137,7 +137,6 @@ const tableColumns: ITableColumn[] = [
     type: 'progressBar',
     options: {
       theme: 'red',
-      width: '150px',
       size: 'small',
     },
   },
@@ -202,6 +201,7 @@ const pbValue = ref(0);
     theme="black"
     stripedRows
     editable
+    paginator
     :no-editing-settings="{
       cells: [[0, 0]],
     }"

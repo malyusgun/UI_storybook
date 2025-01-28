@@ -5,6 +5,7 @@ import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextCo
 import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
 import TableHeader from '@components/Table/components/TableHeader.vue';
 import TableCell from '@components/Table/components/TableCell.vue';
+import Paginator from '@components/Paginator/Paginator.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
@@ -17,6 +18,7 @@ const data = defineModel() as Ref<unknown[][]>;
 const emit = defineEmits(['updateData']);
 
 const table = ref();
+const currentPage = ref(1);
 const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);
 const indexColumnToFilter = ref<number>(0);
@@ -105,7 +107,7 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
 </script>
 
 <template>
-  <div>
+  <div :style="`background-color: ${themeColor}; color: ${color}`">
     <table
       :class="{
         tableLines: showAllLines,
@@ -178,6 +180,14 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
         </tr>
       </tbody>
     </table>
+    <Paginator
+      v-show="paginator"
+      v-model="currentPage"
+      :theme="theme"
+      :total="data.length"
+      v-bind="paginatorOptions"
+      class="paginator"
+    />
   </div>
 </template>
 
@@ -212,6 +222,10 @@ tr::after {
 .cellCenter {
   justify-content: center;
   align-items: center;
+}
+.paginator {
+  display: block;
+  margin: 0 auto;
 }
 .leftBorder {
   border-left: 1px solid v-bind(secondaryColor);

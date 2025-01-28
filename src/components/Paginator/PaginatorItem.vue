@@ -63,7 +63,7 @@ defineProps<{
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
-  z-index: -1;
+  z-index: 5;
   border-radius: 50%;
   background-color: transparent;
   opacity: 0;

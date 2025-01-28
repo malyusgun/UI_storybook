@@ -133,6 +133,8 @@ watch(perPage, (cur, prev) => {
   display: flex;
   gap: calc(v-bind(fontSize) * 0.25);
   align-items: center;
+  width: max-content;
+  height: calc(v-bind(itemSize) * 1.2);
 }
 .paginatorItem {
   width: v-bind(itemSize);
@@ -142,5 +144,7 @@ watch(perPage, (cur, prev) => {
 .digital {
   font-size: v-bind(fontSize);
   font-weight: bold;
+  position: relative;
+  z-index: 100;
 }
 </style>

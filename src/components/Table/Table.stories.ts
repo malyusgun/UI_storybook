@@ -188,7 +188,7 @@ export const Full: Story = {
       ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
     ],
     noEditingSettings: {
-      columns: [5],
+      columns: [2],
       rows: [3],
       cells: [[0, 6]],
     },

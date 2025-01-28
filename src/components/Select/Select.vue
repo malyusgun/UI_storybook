@@ -39,19 +39,29 @@ const optionsNoGroup = computed(() =>
       (filter.value ? (option.label ?? option.value).toLowerCase().startsWith(filter.value.toLowerCase()) : true),
   ),
 );
-const selectedOption = computed(() => props.options.find((option) => option.value === selected.value));
 const fontSize = computed(() => props.fontSize ?? calcFontSize(props.size));
+
+const selectedOption = computed(() => props.options.find((option) => option.value === selected.value));
+const selectedTextWidth = computed(() => {
+  const numberString = String(parseInt(props.width));
+  if (numberString.length + 2 === props.width.length) {
+    return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-2);
+  }
+  if (numberString.length + 3 === props.width.length) {
+    return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-3);
+  }
+  return numberString - parseInt(fontSize.value) - 10 + props.width.slice(-1);
+});
 const fontSizeNumber = computed(() => fontSize.value.slice(0, -2));
 const padding = computed(() => calcPadding(props.size));
 const textColor = computed(() =>
   props.disabled ? '#62708c' : convertThemeToTextColor(props.theme, props.darknessTheme ?? '700'),
 );
+const borderColor = computed(() => (props.noBorder ? 'transparent' : textColor.value));
 const backgroundColor = computed(() =>
-  // convertThemeToColor(
-  //   props.background ?? (props.theme === 'white' ? 'black' : props.theme === 'black' ? 'white' : props.theme),
-  //   (!props.background && props.theme === 'black') || props.background === 'white' ? '500' : props.darknessBackground,
-  // ),
-  convertThemeToColor(props.theme, props.theme === 'white' && !props.darknessTheme ? '500' : props.darknessTheme),
+  props.noBackground
+    ? 'transparent'
+    : convertThemeToColor(props.theme, props.theme === 'white' && !props.darknessTheme ? '500' : props.darknessTheme),
 );
 
 const pickOption = (value: string) => {
@@ -81,7 +91,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
           noHighlight,
         },
       ]"
-      :style="`background-color: ${backgroundColor}`"
+      :style="`background-color: ${noSelectedBackground ? 'transparent' : backgroundColor}`"
     >
       <button
         @pointerup.stop="!disabled ? (isOpen = !isOpen) : ''"
@@ -95,6 +105,9 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
       >
         <SelectItem
           class="selected"
+          :option="selectedOption"
+          :fontSizeNumber="fontSizeNumber"
+          :textColor="textColor"
           :style="`color: ${
             selected
               ? calcOptionColor(selectedOption?.color, selectedOption?.darknessColor, textColor)
@@ -102,19 +115,18 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
                 ? convertThemeToColor(placeholderColor, '700')
                 : '#62708c'
           }; font-weight: 600`"
-          :option="selectedOption"
-          :fontSizeNumber="fontSizeNumber"
-          :textColor="textColor"
         >
           <slot :name="`icon-left-${selectedOption?.value}`"></slot>
-          <span :style="`font-size: ${fontSize}`">{{ selected ?? placeholder }}</span>
+          <span class="text" :style="`font-size: ${fontSize}; width: ${selectedTextWidth}`">{{
+            selected ?? placeholder
+          }}</span>
           <slot :name="`icon-right-${selectedOption?.value}`"></slot>
         </SelectItem>
         <component
           :is="iconsSet[openIcon]"
           :size="fontSizeNumber"
           :color="openIconColor ? convertThemeToColor(openIconColor, darknessOpenIcon) : '#62708c'"
-          :style="`width: ${fontSize}`"
+          :style="`min-width: ${fontSize}`"
         />
       </button>
       <div
@@ -153,6 +165,10 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
               @click.prevent="pickOption(option.value)"
               v-for="option of group.items"
               :key="option.value"
+              :width="width"
+              :option="option"
+              :fontSizeNumber="fontSizeNumber"
+              :textColor="textColor"
               :class="[
                 'flex',
                 {
@@ -162,12 +178,9 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
               ]"
               :style="`color: ${calcOptionColor(option.color, option.darknessColor, textColor)};
             background-color: ${calcOptionColor(option.background, option.darknessBackground, backgroundColor)}`"
-              :option="option"
-              :fontSizeNumber="fontSizeNumber"
-              :textColor="textColor"
             >
               <slot :name="`icon-left-${option.value}`"></slot>
-              <span :style="`font-size: ${fontSize}`">{{ option.label ?? option.value }}</span>
+              <span class="text" :style="`font-size: ${fontSize}`">{{ option.label ?? option.value }}</span>
               <slot :name="`icon-right-${option.value}`"></slot>
             </SelectItem>
           </div>
@@ -175,6 +188,10 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
             @click.prevent="pickOption(option.value)"
             v-for="option of optionsNoGroup"
             :key="option.value"
+            :width="width"
+            :option="option"
+            :fontSizeNumber="fontSizeNumber"
+            :textColor="textColor"
             :class="[
               'flex',
               {
@@ -184,12 +201,9 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
             ]"
             :style="`color: ${calcOptionColor(option.color, option.darknessColor, textColor)};
             background-color: ${calcOptionColor(option.background, option.darknessBackground, backgroundColor)}`"
-            :option="option"
-            :fontSizeNumber="fontSizeNumber"
-            :textColor="textColor"
           >
             <slot :name="`icon-left-${option.value}`"></slot>
-            <span :style="`font-size: ${fontSize}`">{{ option.label ?? option.value }}</span>
+            <span class="text" :style="`font-size: ${fontSize}`">{{ option.label ?? option.value }}</span>
             <slot :name="`icon-right-${option.value}`"></slot>
           </SelectItem>
         </div>
@@ -205,7 +219,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
 .list {
   position: relative;
   width: max-content;
-  border: 1px solid v-bind(textColor);
+  border: 1px solid v-bind(borderColor);
   border-radius: 5px;
   cursor: pointer;
 }
@@ -224,7 +238,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
   z-index: 5000;
   top: 101%;
   width: 100%;
-  border: 1px solid v-bind(textColor);
+  border: 1px solid v-bind(borderColor);
   border-radius: 5px;
   display: grid;
   grid-template-rows: 0fr;
@@ -256,7 +270,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
   padding: v-bind(padding);
 }
 .flex:hover {
-  filter: brightness(90%);
+  filter: brightness(85%);
   transition: all 0.1s ease-in-out;
 }
 .group {
@@ -266,6 +280,12 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
 .filter {
   cursor: auto;
   gap: 7px;
+}
+.text {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .firstOption {
   border-top-right-radius: 4px;

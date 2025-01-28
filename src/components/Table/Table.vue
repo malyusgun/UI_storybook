@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
   fontSize: '16px',
   editable: false,
 });
-const data = defineModel<unknown[][]>();
+const data = defineModel() as Ref<unknown[][]>;
 const emit = defineEmits(['updateData']);
 
 const table = ref();

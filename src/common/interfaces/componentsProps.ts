@@ -35,6 +35,7 @@ export interface ITableProps {
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
+  paginator?: boolean;
   editable?: boolean;
   noEditingSettings?: {
     columns?: number[];
@@ -186,6 +187,9 @@ export interface ISelectProps {
   filtered?: boolean;
   disabled?: boolean;
   noHighlight?: boolean;
+  noBorder?: boolean;
+  noSelectedBackground?: boolean;
+  noBackground?: boolean;
 }
 
 export interface ISBProps {

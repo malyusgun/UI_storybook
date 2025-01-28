@@ -53,8 +53,10 @@ defineEmits(['updateData']);
     />
     <Select
       v-else-if="types[columnIndex] === 'select'"
+      noBorder
+      noSelectedBackground
       v-bind="filterSelectProps(columns[columnIndex].options)"
-      width="100px"
+      width="150px"
       :selected="item as string"
       @update="$emit('updateData', $event, rowIndex, columnIndex)"
     />

@@ -29,7 +29,7 @@
 ---
 ## Общая информация
 ### Components count: 18
-### Bundle size: 296.4KB
+### Bundle size: 319.4KB
 
 ---
 

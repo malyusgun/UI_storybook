@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IRatingProps } from '@interfaces/componentsProps';
-import { computed, type Ref, ref } from 'vue';
+import { computed, type Ref, ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
 import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
 import { convertThemeToColor } from '@helpers/common';
@@ -16,6 +16,14 @@ const props = withDefaults(defineProps<IRatingProps>(), {
 const value = defineModel({
   default: 0,
 }) as Ref<number>;
+const emit = defineEmits(['update']);
+
+if (props.value) {
+  value.value = props.value;
+}
+const propValue = computed(() => props.value);
+watch(propValue, () => (value.value = propValue.value ?? value.value));
+watch(value, () => emit('update', value));
 
 const onHoverIndex = ref();
 

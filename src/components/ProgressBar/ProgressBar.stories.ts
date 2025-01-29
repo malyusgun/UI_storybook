@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar.vue';
 const meta: Meta = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
-  tags: ['autodocs'],
+  tags: ['small_data'],
   parameters: {
     docs: {
       description: {
@@ -24,6 +24,7 @@ const meta: Meta = {
     noBorder: { control: 'boolean' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     fontSize: { control: 'text' },
+    gradient: { control: 'object' },
     colorGaps: { control: 'object' },
     colorInactiveGaps: { control: 'object' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
@@ -93,6 +94,7 @@ export const Small: Story = {
     inactiveTheme: 'red',
     labelAfter: '/100',
     width: '500px',
+    gradient: ['red', 'yellow', 'green'],
   },
 };
 

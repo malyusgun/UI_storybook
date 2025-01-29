@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<IModalProps>(), {
   width: '30%',
   height: '30%',
   headerDivider: false,
-  closeIcon: 'CrossIcon',
+  closeIcon: 'Cross',
 });
 const body = document.querySelector('body')!;
 const emit = defineEmits(['onClose']);

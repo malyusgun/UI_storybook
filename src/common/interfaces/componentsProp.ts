@@ -1,8 +1,17 @@
 import type { TDarkness, TIcon, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
+import type {
+  ICheckboxProps,
+  IKnobProps,
+  IProgressBarProps,
+  IRatingProps,
+  ISelectProps,
+} from '@interfaces/componentsProps';
 
 export interface ITableColumn {
   name: string;
+  options?: ITableColumnOptions;
   type?: TTableColumnType;
+  width?: number;
   editable?: boolean;
   filterable?: boolean;
   sortable?: boolean;
@@ -10,10 +19,12 @@ export interface ITableColumn {
   padding?: string;
 }
 
-export interface ITableItem {
-  value: string;
-  editable?: boolean;
-}
+export interface ITableColumnOptions
+  extends ICheckboxProps,
+    ISelectProps,
+    IRatingProps,
+    IProgressBarProps,
+    IKnobProps {}
 
 export type TTableColumnType =
   | 'checkbox'

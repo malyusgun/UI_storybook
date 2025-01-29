@@ -6,7 +6,7 @@ import { iconsSet } from '@/common/constants/icons';
 const meta: Meta = {
   title: 'Components/Modal',
   component: Modal,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {
@@ -98,7 +98,7 @@ export const Full: Story = {
     theme: 'black',
     position: 'topRight',
     dismissible: true,
-    closeIcon: 'CodeIcon',
+    closeIcon: 'Code',
     headerDivider: true,
   },
 };

@@ -5,7 +5,7 @@ import TreeList from './TreeList.vue';
 const meta: Meta = {
   title: 'Components/TreeList',
   component: TreeList,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {

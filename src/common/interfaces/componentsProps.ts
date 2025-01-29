@@ -18,12 +18,11 @@ import type {
   ISelectOption,
   ISliderOptions,
   ITableColumn,
-  ITableItem,
   ITreeItem,
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
-  data?: ITableItem[][];
+  data?: unknown[][];
   columns: ITableColumn[];
   multipleSort?: boolean;
   gap?: string;
@@ -36,6 +35,18 @@ export interface ITableProps {
   textColor?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessTextColor?: TDarkness;
+  paginator?: boolean;
+  paginatorOptions?: IPaginatorProps;
+  editable?: boolean;
+  noEditingSettings?: {
+    columns?: number[];
+    rows?: number[];
+    cells?: [number, number][];
+  };
+  handlers?: {
+    cell: [number, number];
+    handler?: () => void;
+  }[];
 }
 
 export interface ITLProps {
@@ -80,10 +91,12 @@ export interface IMDProps {
 }
 
 export interface IKnobProps {
+  value?: number;
   min?: number;
   max?: number;
   step?: number;
   size?: TSize;
+  width?: string;
   theme?: TThemeColor;
   colorGaps?: IColorGap[];
   negativeTheme?: TThemeColor;
@@ -158,8 +171,9 @@ export interface IPopupProps {
 }
 
 export interface ISelectProps {
-  options: ISelectOption[];
+  options?: ISelectOption[];
   groups?: ISelectGroup[];
+  selected?: string;
   width?: string;
   placeholder?: string;
   openIcon?: TIcon;
@@ -174,6 +188,9 @@ export interface ISelectProps {
   filtered?: boolean;
   disabled?: boolean;
   noHighlight?: boolean;
+  noBorder?: boolean;
+  noSelectedBackground?: boolean;
+  noBackground?: boolean;
 }
 
 export interface ISBProps {
@@ -204,7 +221,7 @@ export interface IButtonProps {
 }
 
 export interface IProgressBarProps {
-  value: number;
+  value?: number;
   max?: number;
   width?: string;
   height?: string;
@@ -216,6 +233,7 @@ export interface IProgressBarProps {
   inactiveTheme?: TThemeColor;
   darknessTheme?: TDarkness;
   darknessInactiveTheme?: TDarkness;
+  gradient?: string[];
   showLabel?: boolean;
   labelBefore?: string;
   labelAfter?: string;
@@ -223,6 +241,7 @@ export interface IProgressBarProps {
 }
 
 export interface IRatingProps {
+  value?: number;
   count?: number;
   size?: TSize;
   gap?: string;
@@ -255,6 +274,7 @@ export interface ITagProps {
 }
 
 export interface ICheckboxProps {
+  active?: boolean;
   label?: string;
   labelPos?: TPosition;
   name?: string;

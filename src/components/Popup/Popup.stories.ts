@@ -6,7 +6,7 @@ import Button from '@components/Button/Button.vue';
 const meta: Meta = {
   title: 'Components/Popup',
   component: Popup,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {

@@ -5,7 +5,7 @@ import SelectButton from './SelectButton.vue';
 const meta: Meta = {
   title: 'Components/SelectButton',
   component: SelectButton,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

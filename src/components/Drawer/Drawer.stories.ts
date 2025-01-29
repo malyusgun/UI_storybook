@@ -6,7 +6,7 @@ import { iconsSet } from '@/common/constants/icons';
 const meta: Meta = {
   title: 'Components/Drawer',
   component: Drawer,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {
@@ -88,7 +88,7 @@ export const BlackFull: Story = {
     visible: true,
     width: 200,
     theme: 'black',
-    closeIcon: 'CrossIcon',
+    closeIcon: 'Cross',
     header: 'Drawer',
     footer: 'The end.',
     headerDivider: true,

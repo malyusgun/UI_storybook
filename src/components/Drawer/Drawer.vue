@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<IDrawerProps>(), {
   dismissible: true,
   theme: 'white',
   darknessTheme: '500',
-  closeIcon: 'CrossIcon',
+  closeIcon: 'Cross',
   headerDivider: false,
   footerDivider: false,
 });

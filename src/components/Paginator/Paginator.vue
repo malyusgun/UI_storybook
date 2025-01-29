@@ -5,7 +5,7 @@ import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
 import type { IPaginatorProps } from '@interfaces/componentsProps';
 import PaginatorItem from '@components/Paginator/PaginatorItem.vue';
-import { computed, ref, type Ref, watch } from 'vue';
+import { computed, type Ref, watch } from 'vue';
 import Select from '@components/Select/Select.vue';
 import type { ISelectOption } from '@interfaces/componentsProp';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
@@ -15,16 +15,21 @@ const props = withDefaults(defineProps<IPaginatorProps>(), {
   size: 'normal',
   theme: 'white',
   darknessTheme: '500',
-  itemsPerPage: 1,
 });
 
-const current = defineModel({
+const current = defineModel('current', {
   default: 1,
 }) as Ref<number>;
 
-const perPage = ref(props.itemsPerPageOptions?.[0] ?? props.itemsPerPage);
+const itemsPerPage = defineModel('itemsPerPage', {
+  default: 1,
+}) as Ref<number>;
 
-const itemsLength = computed(() => Math.ceil(props.total / perPage.value));
+if (props.itemsPerPageOptions) {
+  itemsPerPage.value = props.itemsPerPageOptions[0];
+}
+
+const itemsLength = computed(() => Math.ceil(props.total / itemsPerPage.value));
 const initArray = computed(() => Array.from({ length: itemsLength.value }, (_, i) => i + 1));
 const selectOptions = computed(() =>
   !props.itemsPerPageOptions ? [{ value: '1' }] : props.itemsPerPageOptions.map((item) => ({ value: String(item) })),
@@ -59,7 +64,7 @@ const itemSize = computed(() => `${+iconSize.value * 2.5}px`);
 const color = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
 
-watch(perPage, (cur, prev) => {
+watch(itemsPerPage, (cur, prev) => {
   if (cur > prev) current.value = Math.ceil((current.value * prev) / cur);
   else current.value = Math.ceil((prev * (current.value - 1) + +cur) / cur);
 });
@@ -116,7 +121,7 @@ watch(perPage, (cur, prev) => {
     </PaginatorItem>
     <Select
       v-if="itemsPerPageOptions"
-      v-model="perPage"
+      v-model="itemsPerPage"
       :theme="theme"
       :darknessTheme="darknessTheme"
       :size="size"
@@ -133,6 +138,8 @@ watch(perPage, (cur, prev) => {
   display: flex;
   gap: calc(v-bind(fontSize) * 0.25);
   align-items: center;
+  width: max-content;
+  height: calc(v-bind(itemSize) * 1.2);
 }
 .paginatorItem {
   width: v-bind(itemSize);
@@ -142,5 +149,7 @@ watch(perPage, (cur, prev) => {
 .digital {
   font-size: v-bind(fontSize);
   font-weight: bold;
+  position: relative;
+  z-index: 100;
 }
 </style>

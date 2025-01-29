@@ -5,7 +5,7 @@ import MenuDial from './MenuDial.vue';
 const meta: Meta = {
   title: 'Components/MenuDial',
   component: MenuDial,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

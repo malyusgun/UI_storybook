@@ -20,6 +20,7 @@ import AtIcon from '@icons/Mono/AtIcon.vue';
 import Knob from '@components/Knob/Knob.vue';
 import Rating from '@components/Rating/Rating.vue';
 import HomeIcon from '@icons/Mono/HomeIcon.vue';
+import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -112,78 +113,54 @@ const tableColumns: ITableColumn[] = [
     name: 'Country',
     type: 'text',
   },
+  {
+    name: 'Is gay?',
+    type: 'checkbox',
+    filterable: true,
+    sortable: true,
+  },
+  {
+    name: 'Status',
+    type: 'select',
+    filterable: true,
+    sortable: true,
+    options: {
+      options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
+      theme: 'black',
+    },
+  },
+  {
+    name: 'Children',
+    type: 'rating',
+    filterable: true,
+    sortable: true,
+    options: {
+      theme: 'yellow',
+    },
+  },
+  {
+    name: 'Job progress',
+    type: 'progressBar',
+    filterable: true,
+    sortable: true,
+    options: {
+      theme: 'red',
+      size: 'small',
+    },
+  },
+  {
+    name: 'Strength',
+    type: 'knob',
+    filterable: true,
+    sortable: true,
+  },
 ];
 const tableData = ref([
-  [
-    {
-      value: 'Pete',
-    },
-    {
-      value: '30',
-    },
-    {
-      value: 'Chess',
-    },
-    {
-      value: 'USA',
-    },
-  ],
-  [
-    {
-      value: 'John',
-    },
-    {
-      value: '7',
-    },
-    {
-      value: 'Football',
-    },
-    {
-      value: 'Canada',
-    },
-  ],
-  [
-    {
-      value: 'Дима',
-    },
-    {
-      value: '22',
-    },
-    {
-      value: 'Frontend',
-    },
-    {
-      value: 'Russia',
-    },
-  ],
-  [
-    {
-      value: 'Ксюша',
-    },
-    {
-      value: '32',
-    },
-    {
-      value: 'Frontend',
-    },
-    {
-      value: 'Russia',
-    },
-  ],
-  [
-    {
-      value: 'Ксюша',
-    },
-    {
-      value: '32',
-    },
-    {
-      value: 'Backend',
-    },
-    {
-      value: 'Russia',
-    },
-  ],
+  ['Pete', '30', 'Chess', 'USA', false, 'Married', 0, 30, 2],
+  ['John', '7', 'Football', 'Canada', true, 'Married', 0, 30, 2],
+  ['Дима', '22', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+  ['Ксюша', '32', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+  ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
 ]);
 const activeCheckbox = ref();
 const selectOptions = [
@@ -195,6 +172,8 @@ const selectOptions = [
   },
 ];
 const knob = ref(0);
+const pbValue = ref(0);
+const openDrawer = () => (visibleDrawer.value = true);
 </script>
 
 <template>
@@ -217,31 +196,34 @@ const knob = ref(0);
     <template #icon-right><TrashIcon color="#3333aa" size="18" /></template>
   </Tag>
   {{ activeCheckbox }}
-  <Checkbox v-model:active="activeCheckbox" size="small" />
-  <Checkbox v-model:active="activeCheckbox" />
-  <Checkbox v-model:active="activeCheckbox" size="large" />
-  <Checkbox v-model:active="activeCheckbox" size="huge" />
+  <Checkbox v-model="activeCheckbox" size="small" />
+  <Checkbox v-model="activeCheckbox" />
+  <Checkbox v-model="activeCheckbox" size="large" />
+  <Checkbox v-model="activeCheckbox" size="huge" />
+  <ProgressBar v-model="pbValue" />
+  {{ tableData[1] }}
   <Table
+    center
     show-all-lines
     :columns="tableColumns"
     darknessTextColor="500"
     v-model="tableData"
-    fontSize="36px"
     theme="black"
     stripedRows
-  ></Table>
-  <Table
-    show-all-lines
-    :columns="tableColumns"
-    darknessTextColor="500"
-    v-model="tableData"
-    fontSize="20px"
-    theme="black"
-    stripedRows
+    paginator
+    :no-editing-settings="{
+      cells: [[0, 0]],
+    }"
+    :handlers="[
+      {
+        cell: [0, 0],
+        handler: () => openDrawer(),
+      },
+    ]"
   ></Table>
   <button class="testButton" @click="visibleDrawer = !visibleDrawer">Нажми меня</button>
   <div class="hui" style="width: 500px; height: 500px; background-color: gray"></div>
-  <Popup v-model:active="popupActive" parentSelector=".hui" theme="sky">
+  <Popup v-model="popupActive" parentSelector=".hui" theme="sky">
     <Button
       @click="
         () => {
@@ -252,7 +234,7 @@ const knob = ref(0);
       label="Открыть модальное окно"
     />
   </Popup>
-  <Popup v-model:active="popupActive2" theme="sky"
+  <Popup v-model="popupActive2" theme="sky"
     >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit
     voluptas. Accusamus aut, error et minima neque praesentium, ratione, reprehenderit repudiandae saepe ut vero! Lorem
     ipsum dolor sit amet, consectetur adipisicing elit. Amet fugiat harum maiores placeat soluta, vel velit voluptas.
@@ -320,7 +302,7 @@ const knob = ref(0);
     </template>
   </SelectButton>
   <ToggleSwitch />
-  <Drawer v-model:visible="visibleDrawer" theme="sky" :dismissible="false" closeIcon="CropIcon">
+  <Drawer v-model:visible="visibleDrawer" theme="sky" :dismissible="false" closeIcon="Crop">
     <template #header>Это - Drawer</template>
     <p>
       pizdwertyuki lokl,kmjhgfwewesrdty ukilo,kmjngeartyukikdhgfgjhklj.,kga Lorem ipsum dolor sit amet, consectetur

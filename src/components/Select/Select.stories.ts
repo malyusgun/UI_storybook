@@ -6,7 +6,7 @@ import { iconsSet } from '@/common/constants/icons';
 const meta: Meta = {
   title: 'Components/Select',
   component: Select,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {
@@ -19,6 +19,7 @@ const meta: Meta = {
     filtered: { control: 'boolean' },
     disabled: { control: 'boolean' },
     noHighlight: { control: 'boolean' },
+    selected: { control: 'text' },
     fontSize: { control: 'text' },
     placeholder: { control: 'text' },
     name: { control: 'text' },
@@ -137,10 +138,43 @@ export const Full: Story = {
     ],
 
     groups: [
-      { name: 'Group', background: 'white', iconLeft: 'Archive' },
-      { name: 'Group 2', background: 'red', iconLeft: 'Badge' },
-    ],
+      {
+        name: 'Group',
+        background: 'white',
+        iconLeft: 'Archive',
 
+        items: [
+          {
+            value: 'First',
+            iconLeft: 'At',
+            color: 'purple',
+            darknessColor: '800',
+            group: 'Group',
+          },
+          {
+            value: 'Second',
+            iconRightColor: 'red',
+            iconRight: 'Age18',
+            group: 'Group',
+          },
+        ],
+      },
+      {
+        name: 'Group 2',
+        background: 'red',
+        iconLeft: 'Badge',
+
+        items: [
+          {
+            iconLeft: 'Calendar',
+            value: 'Third',
+            iconRight: 'CheckMark',
+            group: 'Group 2',
+          },
+        ],
+      },
+    ],
+    selected: 'First',
     placeholder: 'Select a city',
     size: 'normal',
     width: '250px',

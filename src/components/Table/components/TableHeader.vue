@@ -9,13 +9,15 @@ import Button from '@components/Button/Button.vue';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
 import CrossIcon from '@icons/Mono/CrossIcon.vue';
 import type { TThemeColor } from '@interfaces/common';
-import type { ITableColumn } from '@interfaces/componentsProp';
+import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
 import { computed } from 'vue';
 
 interface Props {
+  table: Element;
   columns: ITableColumn[];
   sortState: string[];
-  columnToFilter: number;
+  indexColumnToFilter: number;
+  types: (TTableColumnType | undefined)[];
   initGap: string;
   additionalHeightFromSize: string;
   theme: TThemeColor;
@@ -25,6 +27,7 @@ interface Props {
   showAllLines: boolean;
   center: boolean;
   fontSize: string;
+  isEditMode: boolean;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(['changeColumnSortMode', 'setFilter', 'cancelFilter']);
@@ -40,22 +43,24 @@ const iconSize = computed(() => {
 
 const calcLeft = (selector: string) => {
   const el = document.querySelector(selector);
-  const table = document.querySelector('#table')!;
   if (!el) return 0;
-  return el.getBoundingClientRect().left - table.getBoundingClientRect().left + +iconSize.value;
+  return el.getBoundingClientRect().left - props.table.getBoundingClientRect().left + +iconSize.value;
 };
-const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type === 'text');
+const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter].type === 'text');
 </script>
 
 <template>
   <tr>
     <th
-      :class="{
-        leftBorder: showAllLines,
-      }"
       v-for="(column, index) of columns"
       :key="column.name"
-      :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
+      :style="`position: relative; padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
+      :class="[
+        `column`,
+        {
+          leftBorder: showAllLines,
+        },
+      ]"
     >
       <div
         :style="`justify-content: ${center ? 'center' : 'start'}; gap: ${center ? '0' : initGap}; padding: ${calcColumnPadding(column, center, initGap)}`"
@@ -65,8 +70,9 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
           <h3>
             {{ column.name }}
           </h3>
+          <div v-show="column.sortable && isEditMode" :style="`width: ${fontSize}; height: ${fontSize}`"></div>
           <button
-            v-if="column.sortable"
+            v-show="column.sortable && !isEditMode"
             @click.prevent="emit('changeColumnSortMode', index)"
             :style="`min-width: ${fontSize}; min-height: ${fontSize}; max-height: ${fontSize}`"
           >
@@ -75,7 +81,7 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
             <SortUpIcon v-show="sortState[index] === 'up'" :color="color" :size="iconSize" />
           </button>
           <button
-            v-if="column.filterable"
+            v-if="column.filterable && ~['text', 'number'].indexOf(column.type as string)"
             @pointerdown="emit('setFilter', index)"
             :id="`filter${index}`"
             :style="`position: relative; width: ${fontSize}; max-height: ${fontSize}`"
@@ -87,12 +93,12 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
       </div>
     </th>
     <Popup
-      v-model:active="isFilterPopup"
-      :parentSelector="`#filter${columnToFilter}`"
+      v-model="isFilterPopup"
+      :parentSelector="`#filter${indexColumnToFilter}`"
       buttonMenu
       :theme="theme"
       :top="+iconSize + 10"
-      :left="calcLeft(`#filter${columnToFilter}`)"
+      :left="calcLeft(`#filter${indexColumnToFilter}`)"
       maxHeight="200px"
     >
       <article style="padding: 2px">
@@ -132,7 +138,12 @@ const isColumnTypeText = computed(() => props.columns[props.columnToFilter].type
 .columnHeader-container {
   display: flex;
   align-items: center;
+  padding: 5px 0;
   gap: 10px;
+  > h3 {
+    user-select: none;
+    white-space: nowrap;
+  }
 }
 .filterInput {
   width: 150px;

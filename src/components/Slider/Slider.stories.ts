@@ -5,7 +5,7 @@ import Slider from './Slider.vue';
 const meta: Meta = {
   title: 'Components/Slider',
   component: Slider,
-  tags: ['autodocs'],
+  tags: ['pick'],
   parameters: {
     docs: {
       description: {

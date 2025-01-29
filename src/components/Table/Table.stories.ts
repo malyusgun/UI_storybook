@@ -5,7 +5,7 @@ import Table from './Table.vue';
 const meta: Meta = {
   title: 'Components/Table',
   component: Table,
-  tags: ['autodocs'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {
@@ -23,6 +23,8 @@ const meta: Meta = {
     stripedRows: { control: 'boolean' },
     center: { control: 'boolean' },
     multipleSort: { control: 'boolean' },
+    editable: { control: 'boolean' },
+    noEditingSettings: { control: 'object' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -93,28 +95,8 @@ export const Simple: Story = {
       },
     ],
     data: [
-      [
-        {
-          value: 'Pete',
-        },
-        {
-          value: '30',
-        },
-        {
-          value: 'Chess',
-        },
-      ],
-      [
-        {
-          value: 'John',
-        },
-        {
-          value: '25',
-        },
-        {
-          value: 'Football',
-        },
-      ],
+      ['Pete', '30', 'Chess'],
+      ['John', '25', 'Football'],
     ],
   },
 };
@@ -125,15 +107,13 @@ export const Full: Story = {
       {
         name: 'Name',
         type: 'text',
-        sortable: true,
-        initSort: 'none',
       },
       {
         name: 'Age',
         type: 'number',
-        sortable: true,
         filterable: true,
-        initSort: 'down',
+        sortable: true,
+        width: '50px',
       },
       {
         name: 'Hobbies',
@@ -141,87 +121,57 @@ export const Full: Story = {
         padding: '30px',
         filterable: true,
         sortable: true,
-        initSort: 'none',
       },
       {
         name: 'Country',
         type: 'text',
-        initSort: 'none',
+      },
+      {
+        name: 'Is gay?',
+        type: 'checkbox',
+      },
+      {
+        name: 'Status',
+        type: 'select',
+        options: {
+          options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
+        },
+      },
+      {
+        name: 'Children',
+        type: 'rating',
+        options: {
+          theme: 'yellow',
+        },
+      },
+      {
+        name: 'Job progress',
+        type: 'progressBar',
+        options: {
+          theme: 'red',
+          width: '150px',
+          size: 'small',
+        },
+      },
+      {
+        name: 'Strength',
+        type: 'knob',
+        options: {},
       },
     ],
 
     data: [
-      [
-        {
-          value: 'Pete',
-        },
-        {
-          value: '30',
-        },
-        {
-          value: 'Chess',
-        },
-        {
-          value: 'USA',
-        },
-      ],
-      [
-        {
-          value: 'John',
-        },
-        {
-          value: '7',
-        },
-        {
-          value: 'Football',
-        },
-        {
-          value: 'Canadaaaaaaaaaaaa',
-        },
-      ],
-      [
-        {
-          value: 'Дима',
-        },
-        {
-          value: '22',
-        },
-        {
-          value: 'Frontend',
-        },
-        {
-          value: 'Russia',
-        },
-      ],
-      [
-        {
-          value: 'Ксюша',
-        },
-        {
-          value: '32',
-        },
-        {
-          value: 'Frontend',
-        },
-        {
-          value: 'Russia',
-        },
-      ],
-      [
-        {
-          value: 'Ксюша',
-        },
-        {
-          value: '32',
-        },
-        {
-          value: 'Backend',
-        },
-        {
-          value: 'Russia',
-        },
-      ],
+      ['Pete', '30', 'Chess', 'USA', false, 'Married', 0, 30, 2],
+      ['John', '7', 'Football', 'Canada', true, 'Married', 0, 30, 2],
+      ['Дима', '22', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+      ['Ксюша', '32', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
+      ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
     ],
+    noEditingSettings: {
+      columns: [2],
+      rows: [3],
+      cells: [[0, 6]],
+    },
     fontSize: '24px',
     showAllLines: true,
     border: 'fuchsia',
@@ -230,5 +180,6 @@ export const Full: Story = {
     darknessTextColor: '500',
     center: true,
     size: 'large',
+    editable: true,
   },
 };

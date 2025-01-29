@@ -7,29 +7,29 @@
 ## Список компонентов:
 - Table;
 - TreeList;
-- MenuDial;
 - Popup;
-- Slider;
-
-- Paginator;
-- Drawer;
 - Modal;
+- Drawer;
+
+- MenuDial;
+- Paginator;
+- Slider;
 - Knob;
 - Select;
 - SelectButton;
-
 - Button;
-- ProgressBar;
 - Rating;
 - ToggleSwitch;
-- Tag;
 - Checkbox;
+
+- ProgressBar;
+- Tag;
 - Divider.
 
 ---
 ## Общая информация
 ### Components count: 18
-### Bundle size: 296.4KB
+### Bundle size: 319.4KB
 
 ---
 

@@ -5,7 +5,7 @@ import Divider from './Divider.vue';
 const meta: Meta = {
   title: 'Components/Divider',
   component: Divider,
-  tags: ['autodocs'],
+  tags: ['small_data'],
   parameters: {
     docs: {
       description: {

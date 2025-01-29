@@ -4,6 +4,8 @@ import type { ICheckboxProps, ISelectProps } from '@interfaces/componentsProps';
 
 export const calcRows = (
   initRows: unknown[][] | undefined,
+  currentPage: number,
+  itemsPerPage: number,
   sortStateActive: [number, string] | [],
   multipleSort: boolean,
   indexColumnToFilter: number,
@@ -21,7 +23,7 @@ export const calcRows = (
     });
   }
 
-  if (!sortStateActive.length) return rows;
+  if (!sortStateActive.length) return rows.splice(itemsPerPage * (currentPage - 1), itemsPerPage);
 
   if (multipleSort) {
     // TODO: multiple sort logic
@@ -44,13 +46,17 @@ export const calcRows = (
     const index = sortStateActive[0];
     const value = sortStateActive[1];
     if (~['text', 'select'].indexOf(columnToSortType))
-      return rows.sort((a, b) => {
-        if (typeof a[index] === 'string' && typeof b[index] === 'string')
-          return value === 'down' ? a[index].localeCompare(b[index]) : b[index].localeCompare(a[index]);
-        return 0;
-      });
+      return rows
+        .sort((a, b) => {
+          if (typeof a[index] === 'string' && typeof b[index] === 'string')
+            return value === 'down' ? a[index].localeCompare(b[index]) : b[index].localeCompare(a[index]);
+          return 0;
+        })
+        .splice(itemsPerPage * (currentPage - 1), itemsPerPage);
     // 'number', 'checkbox', 'rating', 'progressBar', 'knob'
-    return rows.sort((a, b) => (value === 'down' ? +a[index] - +b[index] : +b[index] - +a[index]));
+    return (rows as number[][])
+      .sort((a, b) => (value === 'down' ? +a[index] - +b[index] : +b[index] - +a[index]))
+      .splice(itemsPerPage * (currentPage - 1), itemsPerPage);
   }
 };
 

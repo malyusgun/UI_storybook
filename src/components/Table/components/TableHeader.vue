@@ -27,6 +27,7 @@ interface Props {
   showAllLines: boolean;
   center: boolean;
   fontSize: string;
+  isEditMode: boolean;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(['changeColumnSortMode', 'setFilter', 'cancelFilter']);
@@ -58,7 +59,6 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
         `column`,
         {
           leftBorder: showAllLines,
-          textMinWidth: types[index] === 'text',
         },
       ]"
     >
@@ -70,8 +70,9 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
           <h3>
             {{ column.name }}
           </h3>
+          <div v-show="column.sortable && isEditMode" :style="`width: ${fontSize}; height: ${fontSize}`"></div>
           <button
-            v-if="column.sortable"
+            v-show="column.sortable && !isEditMode"
             @click.prevent="emit('changeColumnSortMode', index)"
             :style="`min-width: ${fontSize}; min-height: ${fontSize}; max-height: ${fontSize}`"
           >
@@ -80,7 +81,7 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
             <SortUpIcon v-show="sortState[index] === 'up'" :color="color" :size="iconSize" />
           </button>
           <button
-            v-if="column.filterable"
+            v-if="column.filterable && ~['text', 'number'].indexOf(column.type as string)"
             @pointerdown="emit('setFilter', index)"
             :id="`filter${index}`"
             :style="`position: relative; width: ${fontSize}; max-height: ${fontSize}`"
@@ -157,8 +158,5 @@ const isColumnTypeText = computed(() => props.columns[props.indexColumnToFilter]
 }
 .leftBorder {
   border-left: 1px solid v-bind(secondaryColor);
-}
-.textMinWidth {
-  min-width: 230px;
 }
 </style>

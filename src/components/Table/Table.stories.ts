@@ -95,28 +95,8 @@ export const Simple: Story = {
       },
     ],
     data: [
-      [
-        {
-          value: 'Pete',
-        },
-        {
-          value: '30',
-        },
-        {
-          value: 'Chess',
-        },
-      ],
-      [
-        {
-          value: 'John',
-        },
-        {
-          value: '25',
-        },
-        {
-          value: 'Football',
-        },
-      ],
+      ['Pete', '30', 'Chess'],
+      ['John', '25', 'Football'],
     ],
   },
 };
@@ -133,6 +113,7 @@ export const Full: Story = {
         type: 'number',
         filterable: true,
         sortable: true,
+        width: '50px',
       },
       {
         name: 'Hobbies',
@@ -154,7 +135,6 @@ export const Full: Story = {
         type: 'select',
         options: {
           options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
-          theme: 'sky',
         },
       },
       {

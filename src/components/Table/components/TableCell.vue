@@ -6,19 +6,22 @@ import Select from '@components/Select/Select.vue';
 import Rating from '@components/Rating/Rating.vue';
 import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 import Knob from '@components/Knob/Knob.vue';
+import type { TThemeColor } from '@interfaces/common';
 
 interface IProps {
   item: unknown;
   types: (TTableColumnType | undefined)[];
-  columns: ITableColumn[];
+  column: ITableColumn;
   rowIndex: number;
   columnIndex: number;
   center: boolean | undefined;
-  editable: boolean;
+  isEditMode: boolean;
   fontSize: string;
+  initGap: string;
   knobWidth: string;
   noEditingSettings: [number, number][] | undefined;
   noEdit: boolean;
+  theme: TThemeColor;
 }
 defineProps<IProps>();
 defineEmits(['updateData']);
@@ -26,14 +29,16 @@ defineEmits(['updateData']);
 
 <template>
   <div
+    :style="`width: calc(${column.width ?? 'auto'} - 2 * ${initGap})`"
     :class="[
       'cell',
       {
         cellCenter: center,
         noEdit:
           noEdit ||
-          !editable ||
-          noEditingSettings?.find((i: [number, number]) => i[0] === rowIndex && i[1] === columnIndex),
+          !isEditMode ||
+          (noEditingSettings &&
+            noEditingSettings?.find((i: [number, number]) => i[0] === rowIndex && i[1] === columnIndex)),
       },
     ]"
   >
@@ -43,43 +48,71 @@ defineEmits(['updateData']);
       @input="(event) => $emit('updateData', event.target, rowIndex, columnIndex)"
       :id="`${rowIndex}-${columnIndex}`"
       :type="types[columnIndex]"
-      :style="`display: inline; width: 100%; text-align: ${center ? 'center' : 'auto'}`"
+      :style="`width: 100%; text-align: ${center ? 'center' : 'auto'}`"
     />
-    <Checkbox
-      v-else-if="types[columnIndex] === 'checkbox'"
-      v-bind="filterCheckboxProps(columns[columnIndex].options)"
-      :active="item as boolean"
-      @update="$emit('updateData', $event, rowIndex, columnIndex)"
-    />
-    <Select
-      v-else-if="types[columnIndex] === 'select'"
-      noBorder
-      noSelectedBackground
-      v-bind="filterSelectProps(columns[columnIndex].options)"
-      width="150px"
-      :selected="item as string"
-      @update="$emit('updateData', $event, rowIndex, columnIndex)"
-    />
-    <Rating
-      v-else-if="types[columnIndex] === 'rating'"
-      v-bind="columns[columnIndex].options"
-      :value="item as number"
-      @update="$emit('updateData', $event, rowIndex, columnIndex)"
-    />
-    <ProgressBar
-      v-else-if="types[columnIndex] === 'progressBar'"
-      v-bind="columns[columnIndex].options"
-      :value="item as number"
-      @update="$emit('updateData', $event, rowIndex, columnIndex)"
-    />
-    <Knob
-      v-else-if="types[columnIndex] === 'knob'"
-      v-bind="columns[columnIndex].options"
-      :value="item as number"
-      :width="knobWidth"
-      :fontSize="fontSize"
-      @update="$emit('updateData', $event, rowIndex, columnIndex)"
-    />
+    <div v-else-if="isEditMode">
+      <Checkbox
+        v-if="types[columnIndex] === 'checkbox'"
+        v-bind="filterCheckboxProps(column.options)"
+        :active="item as boolean"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+      <Select
+        v-else-if="types[columnIndex] === 'select'"
+        noBorder
+        noSelectedBackground
+        v-bind="filterSelectProps(column.options)"
+        width="150px"
+        :theme="theme"
+        :selected="item as string"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+      <Rating
+        v-else-if="types[columnIndex] === 'rating'"
+        v-bind="column.options"
+        :value="item as number"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+      <ProgressBar
+        v-else-if="types[columnIndex] === 'progressBar'"
+        v-bind="column.options"
+        :value="item as number"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+      <Knob
+        v-else-if="types[columnIndex] === 'knob'"
+        v-bind="column.options"
+        :value="item as number"
+        :width="knobWidth"
+        :fontSize="fontSize"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+    </div>
+    <div v-else>
+      <Checkbox
+        v-if="types[columnIndex] === 'checkbox'"
+        v-bind="filterCheckboxProps(column.options)"
+        :active="item as boolean"
+      />
+      <Select
+        v-else-if="types[columnIndex] === 'select'"
+        noBorder
+        noSelectedBackground
+        v-bind="filterSelectProps(column.options)"
+        width="150px"
+        :theme="theme"
+        :selected="item as string"
+      />
+      <Rating v-else-if="types[columnIndex] === 'rating'" v-bind="column.options" :value="item as number" />
+      <ProgressBar v-else-if="types[columnIndex] === 'progressBar'" v-bind="column.options" :value="item as number" />
+      <Knob
+        v-else-if="types[columnIndex] === 'knob'"
+        v-bind="column.options"
+        :value="item as number"
+        :width="knobWidth"
+        :fontSize="fontSize"
+      />
+    </div>
   </div>
 </template>
 

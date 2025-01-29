@@ -116,10 +116,14 @@ const tableColumns: ITableColumn[] = [
   {
     name: 'Is gay?',
     type: 'checkbox',
+    filterable: true,
+    sortable: true,
   },
   {
     name: 'Status',
     type: 'select',
+    filterable: true,
+    sortable: true,
     options: {
       options: [{ value: 'Married' }, { value: 'Oh no...(s)he is dead' }],
       theme: 'black',
@@ -128,6 +132,8 @@ const tableColumns: ITableColumn[] = [
   {
     name: 'Children',
     type: 'rating',
+    filterable: true,
+    sortable: true,
     options: {
       theme: 'yellow',
     },
@@ -135,6 +141,8 @@ const tableColumns: ITableColumn[] = [
   {
     name: 'Job progress',
     type: 'progressBar',
+    filterable: true,
+    sortable: true,
     options: {
       theme: 'red',
       size: 'small',
@@ -143,7 +151,8 @@ const tableColumns: ITableColumn[] = [
   {
     name: 'Strength',
     type: 'knob',
-    options: {},
+    filterable: true,
+    sortable: true,
   },
 ];
 const tableData = ref([
@@ -164,6 +173,7 @@ const selectOptions = [
 ];
 const knob = ref(0);
 const pbValue = ref(0);
+const openDrawer = () => (visibleDrawer.value = true);
 </script>
 
 <template>
@@ -200,7 +210,6 @@ const pbValue = ref(0);
     v-model="tableData"
     theme="black"
     stripedRows
-    editable
     paginator
     :no-editing-settings="{
       cells: [[0, 0]],
@@ -208,7 +217,7 @@ const pbValue = ref(0);
     :handlers="[
       {
         cell: [0, 0],
-        handler: () => (visibleDrawer = true),
+        handler: () => openDrawer(),
       },
     ]"
   ></Table>

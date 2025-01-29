@@ -6,6 +6,7 @@ import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpe
 import TableHeader from '@components/Table/components/TableHeader.vue';
 import TableCell from '@components/Table/components/TableCell.vue';
 import Paginator from '@components/Paginator/Paginator.vue';
+import ToggleSwitch from '@components/ToggleSwitch/ToggleSwitch.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
@@ -18,7 +19,10 @@ const data = defineModel() as Ref<unknown[][]>;
 const emit = defineEmits(['updateData']);
 
 const table = ref();
-const currentPage = ref(1);
+const currentPage = ref<number>(1);
+const itemsPerPage = ref<number>(10);
+const isEditMode = ref<boolean>(props.editable);
+
 const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);
 const indexColumnToFilter = ref<number>(0);
@@ -49,6 +53,8 @@ const sortState = computed<string[]>(() => {
 const rows = computed<unknown[][]>(() =>
   calcRows(
     data.value,
+    currentPage.value,
+    itemsPerPage.value,
     sortStateActive.value,
     props.multipleSort,
     indexColumnToFilter.value,
@@ -58,7 +64,7 @@ const rows = computed<unknown[][]>(() =>
   ),
 );
 const types = computed(() => props.columns.map((column) => column.type));
-
+const paginatorContainerHeight = computed(() => (props.paginator || props.editable ? '50px' : '0'));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
   props.textColor
@@ -107,84 +113,97 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
 </script>
 
 <template>
-  <div :style="`background-color: ${themeColor}; color: ${color}`">
-    <table
-      :class="{
-        tableLines: showAllLines,
-      }"
-      :style="`background-color: ${themeColor}; color: ${color}`"
-      class="table"
-      ref="table"
-    >
-      <thead>
-        <TableHeader
-          v-model:filterValue="filterValue"
-          v-model:isFilterPopup="isFilterPopup"
-          v-model:isRegisterSensitive="isRegisterSensitive"
-          :table="table"
-          :columns="columns"
-          :sortState="sortState"
-          :indexColumnToFilter="indexColumnToFilter"
-          :types="types"
-          :initGap="initGap"
-          :additionalHeightFromSize="additionalHeightFromSize"
-          :theme="theme"
-          :themeColor="themeColor"
-          :secondaryColor="secondaryColor"
-          :color="color"
-          :showAllLines="!!showAllLines"
-          :center="!!center"
-          :fontSize="fontSize"
-          @changeColumnSortMode="changeColumnSortMode"
-          @setFilter="setFilter"
-          @cancelFilter="cancelFilter"
-        />
-      </thead>
-      <tbody>
-        <tr
-          v-for="(row, rowIndex) of rows"
-          :key="rowIndex"
+  <table
+    :class="{
+      tableLines: showAllLines,
+    }"
+    :style="`background-color: ${themeColor}; color: ${color}`"
+    class="table"
+    ref="table"
+  >
+    <thead>
+      <TableHeader
+        v-model:filterValue="filterValue"
+        v-model:isFilterPopup="isFilterPopup"
+        v-model:isRegisterSensitive="isRegisterSensitive"
+        :table="table"
+        :columns="columns"
+        :sortState="sortState"
+        :indexColumnToFilter="indexColumnToFilter"
+        :types="types"
+        :initGap="initGap"
+        :additionalHeightFromSize="additionalHeightFromSize"
+        :theme="theme"
+        :themeColor="themeColor"
+        :secondaryColor="secondaryColor"
+        :color="color"
+        :showAllLines="!!showAllLines"
+        :center="!!center"
+        :fontSize="fontSize"
+        :isEditMode="isEditMode"
+        @changeColumnSortMode="changeColumnSortMode"
+        @setFilter="setFilter"
+        @cancelFilter="cancelFilter"
+      />
+    </thead>
+    <tbody>
+      <tr
+        v-for="(row, rowIndex) of rows"
+        :key="rowIndex"
+        :class="{
+          noEdit:
+            !isEditMode ||
+            (noEditingSettings?.rows && noEditingSettings?.rows.find((i) => data?.[i]?.join('') === row.join(''))),
+        }"
+      >
+        <td
+          v-for="(item, columnIndex) of row"
+          :key="columnIndex"
+          @click="
+            handlers ? handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler() : null
+          "
           :class="{
-            noEdit:
-              !editable ||
-              (noEditingSettings?.rows && noEditingSettings?.rows.find((i) => data?.[i]?.join('') === row.join(''))),
+            leftBorder: showAllLines,
+            darkRow: stripedRows && !(rowIndex % 2),
+            noEdit: !isEditMode || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
+            pointer: handlers && handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex),
           }"
+          :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
         >
-          <td
-            v-for="(item, columnIndex) of row"
-            :key="columnIndex"
-            @click="handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler"
-            :class="{
-              leftBorder: showAllLines,
-              darkRow: stripedRows && rowIndex % 2,
-              noEdit: !editable || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
-              pointer: handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex),
-            }"
-            :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
-          >
-            <TableCell
-              :item="item"
-              :types="types"
-              :columns="columns"
-              :rowIndex="rowIndex"
-              :columnIndex="columnIndex"
-              :center="center"
-              :editable="editable"
-              :noEditingSettings="noEditingSettings?.cells"
-              :fontSize="fontSize"
-              :knobWidth="knobWidth"
-              :noEdit="!!handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)"
-              @updateData="updateData"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <TableCell
+            :item="item"
+            :types="types"
+            :column="columns[columnIndex]"
+            :rowIndex="rowIndex"
+            :columnIndex="columnIndex"
+            :center="center"
+            :isEditMode="isEditMode"
+            :noEditingSettings="noEditingSettings?.cells"
+            :fontSize="fontSize"
+            :initGap="initGap"
+            :knobWidth="knobWidth"
+            :noEdit="
+              handlers ? !!handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex) : false
+            "
+            :theme="theme"
+            @updateData="updateData"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="paginatorContainer">
+    <section v-if="editable" class="editMenu">
+      <p class="editText">Edit mode:</p>
+      <ToggleSwitch v-model="isEditMode" negativeTheme="red" />
+    </section>
     <Paginator
       v-show="paginator"
-      v-model="currentPage"
+      v-model:current="currentPage"
+      v-model:itemsPerPage="itemsPerPage"
       :theme="theme"
       :total="data.length"
+      :itemsPerPageOptions="[2, 5]"
       v-bind="paginatorOptions"
       class="paginator"
     />
@@ -194,9 +213,34 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
 <style scoped>
 .table {
   border-collapse: collapse;
+  position: relative;
+  * {
+    font-size: v-bind(fontSize);
+  }
 }
-table * {
-  font-size: v-bind(fontSize);
+.table::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  z-index: -1;
+  width: 100%;
+  height: v-bind(paginatorContainerHeight);
+  background-color: v-bind(themeColor);
+}
+.editMenu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  padding: 10px;
+}
+.editText {
+  color: v-bind(color);
+}
+.paginatorContainer {
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 tr {
   position: relative;
@@ -216,15 +260,14 @@ tr::after {
 }
 .cell {
   display: flex;
-  width: 100%;
   height: 100%;
+  margin: 0 auto;
 }
 .cellCenter {
   justify-content: center;
   align-items: center;
 }
 .paginator {
-  display: block;
   margin: 0 auto;
 }
 .leftBorder {

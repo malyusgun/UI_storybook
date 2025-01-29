@@ -11,6 +11,7 @@ export interface ITableColumn {
   name: string;
   options?: ITableColumnOptions;
   type?: TTableColumnType;
+  width?: number;
   editable?: boolean;
   filterable?: boolean;
   sortable?: boolean;

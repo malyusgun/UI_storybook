@@ -79,6 +79,16 @@ export interface IPaginatorProps {
   darknessTheme?: TDarkness;
 }
 
+export interface ICarouselProps {
+  itemsProps: unknown[];
+  width?: string;
+  size?: TSize;
+  perView?: number;
+  perScroll?: number;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
 export interface IMDProps {
   items: IMDItemProps[];
   size?: TSize;

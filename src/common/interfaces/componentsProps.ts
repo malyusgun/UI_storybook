@@ -45,7 +45,7 @@ export interface ITableProps {
   };
   handlers?: {
     cell: [number, number];
-    handler?: unknown;
+    handler?: () => void;
   }[];
 }
 

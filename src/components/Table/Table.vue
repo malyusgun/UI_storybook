@@ -160,7 +160,7 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
           v-for="(item, columnIndex) of row"
           :key="columnIndex"
           @click="
-            handlers ? handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler() : null
+            handlers ? handlers.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler?.() : null
           "
           :class="{
             leftBorder: showAllLines,

@@ -22,7 +22,7 @@ if (props.value) {
   value.value = props.value;
 }
 const propValue = computed(() => props.value);
-watch(propValue, () => (value.value = propValue.value));
+watch(propValue, () => (value.value = propValue.value ?? value.value));
 watch(value, () => emit('update', value));
 
 const onHoverIndex = ref();

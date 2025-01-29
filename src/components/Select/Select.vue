@@ -25,7 +25,8 @@ const emit = defineEmits(['update']);
 if (props.selected) {
   selected.value = props.selected;
 }
-
+const propSelected = computed(() => props.selected);
+watch(propSelected, () => (selected.value = propSelected.value));
 watch(selected, () => emit('update', selected));
 
 const isOpen = ref<boolean>(false);

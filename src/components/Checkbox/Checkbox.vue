@@ -24,7 +24,8 @@ const emit = defineEmits(['update']);
 if (props.active) {
   active.value = props.active;
 }
-
+const propActive = computed(() => props.active);
+watch(propActive, () => (active.value = propActive.value));
 watch(active, () => emit('update', active));
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));

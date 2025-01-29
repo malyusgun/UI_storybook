@@ -17,9 +17,8 @@ const props = withDefaults(defineProps<IProgressBarProps>(), {
 const value = defineModel() as Ref<number>;
 const emit = defineEmits(['update']);
 
-if (props.value) {
-  value.value = props.value;
-}
+const propValue = computed(() => props.value);
+watch(propValue, () => (value.value = propValue.value), { immediate: true });
 watch(value, () => emit('update', value));
 
 const active = computed(() => `${(value.value / props.max) * 100}%`);

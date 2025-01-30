@@ -81,10 +81,12 @@ export interface IPaginatorProps {
 
 export interface ICarouselProps {
   itemsProps: unknown[];
-  width?: string;
+  innerWidth?: string;
   size?: TSize;
   perView?: number;
   perScroll?: number;
+  circular?: boolean;
+  buttonsBelow?: boolean;
   theme?: TThemeColor;
   darknessTheme?: TDarkness;
 }

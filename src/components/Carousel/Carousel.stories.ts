@@ -14,66 +14,15 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    buttons: { control: 'boolean' },
-    showLabel: { control: 'boolean' },
-    colorAsTheme: { control: 'boolean' },
-    textBold: { control: 'boolean' },
-    min: { control: 'number' },
-    max: { control: 'number' },
-    step: { control: 'number' },
-    fontSize: { control: 'text' },
-    textBefore: { control: 'text' },
-    textAfter: { control: 'text' },
-    colorGaps: { control: 'object' },
+    itemsProps: { control: 'object' },
+    innerWidth: { control: 'text' },
+    perView: { control: 'number' },
+    perScroll: { control: 'number' },
+    circular: { control: 'boolean' },
+    buttonsBelow: { control: 'boolean' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
-    background: { control: 'color' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
-    darknessNegativeTheme: {
-      control: 'select',
-      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-    },
-    darknessColor: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
-      control: 'select',
-      options: [
-        'white',
-        'blue',
-        'sky',
-        'cyan',
-        'teal',
-        'green',
-        'yellow',
-        'orange',
-        'pink',
-        'fuchsia',
-        'purple',
-        'indigo',
-        'rose',
-        'red',
-        'black',
-      ],
-    },
-    negativeTheme: {
-      control: 'select',
-      options: [
-        'white',
-        'blue',
-        'sky',
-        'cyan',
-        'teal',
-        'green',
-        'yellow',
-        'orange',
-        'pink',
-        'fuchsia',
-        'purple',
-        'indigo',
-        'rose',
-        'red',
-        'black',
-      ],
-    },
-    color: {
       control: 'select',
       options: [
         'white',
@@ -102,4 +51,63 @@ type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {
   args: {},
+};
+
+export const Half: Story = {
+  args: {
+    circular: true,
+    perView: 2,
+    perScroll: 1,
+    itemsProps: [
+      {
+        header: 'First',
+        text: 'Some text',
+      },
+      {
+        header: 'Second',
+        text: 'Some text',
+      },
+      {
+        header: 'Third',
+        text: 'Some text',
+      },
+      {
+        header: 'Forth',
+        text: 'Some text',
+      },
+    ],
+  },
+};
+
+export const Full: Story = {
+  args: {
+    circular: true,
+    perView: 2,
+    perScroll: 2,
+
+    itemsProps: [
+      {
+        header: 'First',
+        text: 'Some text',
+      },
+      {
+        header: 'Second',
+        text: 'Some text',
+      },
+      {
+        header: 'Third',
+        text: 'Some text',
+      },
+      {
+        header: 'Forth',
+        text: 'Some text',
+      },
+      {
+        header: 'Fifth',
+        text: 'Some text',
+      },
+    ],
+
+    buttonsBelow: true,
+  },
 };

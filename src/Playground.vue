@@ -21,6 +21,7 @@ import Knob from '@components/Knob/Knob.vue';
 import Rating from '@components/Rating/Rating.vue';
 import HomeIcon from '@icons/Mono/HomeIcon.vue';
 import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
+import Carousel from '@components/Carousel/Carousel.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -201,6 +202,31 @@ const openDrawer = () => (visibleDrawer.value = true);
   <Checkbox v-model="activeCheckbox" size="large" />
   <Checkbox v-model="activeCheckbox" size="huge" />
   <ProgressBar v-model="pbValue" />
+  <Carousel
+    style="margin: 20px"
+    :itemsProps="[
+      {
+        index: 1,
+        text: 'This is SPARTA!',
+      },
+      {
+        index: 2,
+        text: 'This is the second item!',
+      },
+      {
+        index: 3,
+        text:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque blanditiis debitis distinctio, doloribus,\n' +
+          '        eius est eveniet excepturi facere id iure laboriosam laborum libero, minus nesciunt nostrum nulla repellat\n' +
+          '        veritatis.',
+      },
+    ]"
+  >
+    <template v-slot="item: unknown">
+      <h2 style="text-align: center; margin-bottom: 20px">Element {{ item?.index }}</h2>
+      <p>{{ item?.text }}</p></template
+    >
+  </Carousel>
   {{ tableData[1] }}
   <Table
     center
@@ -211,6 +237,7 @@ const openDrawer = () => (visibleDrawer.value = true);
     theme="black"
     stripedRows
     paginator
+    editable
     :no-editing-settings="{
       cells: [[0, 0]],
     }"

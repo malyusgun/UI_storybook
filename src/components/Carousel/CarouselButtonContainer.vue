@@ -3,6 +3,8 @@ defineProps<{
   disable?: boolean;
   textColor: string;
   color: string;
+  width: string;
+  borderRadius: string;
 }>();
 </script>
 
@@ -32,12 +34,13 @@ defineProps<{
 <style scoped>
 .arrowContainer {
   position: relative;
-  min-width: 50px;
-  min-height: 100%;
+  width: v-bind(width);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: v-bind(color);
+  border-radius: v-bind(borderRadius);
 }
 .icon {
   display: flex;
@@ -47,7 +50,6 @@ defineProps<{
   color: v-bind(textColor);
 }
 .arrowContainer:hover > .bg {
-  background-color: v-bind(textColor);
   opacity: 0.1;
 }
 .arrowContainer:active > .bg {
@@ -57,11 +59,9 @@ defineProps<{
   width: 100%;
   height: 100%;
   position: absolute;
-  padding: 10px;
-  z-index: 5;
   opacity: 0;
-  border-radius: 5px;
-  background-color: transparent;
+  border-radius: v-bind(borderRadius);
+  background-color: black;
   transition: all 0.2s ease;
 }
 .disable {

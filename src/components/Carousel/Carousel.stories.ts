@@ -109,5 +109,6 @@ export const Full: Story = {
     ],
 
     buttonsBelow: true,
+    theme: 'sky',
   },
 };

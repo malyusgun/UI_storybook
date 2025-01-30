@@ -29,7 +29,7 @@ defineProps<{
   </div>
 </template>
 
-<style>
+<style scoped>
 .item {
   position: relative;
   display: flex;

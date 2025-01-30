@@ -65,7 +65,7 @@ const color = computed(() => convertThemeToColor(props.theme, props.darknessThem
 const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
 
 watch(itemsPerPage, (cur, prev) => {
-  if (cur > prev) current.value = Math.ceil((current.value * prev) / cur);
+  if (cur > prev) current.value = Math.round((current.value * prev) / cur);
   else current.value = Math.ceil((prev * (current.value - 1) + +cur) / cur);
 });
 </script>

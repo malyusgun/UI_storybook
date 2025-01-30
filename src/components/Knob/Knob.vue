@@ -103,6 +103,7 @@ const onPointerDown = ($event: MouseEvent) => {
     @pointerdown.prevent="!buttons && onPointerDown($event)"
     @pointermove="isClickHold ? setNewValue($event) : ''"
     @pointerup="isClickHold = false"
+    @pointerleave="isClickHold = false"
     class="container containerSize"
     ref="container"
   >

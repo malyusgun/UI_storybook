@@ -72,6 +72,7 @@ const onPointerDown = (event: MouseEvent) => {
     @pointerdown.prevent="onPointerDown($event)"
     @pointermove="isClickHold ? setNewValue($event) : ''"
     @pointerup="isClickHold = false"
+    @pointerleave="isClickHold = false"
   >
     <div class="active">
       <span v-show="showLabel" class="value">{{ labelBefore }}{{ value }}{{ labelAfter }}</span>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ICarouselProps } from '@interfaces/componentsProps';
-import CarouselArrowContainer from '@components/Carousel/CarouselArrowContainer.vue';
+import CarouselButtonContainer from '@components/Carousel/CarouselButtonContainer.vue';
 import { computed, ref } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
@@ -33,19 +33,28 @@ const iconSize = computed(() => {
   return '7';
 });
 const itemWidth = computed(() => `calc(${props.innerWidth} / ${props.perView}`);
+const buttonSize = computed(() => {
+  const size = props.size;
+  if (size === 'normal') return '13px';
+  if (size === 'large') return '19px';
+  if (size === 'huge') return '24px';
+  return '9px';
+});
 const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props.perView} * ${current.value - 1}))`);
 </script>
 
 <template>
   <section class="carouselContainer">
-    <CarouselArrowContainer
+    <CarouselButtonContainer
       @click="!isStartDisabled ? (current = getNewValue('-', current, itemsLength, perScroll, perView)) : null"
+      width="50px"
+      borderRadius="5px"
       :textColor="textColor"
       :color="color"
       :disable="isStartDisabled"
     >
       <ArrowLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
-    </CarouselArrowContainer>
+    </CarouselButtonContainer>
     <div class="content">
       <ul class="list">
         <li v-for="item of Array(itemsLength).keys()" :key="item" class="item">
@@ -65,22 +74,27 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
         </li>
       </ul>
     </div>
-    <CarouselArrowContainer
+    <CarouselButtonContainer
       @click="!isEndDisabled ? (current = getNewValue('+', current, itemsLength, perScroll, perView)) : null"
+      width="50px"
+      borderRadius="5px"
       :textColor="textColor"
       :color="color"
       :disable="isEndDisabled"
     >
       <ArrowRightShortIcon :color="isEndDisabled ? '#aaa' : textColor" :size="iconSize" />
-    </CarouselArrowContainer>
-    <ul class="buttons">
-      <li
-        v-for="item of Array(itemsLength).keys()"
+    </CarouselButtonContainer>
+    <div class="buttons" v-if="buttonsBelow">
+      <CarouselButtonContainer
+        v-for="item of Array(itemsLength - 1).keys()"
         :key="item"
-        class="button"
-        :style="`width: ${iconSize}px; height: ${iconSize}px`"
-      ></li>
-    </ul>
+        :width="buttonSize"
+        borderRadius="50%"
+        :textColor="textColor"
+        :color="color"
+        ><div @click="current = item + 1" class="button"></div
+      ></CarouselButtonContainer>
+    </div>
   </section>
 </template>
 
@@ -88,6 +102,7 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
 .carouselContainer {
   display: flex;
   min-height: 100px;
+  width: max-content;
   position: relative;
 }
 .content {
@@ -105,10 +120,20 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
 .buttons {
   position: absolute;
   bottom: 0;
-  left: 0;
-  transform: translateX(-50%);
+  left: 50%;
+  transform: translate(-50%, 120%);
+  display: flex;
+  gap: 10px;
 }
 .button {
   background-color: v-bind(color);
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  width: v-bind(buttonSize);
+  height: v-bind(buttonSize);
+  :hover {
+    filter: brightness(50%);
+  }
 }
 </style>

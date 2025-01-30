@@ -80,7 +80,7 @@ export interface IPaginatorProps {
 }
 
 export interface ICarouselProps {
-  itemsProps: unknown[];
+  itemsProps: any[];
   innerWidth?: string;
   size?: TSize;
   perView?: number;

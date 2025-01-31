@@ -58,6 +58,7 @@ export const Half: Story = {
     circular: true,
     perView: 2,
     perScroll: 1,
+
     itemsProps: [
       {
         header: 'First',
@@ -76,6 +77,8 @@ export const Half: Story = {
         text: 'Some text',
       },
     ],
+
+    theme: 'sky',
   },
 };
 
@@ -109,6 +112,8 @@ export const Full: Story = {
     ],
 
     buttonsBelow: true,
-    theme: 'sky',
+    theme: 'green',
+    size: 'large',
+    innerWidth: '500px',
   },
 };

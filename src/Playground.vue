@@ -204,14 +204,17 @@ const openDrawer = () => (visibleDrawer.value = true);
   <ProgressBar v-model="pbValue" />
   <Carousel
     style="margin: 20px"
+    theme="rose"
     :itemsProps="[
       {
         index: 1,
         text: 'This is SPARTA!',
+        src: 'storybook.svg',
       },
       {
         index: 2,
         text: 'This is the second item!',
+        src: 'https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif',
       },
       {
         index: 3,
@@ -224,8 +227,9 @@ const openDrawer = () => (visibleDrawer.value = true);
   >
     <template v-slot="item: unknown">
       <h2 style="text-align: center; margin-bottom: 20px">Element {{ item?.index }}</h2>
-      <p>{{ item?.text }}</p></template
-    >
+      <p>{{ item?.text }}</p>
+      <img :src="item.src" :style="`width: ${item.index === 1 ? '30px' : '100%'}`"
+    /></template>
   </Carousel>
   {{ tableData[1] }}
   <Table

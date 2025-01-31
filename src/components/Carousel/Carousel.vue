@@ -25,20 +25,21 @@ const isStartDisabled = computed(() => (props.circular ? false : current.value =
 const isEndDisabled = computed(() =>
   props.circular ? false : current.value === Math.ceil(itemsLength.value / props.perView) || !itemsLength.value,
 );
-const iconSize = computed(() => {
+const sizeCoefficient = computed(() => {
   const size = props.size;
-  if (size === 'normal') return '10';
-  if (size === 'large') return '15';
-  if (size === 'huge') return '18';
-  return '7';
+  if (size === 'normal') return 1;
+  if (size === 'large') return 2;
+  if (size === 'huge') return 3;
+  return 0.75;
 });
+const iconSize = computed(() => 10 * sizeCoefficient.value);
 const itemWidth = computed(() => `calc(${props.innerWidth} / ${props.perView}`);
 const buttonSize = computed(() => {
   const size = props.size;
-  if (size === 'normal') return '13px';
-  if (size === 'large') return '19px';
-  if (size === 'huge') return '24px';
-  return '9px';
+  if (size === 'normal') return 12 * sizeCoefficient.value + 'px';
+  if (size === 'large') return 12 * sizeCoefficient.value + 'px';
+  if (size === 'huge') return 15 * sizeCoefficient.value + 'px';
+  return 9 * sizeCoefficient.value + 'px';
 });
 const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props.perView} * ${current.value - 1}))`);
 </script>
@@ -47,13 +48,13 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
   <section class="carouselContainer">
     <CarouselButtonContainer
       @click="!isStartDisabled ? (current = getNewValue('-', current, itemsLength, perScroll, perView)) : null"
-      width="50px"
-      borderRadius="5px"
+      :width="50 * sizeCoefficient + 'px'"
+      :borderRadius="5 * sizeCoefficient + 'px'"
       :textColor="textColor"
-      :color="color"
+      :color="!isStartDisabled ? color : '#aaa'"
       :disable="isStartDisabled"
     >
-      <ArrowLeftShortIcon :color="isStartDisabled ? '#aaa' : textColor" :size="iconSize" />
+      <ArrowLeftShortIcon :size="iconSize" />
     </CarouselButtonContainer>
     <div class="content">
       <ul class="list">
@@ -76,13 +77,13 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
     </div>
     <CarouselButtonContainer
       @click="!isEndDisabled ? (current = getNewValue('+', current, itemsLength, perScroll, perView)) : null"
-      width="50px"
-      borderRadius="5px"
+      :width="50 * sizeCoefficient + 'px'"
+      :borderRadius="5 * sizeCoefficient + 'px'"
       :textColor="textColor"
-      :color="color"
+      :color="!isEndDisabled ? color : '#aaa'"
       :disable="isEndDisabled"
     >
-      <ArrowRightShortIcon :color="isEndDisabled ? '#aaa' : textColor" :size="iconSize" />
+      <ArrowRightShortIcon :size="iconSize" />
     </CarouselButtonContainer>
     <div class="buttons" v-if="buttonsBelow">
       <CarouselButtonContainer
@@ -92,7 +93,8 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
         borderRadius="50%"
         :textColor="textColor"
         :color="color"
-        ><div @click="current = item + 1" class="button"></div
+        @click="current = item + 1"
+        ><div class="button" :style="`border-width: ${size === 'large' || size === 'huge' ? '2px' : '1px'}`"></div
       ></CarouselButtonContainer>
     </div>
   </section>
@@ -127,7 +129,7 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
 }
 .button {
   background-color: v-bind(color);
-  border: 1px solid black;
+  border: solid black;
   border-radius: 50%;
   cursor: pointer;
   width: v-bind(buttonSize);

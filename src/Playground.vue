@@ -225,7 +225,7 @@ const openDrawer = () => (visibleDrawer.value = true);
       },
     ]"
   >
-    <template v-slot="item: unknown">
+    <template v-slot="item: any">
       <h2 style="text-align: center; margin-bottom: 20px">Element {{ item?.index }}</h2>
       <p>{{ item?.text }}</p>
       <img :src="item.src" :style="`width: ${item.index === 1 ? '30px' : '100%'}`"

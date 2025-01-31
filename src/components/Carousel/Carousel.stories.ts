@@ -5,7 +5,7 @@ import Carousel from './Carousel.vue';
 const meta: Meta = {
   title: 'Components/Carousel',
   component: Carousel,
-  tags: ['pick'],
+  tags: ['data'],
   parameters: {
     docs: {
       description: {

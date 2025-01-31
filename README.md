@@ -7,6 +7,7 @@
 ## Список компонентов:
 - Table;
 - TreeList;
+- Carousel;
 - Popup;
 - Modal;
 - Drawer;
@@ -28,8 +29,8 @@
 
 ---
 ## Общая информация
-### Components count: 18
-### Bundle size: 319.4KB
+### Components count: 19
+### Bundle size: 325.4KB
 
 ---
 

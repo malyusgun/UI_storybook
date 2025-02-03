@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import ColorPicker from './ColorPicker.vue';
+import Cropper from './Cropper.vue';
 
 const meta: Meta = {
-  title: 'Components/ColorPicker',
-  component: ColorPicker,
+  title: 'Components/Cropper',
+  component: Cropper,
   tags: ['pick'],
   parameters: {
     docs: {
@@ -19,7 +19,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
   },
-} satisfies Meta<typeof ColorPicker>;
+} satisfies Meta<typeof Cropper>;
 
 export default meta;
 

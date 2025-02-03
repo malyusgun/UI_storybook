@@ -182,6 +182,10 @@ export interface IPopupProps {
   left?: number;
 }
 
+export interface ICropperProps {
+  size?: TSize;
+}
+
 export interface IColorPickerProps {
   size?: TSize;
   disabled?: boolean;

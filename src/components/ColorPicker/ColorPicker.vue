@@ -16,11 +16,11 @@ const size = computed(() => {
   if (size === 'large') return '40px';
   if (size === 'huge') return '60px';
   return '15px';
-});
-const borderWidth = computed(() => (props.size === 'small' ? '2px' : '3px'));
+}) as Ref<string>;
+const borderWidth = computed(() => (props.size === 'small' ? '2px' : '3px')) as Ref<string>;
 const borderRadius = computed(() => `calc(${size.value} * 0.3)`);
 
-function wc_hex_is_light(color) {
+function wc_hex_is_light(color: string | undefined) {
   if (!color) return true;
   const hex = color.replace('#', '');
   const c_r = parseInt(hex.substring(0, 2), 16);
@@ -31,13 +31,13 @@ function wc_hex_is_light(color) {
 }
 
 const color = computed(() =>
-  props.buttonProps.textColor
-    ? convertThemeToColor(props.buttonProps.textColor, props.buttonProps.darknessTextColor)
+  props.buttonProps?.textColor
+    ? convertThemeToColor(props.buttonProps.textColor, props.buttonProps?.darknessTextColor)
     : props.sameButtonColor
       ? !wc_hex_is_light(value?.value)
         ? 'white'
         : 'black'
-      : convertThemeToTextColor(props.buttonProps.theme ?? 'white', props.buttonProps.darknessTheme),
+      : convertThemeToTextColor(props.buttonProps?.theme ?? 'white', props.buttonProps?.darknessTheme),
 );
 const textSize = computed(() => {
   switch (props.size) {
@@ -51,7 +51,7 @@ const textSize = computed(() => {
   return '16px';
 });
 const buttonPadding = computed(() => {
-  if (props.buttonProps.padding) return props.buttonProps.padding;
+  if (props.buttonProps?.padding) return props.buttonProps?.padding;
   switch (props.size) {
     case 'small':
       return '0.5rem';
@@ -81,8 +81,8 @@ const buttonPadding = computed(() => {
         :class="[
           'text',
           {
-            bold: buttonProps?.textStyle === 'bold',
-            italic: buttonProps?.textStyle === 'italic',
+            bold: buttonProps && buttonProps?.textStyle === 'bold',
+            italic: buttonProps && buttonProps?.textStyle === 'italic',
           },
         ]"
         >{{ buttonProps?.label ?? 'Button' }}</label
@@ -94,8 +94,8 @@ const buttonPadding = computed(() => {
       v-model="value"
       :disabled="disabled"
       :class="{
-        noVisible: buttonProps,
-        disabled,
+        noVisible: !!buttonProps,
+        disabled: disabled,
       }"
     />
   </div>

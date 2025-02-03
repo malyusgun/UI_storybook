@@ -16,6 +16,7 @@
 - Paginator;
 - Slider;
 - Knob;
+- ColorPicker;
 - Select;
 - SelectButton;
 - Button;
@@ -29,7 +30,7 @@
 
 ---
 ## Общая информация
-### Components count: 19
+### Components count: 20
 ### Bundle size: 325.4KB
 
 ---

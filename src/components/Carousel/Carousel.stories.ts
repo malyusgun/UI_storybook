@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component to define number inputs with a dial.',
+        component: 'A content slider.',
       },
     },
   },

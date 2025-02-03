@@ -182,6 +182,13 @@ export interface IPopupProps {
   left?: number;
 }
 
+export interface IColorPickerProps {
+  size?: TSize;
+  disabled?: boolean;
+  buttonProps?: IButtonProps;
+  sameButtonColor?: boolean;
+}
+
 export interface ISelectProps {
   options?: ISelectOption[];
   groups?: ISelectGroup[];

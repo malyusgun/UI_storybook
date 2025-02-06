@@ -183,7 +183,13 @@ export interface IPopupProps {
 }
 
 export interface ICropperProps {
-  size?: TSize;
+  src?: string;
+  file?: File;
+  width?: number;
+  height?: number;
+  menuPosition?: 'top' | 'right' | 'bottom' | 'left';
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
 }
 
 export interface IColorPickerProps {

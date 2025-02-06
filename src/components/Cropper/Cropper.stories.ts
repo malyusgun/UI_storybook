@@ -14,10 +14,11 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    buttonProps: { control: 'object' },
-    sameButtonColor: { control: 'boolean' },
+    menuPosition: { control: 'select', options: ['top', 'right', 'bottom', 'left'] },
+    src: { control: 'text' },
+    width: { control: 'number' },
+    height: { control: 'number' },
     disabled: { control: 'boolean' },
-    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
   },
 } satisfies Meta<typeof Cropper>;
 
@@ -26,7 +27,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {
-  args: {},
+  args: {
+    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFRQjM-wM_nXMA03AGDXgJK3VeX7vtD3ctA&s',
+  },
 };
 
 export const Full: Story = {

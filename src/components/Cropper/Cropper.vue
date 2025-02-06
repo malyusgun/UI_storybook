@@ -5,6 +5,9 @@ import Button from '@components/Button/Button.vue';
 import { convertThemeToTextColor } from '@helpers/common';
 import SaveIcon from '@icons/Mono/SaveIcon.vue';
 import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
+import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
+import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
+import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
 
 const props = withDefaults(defineProps<ICropperProps>(), {
   width: 300,
@@ -28,7 +31,7 @@ watch(
     if (!imageSource.value) return;
 
     const img = new Image();
-    img.src = props.src ?? URL.createObjectURL(props.file);
+    img.src = props.src ?? URL.createObjectURL(props.file!);
 
     img.onload = () => {
       canvas.value.width = width.value ?? 0;
@@ -52,11 +55,15 @@ watch(
     <div class="canvas-container">
       <canvas ref="canvas" id="cropper-canvas"> </canvas>
       <div class="crop-border left top">
-        <CornerLeftTopIcon size="16" />
+        <CornerLeftTopIcon color="white" />
       </div>
-      <div class="crop-border right top"></div>
-      <div class="crop-border left bottom"></div>
-      <div class="crop-border right bottom"></div>
+      <div class="crop-border right top"><CornerRightTopIcon color="white" /></div>
+      <div class="crop-border left bottom">
+        <CornerLeftBottomIcon color="white" />
+      </div>
+      <div class="crop-border right bottom">
+        <CornerRightBottomIcon color="white" />
+      </div>
     </div>
     <div
       v-show="imageSource"
@@ -97,9 +104,18 @@ watch(
 .crop-border {
   position: absolute;
   z-index: 50;
-  width: 20px;
-  height: 20px;
-  background-color: gray;
+  width: 40px;
+  height: 40px;
+  border: 2px dashed white;
+  opacity: 0.6;
+  transition: opacity 0.1s ease;
+  cursor: pointer;
+}
+.crop-border:hover {
+  opacity: 0.8;
+}
+.crop-border:active {
+  opacity: 1;
 }
 .top {
   top: 0;

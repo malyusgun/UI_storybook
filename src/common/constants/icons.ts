@@ -111,6 +111,10 @@ import ArrowShortDownIcon from '@icons/Mono/ArrowDownShortIcon.vue';
 import SearchIcon from '@icons/Mono/SearchIcon.vue';
 import StarIcon from '@icons/Mono/StarIcon.vue';
 import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
+import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
+import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
+import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
+import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
 
 export const iconsSet: Record<string, Component> = {
   Age18: Age18Icon,
@@ -156,6 +160,10 @@ export const iconsSet: Record<string, Component> = {
   Compass: CompassIcon,
   ConstructionWorker: ConstructionWorkerIcon,
   Contacts: ContactsIcon,
+  CornerLeftBottom: CornerLeftBottomIcon,
+  CornerLeftTop: CornerLeftTopIcon,
+  CornerRightBottom: CornerRightBottomIcon,
+  CornerRightTop: CornerRightTopIcon,
   Crop: CropIcon,
   Cross: CrossIcon,
   CrossCircle: CrossCircleIcon,

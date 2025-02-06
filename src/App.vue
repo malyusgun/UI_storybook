@@ -115,6 +115,10 @@ import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowDoubleLeftShortIcon from '@icons/Mono/ArrowDoubleLeftShortIcon.vue';
 import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
 import ArrowDoubleRightShortIcon from '@icons/Mono/ArrowDoubleRightShortIcon.vue';
+import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
+import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
+import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
+import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
 
 const gentleIcons = {
   Age18Icon,
@@ -164,6 +168,10 @@ const gentleIcons = {
   CompassIcon,
   ConstructionWorkerIcon,
   ContactsIcon,
+  CornerLeftBottomIcon,
+  CornerLeftTopIcon,
+  CornerRightBottomIcon,
+  CornerRightTopIcon,
   CropIcon,
   CrossIcon,
   CrossCircleIcon,

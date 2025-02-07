@@ -8,6 +8,7 @@ import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
 import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
 import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
 import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
+import { calcContainerRect, onBorderMove } from '@components/Cropper/helpers';
 
 const props = withDefaults(defineProps<ICropperProps>(), {
   width: 300,
@@ -18,12 +19,22 @@ const props = withDefaults(defineProps<ICropperProps>(), {
 });
 
 const canvas = ref();
+const layerX = ref(0);
+const layerY = ref(0);
+const activeSides = ref<[string, string]>(['top', 'left']);
+
+const isMoving = ref<boolean>(false);
+const top = ref('0');
+const left = ref('0');
+const right = ref('0');
+const bottom = ref('0');
 
 const ctx = computed(() => canvas.value && canvas.value.getContext('2d'));
 const imageSource = computed(() => props.src ?? props.file);
 const width = computed(() => props.width);
 const height = computed(() => props.height);
 const color = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
+const container = computed(() => calcContainerRect());
 
 watch(
   [imageSource, ctx, width, height],
@@ -41,6 +52,38 @@ watch(
   },
   { immediate: true },
 );
+
+const onPointerDown = (event: PointerEvent, newSides: [string, string]) => {
+  activeSides.value = newSides;
+  layerX.value = event.layerX;
+  layerY.value = event.layerY;
+  isMoving.value = true;
+};
+
+// TODO почему то в самом начале переноса элемент смещается на 1-2 пикселя вниз. Пофиксить
+const onBorderMove = (event: PointerEvent) => {
+  if (!isMoving.value) return;
+  if (event.clientY + 39 - layerY.value > container.value?.top + height.value) {
+    console.log('out?');
+    isMoving.value = false;
+  }
+  if (activeSides.value.includes('top')) {
+    const newTop = event.clientY - container.value?.top - layerY.value;
+    top.value = newTop + 'px';
+  }
+  if (activeSides.value.includes('left')) {
+    const newLeft = event.clientX - container.value?.left - layerX.value;
+    left.value = newLeft + 'px';
+  }
+  if (activeSides.value.includes('bottom')) {
+    const newBottom = height.value - event.clientY + container.value?.top - 40 + layerY.value;
+    bottom.value = newBottom + 'px';
+  }
+  if (activeSides.value.includes('right')) {
+    const newRight = width.value - event.clientX + container.value?.left - 40 + layerX.value;
+    right.value = newRight + 'px';
+  }
+};
 </script>
 
 <template>
@@ -52,18 +95,20 @@ watch(
       },
     ]"
   >
-    <div class="canvas-container">
-      <canvas ref="canvas" id="cropper-canvas"> </canvas>
-      <div class="crop-border left top">
+    <div id="canvas-container" @pointermove="onBorderMove" @pointerup="isMoving = false">
+      <canvas ref="canvas" id="cropper-canvas"></canvas>
+      <button @pointerdown="onPointerDown($event, ['left', 'top'])" class="crop-border left top">
         <CornerLeftTopIcon color="white" />
-      </div>
-      <div class="crop-border right top"><CornerRightTopIcon color="white" /></div>
-      <div class="crop-border left bottom">
-        <CornerLeftBottomIcon color="white" />
-      </div>
-      <div class="crop-border right bottom">
+      </button>
+      <button @pointerdown="onPointerDown($event, ['right', 'top'])" class="crop-border right top">
+        <CornerRightTopIcon color="white" />
+      </button>
+      <button @pointerdown="onPointerDown($event, ['right', 'bottom'])" class="crop-border right bottom">
         <CornerRightBottomIcon color="white" />
-      </div>
+      </button>
+      <button @pointerdown="onPointerDown($event, ['left', 'bottom'])" class="crop-border left bottom">
+        <CornerLeftBottomIcon color="white" />
+      </button>
     </div>
     <div
       v-show="imageSource"
@@ -89,7 +134,7 @@ watch(
   align-items: center;
   width: max-content;
 }
-.canvas-container {
+#canvas-container {
   position: relative;
   line-height: 0;
 }
@@ -117,14 +162,17 @@ watch(
 .crop-border:active {
   opacity: 1;
 }
+.left {
+  left: v-bind(left);
+}
 .top {
-  top: 0;
+  top: v-bind(top);
 }
 .right {
-  right: 0;
+  right: v-bind(right);
 }
 .bottom {
-  bottom: 0;
+  bottom: v-bind(bottom);
 }
 .flexVertical {
   flex-direction: column;

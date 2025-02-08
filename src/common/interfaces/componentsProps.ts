@@ -19,6 +19,7 @@ import type {
   ISliderOptions,
   ITableColumn,
   ITreeItem,
+  TToastType,
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
@@ -286,6 +287,15 @@ export interface ITSProps {
   darknessTheme?: TDarkness;
   darknessNegativeTheme?: TDarkness;
   disabled?: boolean;
+}
+
+export interface IToastProps {
+  type?: TToastType;
+  theme?: TThemeColor;
+  size?: TSize;
+  text?: string;
+  header?: string;
+  icon?: TIcon;
 }
 
 export interface ITagProps {

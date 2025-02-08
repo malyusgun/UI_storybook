@@ -118,3 +118,5 @@ export interface ISliderOptions {
   color?: TThemeColor;
   darknessColor?: TDarkness;
 }
+
+export type TToastType = 'success' | 'info' | 'warn' | 'error';

@@ -22,6 +22,7 @@ import Rating from '@components/Rating/Rating.vue';
 import HomeIcon from '@icons/Mono/HomeIcon.vue';
 import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 import Carousel from '@components/Carousel/Carousel.vue';
+import Toast from '@components/Toast/Toast.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -174,11 +175,14 @@ const selectOptions = [
 ];
 const knob = ref(0);
 const pbValue = ref(0);
+const toast = ref(false);
 const openDrawer = () => (visibleDrawer.value = true);
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <Button label="Open toast" @click="toast = true" />
+  <Toast v-model="toast" type="info" position="bottomRight" width="500px" />
   <Rating theme="red">
     <template #offIcon>
       <CrossIcon color="red" />

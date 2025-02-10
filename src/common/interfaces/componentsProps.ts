@@ -290,14 +290,16 @@ export interface ITSProps {
 }
 
 export interface IToastProps {
+  active?: boolean;
+  duration?: number | false;
   type?: TToastType;
   theme?: TThemeColor;
   size?: TSize;
   text?: string;
   header?: string;
   icon?: TIcon;
-  width?: string;
   position?: TExpandedPosition;
+  width?: string;
   static?: boolean;
 }
 

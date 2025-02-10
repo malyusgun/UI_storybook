@@ -59,7 +59,7 @@ export const convertThemeToSecondaryColor = (theme: TThemeColor, darkness: TDark
     : convertThemeToColor(theme, String(100 + ((+darkness + 600) % 900)));
 };
 
-export const getValueFromSize = (size: TSize, options: string[] | number[]) => {
+export const getValueFromSize = <T>(size: TSize, options: T[]): T => {
   if (size === 'normal') return options[1];
   if (size === 'large') return options[2];
   if (size === 'huge') return options[3];

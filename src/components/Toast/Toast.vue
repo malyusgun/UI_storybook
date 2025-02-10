@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IToastProps } from '@interfaces/componentsProps';
-import { computed, ref } from 'vue';
+import { computed, watch } from 'vue';
 import { convertThemeToColor, getValueFromSize } from '@helpers/common';
 import type { TToastType } from '@interfaces/componentsProp';
 import { iconsSet } from '@/common/constants/icons';
@@ -9,13 +9,13 @@ import type { TThemeColor } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IToastProps>(), {
   type: 'success',
-  text: 'This is a toast about success.',
   size: 'normal',
   width: '300px',
   position: 'topRight',
+  duration: 5,
 });
 
-const typeToTheme: Record<TToastType, string> = {
+const typeToTheme: Record<TToastType, TThemeColor> = {
   success: 'green',
   info: 'blue',
   warn: 'yellow',
@@ -36,7 +36,7 @@ const typeToIcon: Record<TToastType, string> = {
   error: 'CrossRound',
 };
 
-const active = ref<boolean>(false);
+const active = defineModel<boolean>();
 
 const themeColor = computed<TThemeColor>(() => props.theme ?? typeToTheme[props.type]);
 const header = computed<string>(() => props.header ?? typeToHeader[props.type]);
@@ -52,7 +52,9 @@ const backgroundColor = computed(() =>
 );
 const borderColor = computed(() => convertThemeToColor(themeColor.value, '500'));
 const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '20px', '24px']));
-const padding = computed(() => getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']));
+const padding = computed(
+  () => getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']) as string,
+);
 const gap = computed(() =>
   props.size === 'normal' ? '10px' : props.size === 'large' || props.size === 'huge' ? '15px' : '5px',
 );
@@ -62,38 +64,58 @@ const textMargin = computed(() => {
 });
 const positionParts = computed(() => {
   const result = [];
+  if (props.position.length < 7) return [props.position];
+
   const position = props.position.toLowerCase();
   if (position.includes('top')) result.push('top');
   if (position.includes('bottom')) result.push('bottom');
   if (position.includes('left')) result.push('left');
   if (position.includes('right')) result.push('right');
+
   return result;
+});
+const styles = computed(() => {
+  if (props.static) return '';
+  if (positionParts.value.length === 1) {
+    const position = positionParts.value[0];
+    if (position === 'left' || position === 'right')
+      return `${position}: -100%; top: 50%; transform: translateY(-50%);`;
+    return `${position}: -100%; left: 50%; transform: translateX(-50%);`;
+  }
+  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
 });
 const activeStyles = computed(() => {
-  let result = '';
-  if (positionParts.value[0] === 'top') result += 'top: 0;';
-  if (positionParts.value[0] === 'bottom') result += 'bottom: 0;';
-  if (positionParts.value[1] === 'left') result += 'left: 0;';
-  if (positionParts.value[1] === 'right') result += 'right: 0;';
-  return result;
+  if (positionParts.value.length === 1) return `${positionParts.value[0]}: 20px`;
+  return `${positionParts.value[0]}: 20px; ${positionParts.value[1]}: 20px`;
 });
 
-const closeToast = () => {};
+const closeToast = () => (active.value = false);
+
+let timeout: number;
+
+if (props.duration) {
+  watch(active, () => {
+    if (active.value) {
+      timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
+    } else {
+      clearTimeout(timeout);
+    }
+  });
+}
 </script>
 
 <template>
   <section
     class="toast-container"
-    :style="`position: ${static ? 'relative' : 'absolute'};
-    ${positionParts[0]}: ${positionParts[0] === 'top' ? '-100%' : '100%'};
-    ${positionParts[1]}: ${positionParts[1] === 'left' ? '-100%' : '100%'};
+    :style="`position: ${static ? 'relative' : 'fixed'};
+    ${styles};
     ${active ? activeStyles : null}`"
   >
     <h3 class="toast-header" :style="`font-size: calc(${fontSize} + 4px)`">
       <component :is="iconsSet[icon]" :color="color" :size="iconSize" />
       <span class="toast-header-text">{{ header }}</span>
     </h3>
-    <p class="toast-text">{{ text }}</p>
+    <p class="toast-text">{{ text ?? `This is a toast about ${type}` }}</p>
     <CrossIcon
       @click="closeToast"
       class="toast-close_button"
@@ -106,10 +128,12 @@ const closeToast = () => {};
 
 <style scoped>
 .toast-container {
+  z-index: 9999;
   padding: v-bind(padding);
   border: 1px solid v-bind(borderColor);
   border-radius: 5px;
   width: v-bind(width);
+  transition: all 0.4s ease-in-out;
   ::before {
     content: '';
     position: absolute;

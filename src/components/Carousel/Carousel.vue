@@ -2,7 +2,7 @@
 import type { ICarouselProps } from '@interfaces/componentsProps';
 import CarouselButtonContainer from '@components/Carousel/CarouselButtonContainer.vue';
 import { computed, ref } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
 import { defaultProps, getNewValue } from './helpers';
@@ -25,22 +25,17 @@ const isStartDisabled = computed(() => (props.circular ? false : current.value =
 const isEndDisabled = computed(() =>
   props.circular ? false : current.value === Math.ceil(itemsLength.value / props.perView) || !itemsLength.value,
 );
-const sizeCoefficient = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return 1;
-  if (size === 'large') return 2;
-  if (size === 'huge') return 3;
-  return 0.75;
-});
+const sizeCoefficient = computed(() => getValueFromSize(props.size, [0.75, 1, 2, 3]));
 const iconSize = computed(() => 10 * sizeCoefficient.value);
 const itemWidth = computed(() => `calc(${props.innerWidth} / ${props.perView}`);
-const buttonSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return 12 * sizeCoefficient.value + 'px';
-  if (size === 'large') return 12 * sizeCoefficient.value + 'px';
-  if (size === 'huge') return 15 * sizeCoefficient.value + 'px';
-  return 9 * sizeCoefficient.value + 'px';
-});
+const buttonSize = computed(() =>
+  getValueFromSize(props.size, [
+    9 * sizeCoefficient.value + 'px',
+    12 * sizeCoefficient.value + 'px',
+    12 * sizeCoefficient.value + 'px',
+    15 * sizeCoefficient.value + 'px',
+  ]),
+);
 const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props.perView} * ${current.value - 1}))`);
 </script>
 

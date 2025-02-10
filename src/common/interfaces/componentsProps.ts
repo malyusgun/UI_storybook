@@ -296,6 +296,9 @@ export interface IToastProps {
   text?: string;
   header?: string;
   icon?: TIcon;
+  width?: string;
+  position?: TExpandedPosition;
+  static?: boolean;
 }
 
 export interface ITagProps {

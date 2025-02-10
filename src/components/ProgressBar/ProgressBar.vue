@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IProgressBarProps } from '@interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 
 const props = withDefaults(defineProps<IProgressBarProps>(), {
   value: 0,
@@ -36,21 +36,8 @@ const inactiveColor = computed(() => {
   return convertThemeToColor(current.color, current.darknessColor);
 });
 const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
-const fontSize = computed(() => {
-  if (props.fontSize) return props.fontSize;
-  const size = props.size;
-  if (size === 'normal') return '16px';
-  if (size === 'large') return '20px';
-  if (size === 'huge') return '24px';
-  return '12px';
-});
-const defaultHeight = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '30px';
-  if (size === 'large') return '45px';
-  if (size === 'huge') return '60px';
-  return '15px';
-});
+const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '20px', '24px']));
+const defaultHeight = computed(() => getValueFromSize(props.size, ['15px', '30px', '45px', '60px']));
 
 const isClickHold = ref<boolean>(false);
 

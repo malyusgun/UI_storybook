@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ITagProps } from '@interfaces/componentsProps';
 import { computed } from 'vue';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, getValueFromSize } from '@helpers/common';
 import { iconsSet } from '@/common/constants/icons';
 
 const props = withDefaults(defineProps<ITagProps>(), {
@@ -22,20 +22,8 @@ const backgroundColor = computed(() =>
 const borderColor = computed(() =>
   props.border ? convertThemeToColor(props.border, props.darknessBorder) : 'transparent',
 );
-const fontSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '16px';
-  if (size === 'large') return '20px';
-  if (size === 'huge') return '24px';
-  return '12px';
-});
-const padding = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '5px 11px';
-  if (size === 'large') return '6px 13px';
-  if (size === 'huge') return '7px 16px';
-  return '3px 7px';
-});
+const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '20px', '24px']));
+const padding = computed(() => getValueFromSize(props.size, ['3px 7px', '5px 11px', '6px 13px', '7px 16px']));
 </script>
 
 <template>

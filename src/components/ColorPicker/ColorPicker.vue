@@ -2,7 +2,7 @@
 import type { IColorPickerProps } from '@interfaces/componentsProps';
 import { computed, type Ref } from 'vue';
 import Button from './Button.vue';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 
 const props = withDefaults(defineProps<IColorPickerProps>(), {
   size: 'normal',
@@ -10,13 +10,7 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
 });
 
 const value = defineModel() as Ref<string>;
-const size = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '25px';
-  if (size === 'large') return '40px';
-  if (size === 'huge') return '60px';
-  return '15px';
-}) as Ref<string>;
+const size = computed(() => getValueFromSize(props.size, ['15px', '25px', '40px', '60px']));
 const borderWidth = computed(() => (props.size === 'small' ? '2px' : '3px')) as Ref<string>;
 const borderRadius = computed(() => `calc(${size.value} * 0.3)`);
 

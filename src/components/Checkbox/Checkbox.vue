@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ICheckboxProps } from '@interfaces/componentsProps';
 import { computed, watch } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
 
 const props = withDefaults(defineProps<ICheckboxProps>(), {
@@ -37,20 +37,10 @@ const color = computed(() => convertThemeToColor(props.textColor, props.darkness
 const borderColor = computed(() =>
   props.invalid ? 'red' : props.disabled ? '#62708c' : convertThemeToColor(props.borderColor, props.darknessBorder),
 );
-const elSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return 20;
-  if (size === 'large') return 30;
-  if (size === 'huge') return 40;
-  return 13;
-});
+const elSize = computed(() => getValueFromSize(props.size, [13, 20, 30, 40]));
 const gap = computed(() => {
   if (!props.label) return '0px';
-  const size = props.size;
-  if (size === 'normal') return '7px';
-  if (size === 'large') return '10px';
-  if (size === 'huge') return '15px';
-  return '5px';
+  return getValueFromSize(props.size, ['5px', '7px', '10px', '15px']);
 });
 const borderWidth = computed(() => (props.size === 'large' || props.size === 'huge' ? 2 : 1));
 const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`);

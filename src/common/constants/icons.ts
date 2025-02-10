@@ -33,7 +33,7 @@ import CardsIcon from '@icons/Mono/CardsIcon.vue';
 import ChartLineIcon from '@icons/Mono/ChartLineIcon.vue';
 import ChartPieIcon from '@icons/Mono/ChartPieIcon.vue';
 import ChatIcon from '@icons/Mono/ChatIcon.vue';
-import CrossCircleIcon from '@icons/Mono/CrossCircleIcon.vue';
+import CrossRoundFilledIcon from '@icons/Mono/CrossRoundFilledIcon.vue';
 import CropIcon from '@icons/Mono/CropIcon.vue';
 import ChatWritingIcon from '@icons/Mono/ChatWritingIcon.vue';
 import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
@@ -115,6 +115,9 @@ import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
 import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
 import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
 import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
+import InfoIcon from '@icons/Mono/InfoIcon.vue';
+import WarningIcon from '@icons/Mono/WarningIcon.vue';
+import CrossRoundIcon from '@icons/Mono/CrossRoundIcon.vue';
 
 export const iconsSet: Record<string, Component> = {
   Age18: Age18Icon,
@@ -166,7 +169,8 @@ export const iconsSet: Record<string, Component> = {
   CornerRightTop: CornerRightTopIcon,
   Crop: CropIcon,
   Cross: CrossIcon,
-  CrossCircle: CrossCircleIcon,
+  CrossRound: CrossRoundIcon,
+  CrossRoundFilled: CrossRoundFilledIcon,
   Cube: CubeIcon,
   Cup: CupIcon,
   Cursor: CursorIcon,
@@ -209,6 +213,7 @@ export const iconsSet: Record<string, Component> = {
   Home: HomeIcon,
   Image: ImageIcon,
   ImageEdit: ImageEditIcon,
+  Info: InfoIcon,
   Line: LineIcon,
   LineDashed: LineDashedIcon,
   LineDotted: LineDottedIcon,
@@ -232,4 +237,5 @@ export const iconsSet: Record<string, Component> = {
   Trash: TrashIcon,
   Triangle: TriangleIcon,
   User: UserIcon,
+  Warning: WarningIcon,
 };

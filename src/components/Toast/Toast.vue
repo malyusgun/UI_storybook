@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IToastProps } from '@interfaces/componentsProps';
-import { computed, onBeforeUnmount, onMounted, ref, type Ref, watch } from 'vue';
+import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor, getValueFromSize } from '@helpers/common';
 import type { TToastType } from '@interfaces/componentsProp';
 import { iconsSet } from '@/common/constants/icons';
@@ -39,41 +39,15 @@ const typeToIcon: Record<TToastType, string> = {
 const active = defineModel() as Ref<boolean>;
 
 let toastsContainer = document.querySelector(`.toasts-container.${props.position}`);
-if (!toastsContainer) {
-  toastsContainer = document.createElement('div');
-  toastsContainer.classList.add('toasts-container');
-  toastsContainer.classList.add(`${props.position}`);
-  document.body.appendChild(toastsContainer);
-}
 
 const toast = ref();
-watch(toast, () => {
-  if (toast.value) {
+watch([toast, () => props.static], () => {
+  console.log('watch 2');
+  if (toast.value && !props.static) {
     toastsContainer?.appendChild(toast.value);
   }
-});
-const activeToastsCount = ref(0);
-let observer = null;
-
-const updateCount = () => {
-  activeToastsCount.value = document.querySelectorAll(`.toast-container.${props.position}.active`).length;
-};
-const initObserver = () => {
-  const config = { attributeOldValue: true, attributes: true, characterData: true, childList: true, subtree: true };
-  observer = new MutationObserver(() => {
-    console.log('update type: ', props.type);
-    updateCount();
-  });
-  observer.observe(toastsContainer, config);
-};
-
-onMounted(() => {
-  updateCount();
-  initObserver();
-});
-onBeforeUnmount(() => {
-  if (observer) {
-    observer.disconnect();
+  if (props.static) {
+    toastsContainer?.removeChild(toast.value);
   }
 });
 
@@ -126,39 +100,81 @@ const styles = computed(() => {
   return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
 });
 
-const calcActiveStyles = () => {
-  const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
-  let activeToastsHeight = 0;
-  for (const toast of activeToasts) {
-    activeToastsHeight += toast.offsetHeight;
+const initContainer = () => {
+  if (!toastsContainer) {
+    toastsContainer = document.createElement('div');
+    toastsContainer.classList.add('toasts-container');
+    toastsContainer.classList.add(`${props.position}`);
+    toastsContainer.style = `
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.4s ease-in-out;
+    ${styles.value}
+  `;
+    document.body.appendChild(toastsContainer);
   }
-
-  const offset = activeToastsHeight + 20 * activeToasts.length + 20 + 'px';
-  console.log('activeToasts: ', `${positionParts.value[0]}: ${offset}`);
-
-  if (positionParts.value.length === 1) return `${positionParts.value[0]}: ${offset}`;
-  return `${positionParts.value[0]}: ${offset}; ${positionParts.value[1]}: 20px`;
 };
+watch(
+  () => props.position,
+  () => {
+    console.log('watch 1');
+
+    initContainer();
+  },
+  {
+    immediate: true,
+  },
+);
+// const activeStyles = computed(() => {
+//   const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
+//   let activeToastsHeight = 0;
+//   for (const toast of activeToasts) {
+//     activeToastsHeight += toast.offsetHeight;
+//   }
+//
+//   const offset = activeToastsHeight + 20 * activeToasts.length + 20 + 'px';
+//   console.log('activeToasts: ', `${positionParts.value[0]}: ${offset}`);
+//
+//   if (positionParts.value.length === 1) return `${positionParts.value[0]}: ${offset}`;
+//   return `${positionParts.value[0]}: ${offset}; ${positionParts.value[1]}: 20px`;
+// });
 const closeToast = () => (active.value = false);
 
 let timeout: number;
-const key = Math.random();
 
 if (props.duration) {
   watch(active, () => {
     if (active.value) {
+      toast.value.classList.add('active');
+      const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
+      let activeToastsHeight = 0;
+      for (const toast of activeToasts) {
+        activeToastsHeight += toast.offsetHeight;
+      }
+      console.log('activeToasts.length: ', activeToasts.length);
+      const offset = activeToastsHeight + 20 * activeToasts.length;
+      console.log('offset: ', offset, offset - toastsContainer?.clientHeight, toastsContainer?.clientHeight);
+      toast.value.style.order = 9999;
+      toastsContainer.style[positionParts.value[0]] = offset - toastsContainer?.clientHeight + 'px';
+      console.log('toast.value.style: ', toast.value.style);
       timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
-      toastsContainer?.setAttribute('key', String(key));
     } else {
+      console.log('inactive');
+      toast.value.classList.remove('active');
+      const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
+      let activeToastsHeight = 0;
+      for (const toast of activeToasts) {
+        activeToastsHeight += toast.offsetHeight;
+      }
+      const offset = activeToastsHeight + 20 * activeToasts.length;
+      toastsContainer.style[positionParts.value[0]] = offset - toastsContainer?.clientHeight + 'px';
+      toast.value.style.order = 1;
       clearTimeout(timeout);
-      toastsContainer?.removeAttribute('key');
     }
   });
 }
-watch(activeToastsCount, () => {
-  console.log(activeToastsCount.value);
-  calcActiveStyles();
-});
 </script>
 
 <template>
@@ -170,9 +186,8 @@ watch(activeToastsCount, () => {
         active,
       },
     ]"
-    :style="`position: ${static ? 'relative' : 'fixed'};
-    ${styles};
-    ${active ? calcActiveStyles() : null}`"
+    :style="`position: relative;
+    ${styles}`"
   >
     <h3 class="toast-header" :style="`font-size: calc(${fontSize} + 4px)`">
       <component :is="iconsSet[icon]" :color="color" :size="iconSize" />
@@ -196,7 +211,6 @@ watch(activeToastsCount, () => {
   border: 1px solid v-bind(borderColor);
   border-radius: 7px;
   width: v-bind(width);
-  transition: all 0.4s ease-in-out;
   ::before {
     content: '';
     position: absolute;

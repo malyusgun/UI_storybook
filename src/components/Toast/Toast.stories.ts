@@ -20,7 +20,7 @@ const meta: Meta = {
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     position: {
       control: 'select',
-      options: ['topRight', 'bottomRight', 'bottomLeft', 'topLeft', 'top', 'right', 'bottom', 'left'],
+      options: ['topRight', 'bottomRight', 'bottomLeft', 'topLeft', 'top', 'bottom'],
     },
     active: { control: 'boolean' },
     static: { control: 'boolean' },
@@ -103,6 +103,8 @@ export const Small: Story = {
     active: true,
     size: 'small',
     static: true,
+    theme: 'black',
+    width: '400px',
   },
 };
 

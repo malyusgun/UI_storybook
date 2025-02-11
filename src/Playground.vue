@@ -176,13 +176,31 @@ const selectOptions = [
 const knob = ref(0);
 const pbValue = ref(0);
 const toast = ref(false);
+const toast2 = ref(false);
+const toast3 = ref(false);
+const toast4 = ref(false);
 const openDrawer = () => (visibleDrawer.value = true);
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
-  <Button label="Open toast" @click="toast = true" />
-  <Toast v-model="toast" type="info" position="bottomRight" width="500px" />
+  <Button
+    theme="black"
+    label="Open all toasts"
+    @click="
+      () => {
+        toast = true;
+        toast2 = true;
+        toast3 = true;
+        toast4 = true;
+      }
+    "
+  />
+  <Button label="Open toast" @click="toast2 = true" />
+  <Toast v-model="toast" type="success" position="top" width="500px" />
+  <Toast v-model="toast4" type="info" position="top" width="500px" />
+  <Toast v-model="toast3" type="warn" position="top" width="500px" />
+  <Toast v-model="toast2" type="error" position="top" width="500px" />
   <Rating theme="red">
     <template #offIcon>
       <CrossIcon color="red" />

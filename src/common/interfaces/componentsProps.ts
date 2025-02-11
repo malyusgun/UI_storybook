@@ -298,7 +298,7 @@ export interface IToastProps {
   text?: string;
   header?: string;
   icon?: TIcon;
-  position?: TExpandedPosition;
+  position?: Exclude<TExpandedPosition, 'left' | 'right'>;
   width?: string;
   static?: boolean;
 }

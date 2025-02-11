@@ -38,16 +38,12 @@ const typeToIcon: Record<TToastType, string> = {
 
 const active = defineModel() as Ref<boolean>;
 
-let toastsContainer = document.querySelector(`.toasts-container.${props.position}`);
+let toastsContainer: HTMLElement = document.querySelector(`.toasts-container.${props.position}`)!;
 
-const toast = ref();
-watch([toast, () => props.static], () => {
-  console.log('watch 2');
-  if (toast.value && !props.static) {
+const toast = ref<HTMLElement>() as Ref<HTMLElement>;
+watch([toast], () => {
+  if (toast.value) {
     toastsContainer?.appendChild(toast.value);
-  }
-  if (props.static) {
-    toastsContainer?.removeChild(toast.value);
   }
 });
 
@@ -77,7 +73,7 @@ const iconSize = computed(() => fontSize.value.slice(0, -2));
 const textMargin = computed(() => {
   return +iconSize.value + +gap.value.slice(0, -2) + 'px';
 });
-const positionParts = computed(() => {
+const positionParts = computed<string[]>(() => {
   const result = [];
   if (props.position.length < 7) return [props.position];
 
@@ -89,17 +85,17 @@ const positionParts = computed(() => {
 
   return result;
 });
+const topOrBottom = computed(() => props.position[0]);
 const styles = computed(() => {
   if (props.static) return '';
   if (positionParts.value.length === 1) {
     const position = positionParts.value[0];
-    if (position === 'left' || position === 'right')
-      return `${position}: -100%; top: 50%; transform: translateY(-50%);`;
+    // if (position === 'left' || position === 'right')
+    //   return `${position}: -100%; top: 50%; transform: translateY(-50%);`;
     return `${position}: -100%; left: 50%; transform: translateX(-50%);`;
   }
-  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
+  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px;`;
 });
-
 const initContainer = () => {
   if (!toastsContainer) {
     toastsContainer = document.createElement('div');
@@ -108,7 +104,7 @@ const initContainer = () => {
     toastsContainer.style = `
     position: fixed;
     display: flex;
-    flex-direction: column;
+    flex-direction: ${positionParts.value.find((i) => i === 'bottom') ? 'column-reverse' : 'column'};
     gap: 20px;
     transition: all 0.4s ease-in-out;
     ${styles.value}
@@ -119,27 +115,12 @@ const initContainer = () => {
 watch(
   () => props.position,
   () => {
-    console.log('watch 1');
-
     initContainer();
   },
   {
     immediate: true,
   },
 );
-// const activeStyles = computed(() => {
-//   const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
-//   let activeToastsHeight = 0;
-//   for (const toast of activeToasts) {
-//     activeToastsHeight += toast.offsetHeight;
-//   }
-//
-//   const offset = activeToastsHeight + 20 * activeToasts.length + 20 + 'px';
-//   console.log('activeToasts: ', `${positionParts.value[0]}: ${offset}`);
-//
-//   if (positionParts.value.length === 1) return `${positionParts.value[0]}: ${offset}`;
-//   return `${positionParts.value[0]}: ${offset}; ${positionParts.value[1]}: 20px`;
-// });
 const closeToast = () => (active.value = false);
 
 let timeout: number;
@@ -153,24 +134,20 @@ if (props.duration) {
       for (const toast of activeToasts) {
         activeToastsHeight += toast.offsetHeight;
       }
-      console.log('activeToasts.length: ', activeToasts.length);
+      toast.value.style.order = '9999';
       const offset = activeToastsHeight + 20 * activeToasts.length;
-      console.log('offset: ', offset, offset - toastsContainer?.clientHeight, toastsContainer?.clientHeight);
-      toast.value.style.order = 9999;
-      toastsContainer.style[positionParts.value[0]] = offset - toastsContainer?.clientHeight + 'px';
-      console.log('toast.value.style: ', toast.value.style);
+      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = offset - toastsContainer?.clientHeight + 'px';
       timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
     } else {
-      console.log('inactive');
       toast.value.classList.remove('active');
       const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
       let activeToastsHeight = 0;
       for (const toast of activeToasts) {
         activeToastsHeight += toast.offsetHeight;
       }
+      toast.value.style.order = '1';
       const offset = activeToastsHeight + 20 * activeToasts.length;
-      toastsContainer.style[positionParts.value[0]] = offset - toastsContainer?.clientHeight + 'px';
-      toast.value.style.order = 1;
+      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = offset - toastsContainer?.clientHeight + 'px';
       clearTimeout(timeout);
     }
   });
@@ -184,6 +161,8 @@ if (props.duration) {
       `toast-container ${position}`,
       {
         active,
+        topOrBottom,
+        oneAxis: positionParts.length === 1,
       },
     ]"
     :style="`position: relative;
@@ -210,6 +189,7 @@ if (props.duration) {
   padding: v-bind(padding);
   border: 1px solid v-bind(borderColor);
   border-radius: 7px;
+  transition: all 0.5s ease-in-out;
   width: v-bind(width);
   ::before {
     content: '';
@@ -243,5 +223,29 @@ if (props.duration) {
   position: absolute;
   cursor: pointer;
   display: block;
+}
+.top {
+  transform: translateY(-1000px);
+}
+.bottom {
+  transform: translateY(1000px);
+}
+.active.top {
+  transform: translateY(0);
+}
+.active.bottom {
+  transform: translateY(0);
+}
+.oneAxis.top {
+  transform: translate(-50%, -1000px) !important;
+}
+.oneAxis.bottom {
+  transform: translate(-50%, 1000px) !important;
+}
+.oneAxis.active.top {
+  transform: translate(-50%, 0) !important;
+}
+.oneAxis.active.bottom {
+  transform: translate(-50%, 0) !important;
 }
 </style>

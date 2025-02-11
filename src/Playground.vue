@@ -197,7 +197,7 @@ const openDrawer = () => (visibleDrawer.value = true);
     "
   />
   <Button label="Open toast" @click="toast2 = true" />
-  <Toast v-model="toast" type="success" position="top" width="500px" />
+  <Toast v-model="toast" static type="success" position="top" width="500px" />
   <Toast v-model="toast4" type="info" position="top" width="500px" />
   <Toast v-model="toast3" type="warn" position="top" width="500px" />
   <Toast v-model="toast2" type="error" position="top" width="500px" />

@@ -38,12 +38,14 @@ const typeToIcon: Record<TToastType, string> = {
 
 const active = defineModel() as Ref<boolean>;
 
-let toastsContainer: HTMLElement = document.querySelector(`.toasts-container.${props.position}`)!;
+let toastsContainer: HTMLElement = document.querySelector(`.toasts-container.${props.position}`) as HTMLElement;
 
 const toast = ref<HTMLElement>() as Ref<HTMLElement>;
-watch([toast], () => {
-  if (toast.value) {
+watch([toast, () => props.static], () => {
+  if (toast.value && !props.static) {
     toastsContainer?.appendChild(toast.value);
+  }
+  if (props.static) {
   }
 });
 
@@ -64,7 +66,9 @@ const backgroundColor = computed(() =>
 const borderColor = computed(() => convertThemeToColor(themeColor.value, '500'));
 const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '20px', '24px']));
 const padding = computed(
-  () => getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']) as string,
+  () =>
+    (props.static || active.value) &&
+    (getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']) as string),
 );
 const gap = computed(() =>
   props.size === 'normal' ? '10px' : props.size === 'large' || props.size === 'huge' ? '15px' : '5px',
@@ -91,24 +95,26 @@ const styles = computed(() => {
   if (positionParts.value.length === 1) {
     const position = positionParts.value[0];
     // if (position === 'left' || position === 'right')
-    //   return `${position}: -100%; top: 50%; transform: translateY(-50%);`;
-    return `${position}: -100%; left: 50%; transform: translateX(-50%);`;
+    //   return `${position}: -100%; top: 50%; transform: translateY(-50%)`;
+    return `${position}: -100%; left: 50%; transform: translateX(-50%)`;
   }
-  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px;`;
+  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
 });
 const initContainer = () => {
-  if (!toastsContainer) {
+  if (!toastsContainer && !props.static) {
     toastsContainer = document.createElement('div');
     toastsContainer.classList.add('toasts-container');
     toastsContainer.classList.add(`${props.position}`);
-    toastsContainer.style = `
-    position: fixed;
-    display: flex;
-    flex-direction: ${positionParts.value.find((i) => i === 'bottom') ? 'column-reverse' : 'column'};
-    gap: 20px;
-    transition: all 0.4s ease-in-out;
-    ${styles.value}
-  `;
+    toastsContainer.style.position = 'fixed';
+    toastsContainer.style.zIndex = '9999';
+    toastsContainer.style.display = 'flex';
+    toastsContainer.style.flexDirection = positionParts.value.find((i) => i === 'bottom') ? 'column-reverse' : 'column';
+    toastsContainer.style.transition = 'all 0.5s ease-in-out';
+    for (const item of styles.value.split('; ')) {
+      const splatItem = item.split(':');
+      if (splatItem[0] === '') break;
+      toastsContainer.style[splatItem[0]] = splatItem[1];
+    }
     document.body.appendChild(toastsContainer);
   }
 };
@@ -125,33 +131,18 @@ const closeToast = () => (active.value = false);
 
 let timeout: number;
 
-if (props.duration) {
-  watch(active, () => {
-    if (active.value) {
-      toast.value.classList.add('active');
-      const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
-      let activeToastsHeight = 0;
-      for (const toast of activeToasts) {
-        activeToastsHeight += toast.offsetHeight;
-      }
-      toast.value.style.order = '9999';
-      const offset = activeToastsHeight + 20 * activeToasts.length;
-      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = offset - toastsContainer?.clientHeight + 'px';
-      timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
-    } else {
-      toast.value.classList.remove('active');
-      const activeToasts = document.querySelectorAll(`.toast-container.${props.position}.active`);
-      let activeToastsHeight = 0;
-      for (const toast of activeToasts) {
-        activeToastsHeight += toast.offsetHeight;
-      }
-      toast.value.style.order = '1';
-      const offset = activeToastsHeight + 20 * activeToasts.length;
-      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = offset - toastsContainer?.clientHeight + 'px';
-      clearTimeout(timeout);
-    }
-  });
-}
+watch(active, () => {
+  console.log('props.duration,props.static:', props.duration, props.static);
+  if (props.static) return;
+  if (active.value) {
+    toast.value.classList.add('active');
+    toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '20px';
+    timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
+  } else if (props.duration) {
+    toast.value.classList.remove('active');
+    clearTimeout(timeout);
+  }
+});
 </script>
 
 <template>
@@ -165,7 +156,7 @@ if (props.duration) {
         oneAxis: positionParts.length === 1,
       },
     ]"
-    :style="`position: relative;
+    :style="`position: relative; margin-bottom: ${active ? '20px' : '0'};
     ${styles}`"
   >
     <h3 class="toast-header" :style="`font-size: calc(${fontSize} + 4px)`">
@@ -176,7 +167,7 @@ if (props.duration) {
     <CrossIcon
       @click="closeToast"
       class="toast-close_button"
-      :style="`top: ${padding.split(' ')[0]}; right: ${padding.split(' ')[1]}`"
+      :style="`top: ${padding && padding.split(' ')[0]}; right: ${padding && padding.split(' ')[1]}`"
       :color="color"
       :size="iconSize"
     />
@@ -189,7 +180,11 @@ if (props.duration) {
   padding: v-bind(padding);
   border: 1px solid v-bind(borderColor);
   border-radius: 7px;
-  transition: all 0.5s ease-in-out;
+  transition:
+    all 0.5s ease-in-out,
+    max-height 0.01s ease-in-out,
+    padding 0.2s ease-in-out,
+    margin 0.2s ease-in-out;
   width: v-bind(width);
   ::before {
     content: '';
@@ -225,27 +220,35 @@ if (props.duration) {
   display: block;
 }
 .top {
-  transform: translateY(-1000px);
+  transform: translateY(-500px);
+  max-height: 0;
 }
 .bottom {
-  transform: translateY(1000px);
+  transform: translateY(500px);
+  max-height: 0;
 }
 .active.top {
   transform: translateY(0);
+  max-height: 1000px;
 }
 .active.bottom {
   transform: translateY(0);
+  max-height: 1000px;
 }
 .oneAxis.top {
-  transform: translate(-50%, -1000px) !important;
+  transform: translate(-50%, -500px) !important;
+  max-height: 0;
 }
 .oneAxis.bottom {
-  transform: translate(-50%, 1000px) !important;
+  transform: translate(-50%, 500px) !important;
+  max-height: 0;
 }
 .oneAxis.active.top {
   transform: translate(-50%, 0) !important;
+  max-height: 1000px;
 }
 .oneAxis.active.bottom {
   transform: translate(-50%, 0) !important;
+  max-height: 1000px;
 }
 </style>

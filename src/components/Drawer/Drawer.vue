@@ -107,13 +107,13 @@ const drawerWidth = computed(() => {
   opacity: 0;
 }
 .drawerBackgroundOpened {
-  z-index: 30;
+  z-index: 200;
   opacity: 1;
 }
 .drawer {
   width: v-bind(drawerWidth);
   position: fixed;
-  z-index: 31;
+  z-index: 201;
   height: 100vh;
   display: flex;
   flex-direction: column;

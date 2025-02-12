@@ -300,7 +300,6 @@ export interface IToastProps {
   icon?: TIcon;
   position?: Exclude<TExpandedPosition, 'left' | 'right'>;
   width?: string;
-  static?: boolean;
 }
 
 export interface ITagProps {

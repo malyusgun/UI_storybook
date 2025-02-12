@@ -41,13 +41,7 @@ const active = defineModel() as Ref<boolean>;
 let toastsContainer: HTMLElement = document.querySelector(`.toasts-container.${props.position}`) as HTMLElement;
 
 const toast = ref<HTMLElement>() as Ref<HTMLElement>;
-watch([toast, () => props.static], () => {
-  if (toast.value && !props.static) {
-    toastsContainer?.appendChild(toast.value);
-  }
-  if (props.static) {
-  }
-});
+const isToastInContainer = ref<boolean>(false);
 
 const themeColor = computed<TThemeColor>(() => props.theme ?? typeToTheme[props.type]);
 const header = computed<string>(() => props.header ?? typeToHeader[props.type]);
@@ -66,9 +60,7 @@ const backgroundColor = computed(() =>
 const borderColor = computed(() => convertThemeToColor(themeColor.value, '500'));
 const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '20px', '24px']));
 const padding = computed(
-  () =>
-    (props.static || active.value) &&
-    (getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']) as string),
+  () => active.value && (getValueFromSize(props.size, ['7px 10px', '10px 15px', '14px 20px', '20px 30px']) as string),
 );
 const gap = computed(() =>
   props.size === 'normal' ? '10px' : props.size === 'large' || props.size === 'huge' ? '15px' : '5px',
@@ -77,6 +69,7 @@ const iconSize = computed(() => fontSize.value.slice(0, -2));
 const textMargin = computed(() => {
   return +iconSize.value + +gap.value.slice(0, -2) + 'px';
 });
+const windowHeight = computed(() => document.body.clientHeight);
 const positionParts = computed<string[]>(() => {
   const result = [];
   if (props.position.length < 7) return [props.position];
@@ -91,7 +84,11 @@ const positionParts = computed<string[]>(() => {
 });
 const topOrBottom = computed(() => props.position[0]);
 const styles = computed(() => {
-  if (props.static) return '';
+  if (!isToastInContainer.value) {
+    if (positionParts.value.length === 1)
+      return `${positionParts.value[0]}: -${windowHeight.value}px; left: 50%; transform: translateX(-50%)`;
+    return `${positionParts.value[0]}: -${windowHeight.value}px; ${positionParts.value[1]}: 20px`;
+  }
   if (positionParts.value.length === 1) {
     const position = positionParts.value[0];
     // if (position === 'left' || position === 'right')
@@ -101,7 +98,7 @@ const styles = computed(() => {
   return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
 });
 const initContainer = () => {
-  if (!toastsContainer && !props.static) {
+  if (!toastsContainer) {
     toastsContainer = document.createElement('div');
     toastsContainer.classList.add('toasts-container');
     toastsContainer.classList.add(`${props.position}`);
@@ -110,8 +107,17 @@ const initContainer = () => {
     toastsContainer.style.display = 'flex';
     toastsContainer.style.flexDirection = positionParts.value.find((i) => i === 'bottom') ? 'column-reverse' : 'column';
     toastsContainer.style.transition = 'all 0.5s ease-in-out';
-    for (const item of styles.value.split('; ')) {
-      const splatItem = item.split(':');
+    const calcStyles = () => {
+      if (positionParts.value.length === 1) {
+        const position = positionParts.value[0];
+        // if (position === 'left' || position === 'right')
+        //   return `${position}: -100%; top: 50%; transform: translateY(-50%)`;
+        return `${position}: -100%; left: 50%; transform: translateX(-50%)`;
+      }
+      return `${positionParts.value[0]}: -100%;`;
+    };
+    for (const item of calcStyles().split('; ')) {
+      const splatItem = item.split(':') as ('top' | 'bottom' | '')[];
       if (splatItem[0] === '') break;
       toastsContainer.style[splatItem[0]] = splatItem[1];
     }
@@ -132,14 +138,23 @@ const closeToast = () => (active.value = false);
 let timeout: number;
 
 watch(active, () => {
-  console.log('props.duration,props.static:', props.duration, props.static);
-  if (props.static) return;
   if (active.value) {
     toast.value.classList.add('active');
+    isToastInContainer.value = true;
+
+    toastsContainer?.appendChild(toast.value);
     toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '20px';
     timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
   } else if (props.duration) {
+    isToastInContainer.value = false;
     toast.value.classList.remove('active');
+
+    if (!toastsContainer.children.length) {
+      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '-100%';
+    }
+    setTimeout(() => {
+      toastsContainer?.removeChild(toast.value);
+    }, 300);
     clearTimeout(timeout);
   }
 });
@@ -151,12 +166,14 @@ watch(active, () => {
     :class="[
       `toast-container ${position}`,
       {
+        relative: isToastInContainer,
+        absolute: !isToastInContainer,
         active,
         topOrBottom,
         oneAxis: positionParts.length === 1,
       },
     ]"
-    :style="`position: relative; margin-bottom: ${active ? '20px' : '0'};
+    :style="`margin-bottom: ${active ? '20px' : '0'};
     ${styles}`"
   >
     <h3 class="toast-header" :style="`font-size: calc(${fontSize} + 4px)`">
@@ -250,5 +267,11 @@ watch(active, () => {
 .oneAxis.active.bottom {
   transform: translate(-50%, 0) !important;
   max-height: 1000px;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
 }
 </style>

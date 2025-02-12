@@ -80,6 +80,18 @@ export const Info: Story = {
     type: 'info',
     static: true,
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };
 
 export const Warn: Story = {
@@ -88,6 +100,18 @@ export const Warn: Story = {
     type: 'warn',
     static: true,
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };
 
 export const Error: Story = {
@@ -96,6 +120,18 @@ export const Error: Story = {
     type: 'error',
     static: true,
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };
 
 export const Small: Story = {
@@ -106,6 +142,18 @@ export const Small: Story = {
     theme: 'black',
     width: '400px',
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };
 
 export const Large: Story = {
@@ -118,6 +166,18 @@ export const Large: Story = {
     theme: 'sky',
     static: true,
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };
 
 export const Huge: Story = {
@@ -131,4 +191,16 @@ export const Huge: Story = {
     header: 'Custom header',
     static: true,
   },
+  render: (args) => ({
+    components: { Toast, Button },
+    data() {
+      return {
+        active: false,
+      };
+    },
+    setup() {
+      return { args };
+    },
+    template: '<Toast v-model="active" v-bind="args" /><Button @click="active = true" label="Open toast"/>',
+  }),
 };

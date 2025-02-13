@@ -24,14 +24,15 @@
 - ToggleSwitch;
 - Checkbox;
 
+- Toast;
 - ProgressBar;
 - Tag;
 - Divider.
 
 ---
 ## Общая информация
-### Components count: 20
-### Bundle size: 325.4KB
+### Components count: 21
+### Bundle size: 336.6KB
 
 ---
 

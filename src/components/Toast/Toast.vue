@@ -69,7 +69,7 @@ const iconSize = computed(() => fontSize.value.slice(0, -2));
 const textMargin = computed(() => {
   return +iconSize.value + +gap.value.slice(0, -2) + 'px';
 });
-const windowHeight = computed(() => document.body.clientHeight);
+const windowHeight = computed(() => '-' + document.body.clientHeight + 'px');
 const positionParts = computed<string[]>(() => {
   const result = [];
   if (props.position.length < 7) return [props.position];
@@ -83,20 +83,7 @@ const positionParts = computed<string[]>(() => {
   return result;
 });
 const topOrBottom = computed(() => props.position[0]);
-const styles = computed(() => {
-  if (!isToastInContainer.value) {
-    if (positionParts.value.length === 1)
-      return `${positionParts.value[0]}: -${windowHeight.value}px; left: 50%; transform: translateX(-50%)`;
-    return `${positionParts.value[0]}: -${windowHeight.value}px; ${positionParts.value[1]}: 20px`;
-  }
-  if (positionParts.value.length === 1) {
-    const position = positionParts.value[0];
-    // if (position === 'left' || position === 'right')
-    //   return `${position}: -100%; top: 50%; transform: translateY(-50%)`;
-    return `${position}: -100%; left: 50%; transform: translateX(-50%)`;
-  }
-  return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
-});
+
 const initContainer = () => {
   if (!toastsContainer) {
     toastsContainer = document.createElement('div');
@@ -105,6 +92,7 @@ const initContainer = () => {
     toastsContainer.style.position = 'fixed';
     toastsContainer.style.zIndex = '9999';
     toastsContainer.style.display = 'flex';
+    toastsContainer.style.gap = '20px';
     toastsContainer.style.flexDirection = positionParts.value.find((i) => i === 'bottom') ? 'column-reverse' : 'column';
     toastsContainer.style.transition = 'all 0.5s ease-in-out';
     const calcStyles = () => {
@@ -114,7 +102,7 @@ const initContainer = () => {
         //   return `${position}: -100%; top: 50%; transform: translateY(-50%)`;
         return `${position}: -100%; left: 50%; transform: translateX(-50%)`;
       }
-      return `${positionParts.value[0]}: -100%;`;
+      return `${positionParts.value[0]}: -100%; ${positionParts.value[1]}: 20px`;
     };
     for (const item of calcStyles().split('; ')) {
       const splatItem = item.split(':') as ('top' | 'bottom' | '')[];
@@ -146,15 +134,14 @@ watch(active, () => {
     toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '20px';
     timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
   } else if (props.duration) {
-    isToastInContainer.value = false;
     toast.value.classList.remove('active');
-
-    if (!toastsContainer.children.length) {
-      toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '-100%';
-    }
     setTimeout(() => {
+      if (toastsContainer.children.length < 2) {
+        toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '-100%';
+      }
       toastsContainer?.removeChild(toast.value);
-    }, 300);
+      isToastInContainer.value = false;
+    }, 100);
     clearTimeout(timeout);
   }
 });
@@ -168,13 +155,15 @@ watch(active, () => {
       {
         relative: isToastInContainer,
         absolute: !isToastInContainer,
+        top: position.includes('top'),
+        bottom: position.includes('bottom'),
+        left: position.includes('left'),
+        right: position.includes('right'),
         active,
         topOrBottom,
         oneAxis: positionParts.length === 1,
       },
     ]"
-    :style="`margin-bottom: ${active ? '20px' : '0'};
-    ${styles}`"
   >
     <h3 class="toast-header" :style="`font-size: calc(${fontSize} + 4px)`">
       <component :is="iconsSet[icon]" :color="color" :size="iconSize" />
@@ -198,8 +187,8 @@ watch(active, () => {
   border: 1px solid v-bind(borderColor);
   border-radius: 7px;
   transition:
-    all 0.5s ease-in-out,
-    max-height 0.01s ease-in-out,
+    all 0.2s ease-in-out,
+    max-height 0.2s ease-in-out,
     padding 0.2s ease-in-out,
     margin 0.2s ease-in-out;
   width: v-bind(width);
@@ -222,9 +211,6 @@ watch(active, () => {
   color: v-bind(color);
   margin-bottom: 5px;
 }
-.toast-header-text {
-  font-weight: 500;
-}
 .toast-text {
   margin-left: v-bind(textMargin);
   color: v-bind(whiteOrBlack);
@@ -237,20 +223,28 @@ watch(active, () => {
   display: block;
 }
 .top {
+  top: v-bind(windowHeight);
   transform: translateY(-500px);
   max-height: 0;
 }
 .bottom {
+  bottom: v-bind(windowHeight);
   transform: translateY(500px);
   max-height: 0;
 }
 .active.top {
+  top: 0;
   transform: translateY(0);
   max-height: 1000px;
 }
 .active.bottom {
+  bottom: 0;
   transform: translateY(0);
   max-height: 1000px;
+}
+.oneAxis {
+  left: 50%;
+  transform: translateX(-50%);
 }
 .oneAxis.top {
   transform: translate(-50%, -500px) !important;

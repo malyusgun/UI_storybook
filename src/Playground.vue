@@ -197,10 +197,10 @@ const openDrawer = () => (visibleDrawer.value = true);
     "
   />
   <Button label="Open toast" @click="toast2 = true" />
-  <Toast v-model="toast" static :duration="2" type="success" position="topRight" width="500px" />
-  <Toast v-model="toast4" :duration="2" type="info" position="topRight" width="500px" />
-  <Toast v-model="toast3" :duration="2" type="warn" position="bottomLeft" width="500px" />
-  <Toast v-model="toast2" :duration="60" type="error" position="bottomLeft" width="500px" />
+  <Toast v-model="toast" static :duration="60" type="success" position="topLeft" width="500px" />
+  <Toast v-model="toast4" :duration="2" type="info" position="topLeft" width="500px" />
+  <Toast v-model="toast3" :duration="2" type="warn" position="bottomRight" width="500px" />
+  <Toast v-model="toast2" :duration="60" type="error" position="bottomRight" width="500px" />
   <Rating theme="red">
     <template #offIcon>
       <CrossIcon color="red" />

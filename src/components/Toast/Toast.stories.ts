@@ -23,7 +23,7 @@ const meta: Meta = {
       options: ['topRight', 'bottomRight', 'bottomLeft', 'topLeft', 'top', 'bottom'],
     },
     active: { control: 'boolean' },
-    static: { control: 'boolean' },
+    duration: { control: 'number' },
     width: { control: 'text' },
     header: { control: 'text' },
     text: { control: 'text' },

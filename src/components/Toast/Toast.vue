@@ -132,7 +132,7 @@ watch(active, () => {
 
     toastsContainer?.appendChild(toast.value);
     toastsContainer.style[positionParts.value[0] as 'top' | 'bottom'] = '20px';
-    timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000);
+    timeout = setTimeout(() => (active.value = false), (props.duration as number) * 1000) as unknown as number;
   } else if (props.duration) {
     toast.value.classList.remove('active');
     setTimeout(() => {

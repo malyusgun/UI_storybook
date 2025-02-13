@@ -19,6 +19,7 @@ import type {
   ISliderOptions,
   ITableColumn,
   ITreeItem,
+  TInputDivScheme,
   TToastType,
 } from '@interfaces/componentsProp';
 
@@ -221,6 +222,19 @@ export interface ISelectProps {
   noBorder?: boolean;
   noSelectedBackground?: boolean;
   noBackground?: boolean;
+}
+
+export interface IInputDivProps {
+  scheme?: TInputDivScheme;
+  size?: TSize;
+  secret?: boolean;
+  dashed?: boolean;
+  numbersOnly?: boolean;
+  bottomOnly?: boolean;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  textColor?: TThemeColor;
+  darknessTextColor?: TDarkness;
 }
 
 export interface ISBProps {

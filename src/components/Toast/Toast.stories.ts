@@ -11,7 +11,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A component is used to categorize content. Can be used with icons.',
+        component: 'A component to display messages in an overlay',
       },
     },
   },

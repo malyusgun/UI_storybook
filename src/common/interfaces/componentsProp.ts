@@ -98,6 +98,17 @@ export interface ISelectGroup {
   iconRightColor?: TThemeColor;
 }
 
+export type TInputDivScheme =
+  | `${number}by${number}`
+  | `${number}-${number}`
+  | `${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}`
+  | `${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}-${number}`;
+
 export interface ISBOption {
   label: string;
   value?: never;

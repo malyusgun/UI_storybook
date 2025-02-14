@@ -13,7 +13,8 @@ const props = withDefaults(defineProps<IInputDivProps>(), {
 });
 
 const value = defineModel() as Ref<string>;
-const container = document.querySelector('#inputDiv-container');
+let container;
+setTimeout(() => (container = document.querySelector('#inputDiv-container')), 0);
 
 const inputPartsBy = computed(() => calcPartsBy(props.scheme));
 const inputPartsDash = computed(() => calcPartsDash(props.scheme));
@@ -29,33 +30,64 @@ const inputHeight = computed(() => getValueFromSize(props.size, ['30px', '36px',
 const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '24px', '32px']));
 const borderWidth = computed(() => (props.size === 'small' || props.size === 'normal' ? '1px' : '2px'));
 
-const toggleInput = () => {};
+const toggleInput = (itemIndex: number, inputIndex: number) => {
+  let currentInput;
+  let currentItem;
+  const list = Array(container?.children[inputPartsBy.value ? 0 : 1].children)[0];
+
+  cycle: for (let i = 0; i < list.length; i++) {
+    const item = list[i];
+    if (!item.classList.contains(itemIndex)) continue;
+    for (const child of item.children) {
+      if (child.classList.contains(inputIndex)) {
+        currentInput = child;
+        currentItem = item;
+        break cycle;
+      }
+    }
+  }
+  // если значение ввели
+  if (currentInput.value) {
+    let nextInputInSameItem = null;
+    for (const child of currentItem.children) {
+      if (child.classList.contains(inputIndex + 1)) {
+        nextInputInSameItem = child;
+        break;
+      }
+    }
+    if (nextInputInSameItem) {
+      nextInputInSameItem.focus();
+    } else {
+      // обработка следующей части, если она есть, иначе ничего не делать (или оставить старое значение, что ещё лучше)
+    }
+  } else {
+    // если значение удалили
+    let prevInputInSameItem = null;
+    for (const child of currentItem.children) {
+      if (child.classList.contains(inputIndex - 1)) {
+        prevInputInSameItem = child;
+        break;
+      }
+    }
+    if (prevInputInSameItem) {
+      prevInputInSameItem.focus();
+    } else {
+      // обработка предыдущей части, если она есть, иначе ничего не делать
+    }
+  }
+};
 </script>
 
 <template>
   <section id="inputDiv-container">
     <div v-show="inputPartsBy" class="list">
-      <div
-        v-for="(item, itemIndex) of inputPartsBy"
-        :key="item"
-        :class="[
-          'item',
-          {
-            itemIndex,
-          },
-        ]"
-      >
+      <div v-for="(item, itemIndex) of inputPartsBy" :key="item" :class="`item ${itemIndex}`">
         <input
           v-for="(input, inputIndex) of item"
           :key="inputIndex"
-          @change="toggleInput(itemIndex, inputIndex)"
+          @input.prevent="toggleInput(itemIndex, +inputIndex)"
           type="text"
-          :class="[
-            'input',
-            {
-              inputIndex,
-            },
-          ]"
+          :class="`input ${inputIndex}`"
         />
       </div>
     </div>
@@ -73,7 +105,7 @@ const toggleInput = () => {};
         <input
           v-for="(input, inputIndex) of item"
           :key="inputIndex"
-          @change="toggleInput(itemIndex, inputIndex)"
+          @input="toggleInput(itemIndex, +inputIndex)"
           type="text"
           :class="[
             'input',

@@ -20,7 +20,32 @@ const meta: Meta = {
     numbersOnly: { control: 'boolean' },
     bottomOnly: { control: 'boolean' },
     scheme: { control: 'text' },
+    darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
+    darknessTextColor: {
+      control: 'select',
+      options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    },
     theme: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    textColor: {
       control: 'select',
       options: [
         'white',
@@ -49,7 +74,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {
-  args: {
-    active: true,
-  },
+  args: {},
 };

@@ -18,6 +18,7 @@
 - Knob;
 - ColorPicker;
 - Select;
+- InputDiv;
 - SelectButton;
 - Button;
 - Rating;
@@ -31,7 +32,7 @@
 
 ---
 ## Общая информация
-### Components count: 21
+### Components count: 22
 ### Bundle size: 336.6KB
 
 ---

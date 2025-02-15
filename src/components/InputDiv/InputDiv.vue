@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { IInputDivProps } from '@interfaces/componentsProps';
-import { computed, type Ref } from 'vue';
+import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
-import { calcPartsBy, calcPartsDash } from '@components/InputDiv/helpers';
+import { calcPartsBy, calcPartsDash, changeInputHandler, moveFocus } from '@components/InputDiv/helpers';
 
 const props = withDefaults(defineProps<IInputDivProps>(), {
   scheme: '4by1',
@@ -13,11 +13,41 @@ const props = withDefaults(defineProps<IInputDivProps>(), {
 });
 
 const value = defineModel() as Ref<string>;
-let container;
+const valueParts = ref<string[]>([]);
+
+watch(valueParts, () => {
+  value.value = valueParts.value.join('');
+});
+let container: HTMLElement | null;
 setTimeout(() => (container = document.querySelector('#inputDiv-container')), 0);
 
 const inputPartsBy = computed(() => calcPartsBy(props.scheme));
 const inputPartsDash = computed(() => calcPartsDash(props.scheme));
+const indexesToValueIndex = computed(() => {
+  const result = {};
+  let index = 0;
+  if (inputPartsBy.value) {
+    const splat = props.scheme.split('by');
+    for (const itemIndex of [...Array(+splat[0]).keys()]) {
+      for (const inputIndex of [...Array(+splat[1]).keys()]) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-expect-error
+        result[itemIndex + '-' + inputIndex] = index++;
+      }
+    }
+  } else {
+    const splat = props.scheme.split('-').map((i) => +i);
+    for (const item of splat) {
+      for (const inputIndex of [...Array(item).keys()]) {
+        const itemIndex = splat.indexOf(item);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-expect-error
+        result[itemIndex + '-' + inputIndex] = index++;
+      }
+    }
+  }
+  return result;
+});
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -30,89 +60,48 @@ const inputHeight = computed(() => getValueFromSize(props.size, ['30px', '36px',
 const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '24px', '32px']));
 const borderWidth = computed(() => (props.size === 'small' || props.size === 'normal' ? '1px' : '2px'));
 
-const toggleInput = (itemIndex: number, inputIndex: number) => {
-  let currentInput;
-  let currentItem;
-  const list = Array(container?.children[inputPartsBy.value ? 0 : 1].children)[0];
-
-  cycle: for (let i = 0; i < list.length; i++) {
-    const item = list[i];
-    if (!item.classList.contains(itemIndex)) continue;
-    for (const child of item.children) {
-      if (child.classList.contains(inputIndex)) {
-        currentInput = child;
-        currentItem = item;
-        break cycle;
-      }
-    }
-  }
-  // если значение ввели
-  if (currentInput.value) {
-    let nextInputInSameItem = null;
-    for (const child of currentItem.children) {
-      if (child.classList.contains(inputIndex + 1)) {
-        nextInputInSameItem = child;
-        break;
-      }
-    }
-    if (nextInputInSameItem) {
-      nextInputInSameItem.focus();
-    } else {
-      // обработка следующей части, если она есть, иначе ничего не делать (или оставить старое значение, что ещё лучше)
-    }
-  } else {
-    // если значение удалили
-    let prevInputInSameItem = null;
-    for (const child of currentItem.children) {
-      if (child.classList.contains(inputIndex - 1)) {
-        prevInputInSameItem = child;
-        break;
-      }
-    }
-    if (prevInputInSameItem) {
-      prevInputInSameItem.focus();
-    } else {
-      // обработка предыдущей части, если она есть, иначе ничего не делать
-    }
-  }
-};
+const toggleInput = (target: any, itemIndex: number, inputIndex: number, backspace?: boolean) =>
+  (valueParts.value = changeInputHandler(
+    target,
+    container!,
+    !!inputPartsBy.value,
+    valueParts.value,
+    indexesToValueIndex.value,
+    itemIndex,
+    inputIndex,
+    backspace ?? false,
+  ));
 </script>
 
 <template>
   <section id="inputDiv-container">
     <div v-show="inputPartsBy" class="list">
-      <div v-for="(item, itemIndex) of inputPartsBy" :key="item" :class="`item ${itemIndex}`">
+      <div v-for="(item, itemIndex) of inputPartsBy" :key="itemIndex" :class="`item ${itemIndex}`">
         <input
-          v-for="(input, inputIndex) of item"
+          v-for="(_, inputIndex) of item"
           :key="inputIndex"
-          @input.prevent="toggleInput(itemIndex, +inputIndex)"
+          @input="toggleInput($event.target, itemIndex, +inputIndex)"
+          @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
+          @keydown.left="moveFocus('left', container!, !!inputPartsBy, itemIndex, inputIndex)"
+          @keydown.right="moveFocus('right', container!, !!inputPartsBy, itemIndex, inputIndex)"
           type="text"
           :class="`input ${inputIndex}`"
+          maxlength="2"
         />
       </div>
     </div>
     <div v-show="inputPartsDash" class="list">
-      <div
-        v-for="(item, itemIndex) of inputPartsDash"
-        :key="item"
-        :class="[
-          'item',
-          {
-            itemIndex,
-          },
-        ]"
-      >
+      <div v-for="(item, itemIndex) of inputPartsDash" :key="itemIndex" :class="`item ${itemIndex}`">
         <input
-          v-for="(input, inputIndex) of item"
+          v-for="(_, inputIndex) of item"
           :key="inputIndex"
-          @input="toggleInput(itemIndex, +inputIndex)"
+          @input="toggleInput($event.target, itemIndex, +inputIndex)"
+          @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
+          @keydown.left="moveFocus('left', container!, !!inputPartsBy, itemIndex, inputIndex)"
+          @keydown.right="moveFocus('right', container!, !!inputPartsBy, itemIndex, inputIndex)"
           type="text"
-          :class="[
-            'input',
-            {
-              inputIndex,
-            },
-          ]"
+          :class="`input ${inputIndex}`"
+          maxlength="2"
         />
       </div>
     </div>

@@ -184,6 +184,7 @@ const openDrawer = () => (visibleDrawer.value = true);
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <input type="text" style="border: 1px solid black" />
   <Button
     theme="black"
     label="Open all toasts"

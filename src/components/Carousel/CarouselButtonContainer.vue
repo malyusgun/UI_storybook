@@ -1,16 +1,17 @@
 <script setup lang="ts">
 defineProps<{
-  active?: boolean;
   disable?: boolean;
   textColor: string;
   color: string;
+  width: string;
+  borderRadius: string;
 }>();
 </script>
 
 <template>
   <div
     :class="[
-      'item',
+      'arrowContainer',
       {
         disable,
       },
@@ -20,61 +21,48 @@ defineProps<{
       :class="[
         'bg',
         {
-          active,
           disableBg: disable,
         },
       ]"
     ></div>
-    <slot />
+    <div class="icon">
+      <slot />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.item {
+.arrowContainer {
   position: relative;
+  width: v-bind(width);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: v-bind(color);
+  border-radius: v-bind(borderRadius);
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 1.2;
   color: v-bind(textColor);
 }
-.item::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: v-bind(color);
-}
-.item:hover > .bg:not(.active) {
-  background-color: v-bind(textColor);
+.arrowContainer:hover > .bg {
   opacity: 0.1;
 }
-.item:active > .bg:not(.active) {
+.arrowContainer:active > .bg {
   opacity: 0.2;
 }
 .bg {
-  width: 120%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 10px;
-  z-index: 5;
-  border-radius: 50%;
-  background-color: transparent;
   opacity: 0;
+  border-radius: v-bind(borderRadius);
+  background-color: black;
   transition: all 0.2s ease;
-}
-.item > .active {
-  background-color: v-bind(textColor) !important;
-  opacity: 1;
-}
-.active + * {
-  color: v-bind(color);
 }
 .disable {
   cursor: auto;

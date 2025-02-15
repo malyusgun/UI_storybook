@@ -8,7 +8,7 @@ import PaginatorItem from '@components/Paginator/PaginatorItem.vue';
 import { computed, type Ref, watch } from 'vue';
 import Select from '@components/Select/Select.vue';
 import type { ISelectOption } from '@interfaces/componentsProp';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 
 const props = withDefaults(defineProps<IPaginatorProps>(), {
   total: 10,
@@ -45,27 +45,14 @@ const items = computed(() => {
   if (itemsPerView === 5) return [cur - 2, cur - 1, cur, cur + 1, cur + 2];
   return initArray.value;
 });
-const iconSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '10';
-  if (size === 'large') return '15';
-  if (size === 'huge') return '18';
-  return '7';
-});
-const fontSize = computed(() => {
-  if (props.fontSize) return props.fontSize;
-  const size = props.size;
-  if (size === 'normal') return '16px';
-  if (size === 'large') return '26px';
-  if (size === 'huge') return '32px';
-  return '12px';
-});
+const iconSize = computed(() => getValueFromSize(props.size, ['7', '10', '15', '18']));
+const fontSize = computed(() => getValueFromSize(props.size, ['12px', '16px', '26px', '32px']));
 const itemSize = computed(() => `${+iconSize.value * 2.5}px`);
 const color = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
 
 watch(itemsPerPage, (cur, prev) => {
-  if (cur > prev) current.value = Math.ceil((current.value * prev) / cur);
+  if (cur > prev) current.value = Math.round((current.value * prev) / cur);
   else current.value = Math.ceil((prev * (current.value - 1) + +cur) / cur);
 });
 </script>

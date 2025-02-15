@@ -19,6 +19,8 @@ import type {
   ISliderOptions,
   ITableColumn,
   ITreeItem,
+  TInputDivScheme,
+  TToastType,
 } from '@interfaces/componentsProp';
 
 export interface ITableProps {
@@ -75,6 +77,18 @@ export interface IPaginatorProps {
   itemsPerPageOptions?: number[];
   size?: TSize;
   fontSize?: string;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
+export interface ICarouselProps {
+  itemsProps: any[];
+  innerWidth?: string;
+  size?: TSize;
+  perView?: number;
+  perScroll?: number;
+  circular?: boolean;
+  buttonsBelow?: boolean;
   theme?: TThemeColor;
   darknessTheme?: TDarkness;
 }
@@ -170,6 +184,23 @@ export interface IPopupProps {
   left?: number;
 }
 
+export interface ICropperProps {
+  src?: string;
+  file?: File;
+  width?: number;
+  height?: number;
+  menuPosition?: 'top' | 'right' | 'bottom' | 'left';
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+}
+
+export interface IColorPickerProps {
+  size?: TSize;
+  disabled?: boolean;
+  buttonProps?: IButtonProps;
+  sameButtonColor?: boolean;
+}
+
 export interface ISelectProps {
   options?: ISelectOption[];
   groups?: ISelectGroup[];
@@ -191,6 +222,22 @@ export interface ISelectProps {
   noBorder?: boolean;
   noSelectedBackground?: boolean;
   noBackground?: boolean;
+}
+
+export interface IInputDivProps {
+  scheme?: TInputDivScheme;
+  size?: TSize;
+  gap?: string;
+  inputsGap?: string;
+  secret?: boolean;
+  dashed?: boolean;
+  numbersOnly?: boolean;
+  regex?: RegExp;
+  bottomOnly?: boolean;
+  theme?: TThemeColor;
+  darknessTheme?: TDarkness;
+  textColor?: TThemeColor;
+  darknessTextColor?: TDarkness;
 }
 
 export interface ISBProps {
@@ -257,6 +304,19 @@ export interface ITSProps {
   darknessTheme?: TDarkness;
   darknessNegativeTheme?: TDarkness;
   disabled?: boolean;
+}
+
+export interface IToastProps {
+  active?: boolean;
+  duration?: number | false;
+  type?: TToastType;
+  theme?: TThemeColor;
+  size?: TSize;
+  text?: string;
+  header?: string;
+  icon?: TIcon;
+  position?: Exclude<TExpandedPosition, 'left' | 'right'>;
+  width?: string;
 }
 
 export interface ITagProps {

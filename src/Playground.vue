@@ -21,6 +21,9 @@ import Knob from '@components/Knob/Knob.vue';
 import Rating from '@components/Rating/Rating.vue';
 import HomeIcon from '@icons/Mono/HomeIcon.vue';
 import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
+import Carousel from '@components/Carousel/Carousel.vue';
+import Toast from '@components/Toast/Toast.vue';
+import InputDiv from '@components/InputDiv/InputDiv.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -173,11 +176,33 @@ const selectOptions = [
 ];
 const knob = ref(0);
 const pbValue = ref(0);
+const toast = ref(false);
+const toast2 = ref(false);
+const toast3 = ref(false);
+const toast4 = ref(false);
 const openDrawer = () => (visibleDrawer.value = true);
 </script>
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
+  <Button
+    theme="black"
+    label="Open all toasts"
+    @click="
+      () => {
+        toast = true;
+        toast2 = true;
+        toast3 = true;
+        toast4 = true;
+      }
+    "
+  />
+  <InputDiv :regex="/^[0-9-+=]+$/" />
+  <Button label="Open toast" @click="toast2 = true" />
+  <Toast v-model="toast" static :duration="60" type="success" position="topLeft" width="500px" />
+  <Toast v-model="toast4" :duration="2" type="info" position="topLeft" width="500px" />
+  <Toast v-model="toast3" :duration="2" type="warn" position="bottomRight" width="500px" />
+  <Toast v-model="toast2" :duration="60" type="error" position="bottomRight" width="500px" />
   <Rating theme="red">
     <template #offIcon>
       <CrossIcon color="red" />
@@ -201,6 +226,35 @@ const openDrawer = () => (visibleDrawer.value = true);
   <Checkbox v-model="activeCheckbox" size="large" />
   <Checkbox v-model="activeCheckbox" size="huge" />
   <ProgressBar v-model="pbValue" />
+  <Carousel
+    style="margin: 20px"
+    theme="rose"
+    :itemsProps="[
+      {
+        index: 1,
+        text: 'This is SPARTA!',
+        src: 'storybook.svg',
+      },
+      {
+        index: 2,
+        text: 'This is the second item!',
+        src: 'https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif',
+      },
+      {
+        index: 3,
+        text:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque blanditiis debitis distinctio, doloribus,\n' +
+          '        eius est eveniet excepturi facere id iure laboriosam laborum libero, minus nesciunt nostrum nulla repellat\n' +
+          '        veritatis.',
+      },
+    ]"
+  >
+    <template v-slot="item: any">
+      <h2 style="text-align: center; margin-bottom: 20px">Element {{ item?.index }}</h2>
+      <p>{{ item?.text }}</p>
+      <img :src="item.src" :style="`width: ${item.index === 1 ? '30px' : '100%'}`"
+    /></template>
+  </Carousel>
   {{ tableData[1] }}
   <Table
     center
@@ -211,6 +265,7 @@ const openDrawer = () => (visibleDrawer.value = true);
     theme="black"
     stripedRows
     paginator
+    editable
     :no-editing-settings="{
       cells: [[0, 0]],
     }"

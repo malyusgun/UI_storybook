@@ -3,7 +3,7 @@ import type { IRatingProps } from '@interfaces/componentsProps';
 import { computed, type Ref, ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
 import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor, getValueFromSize } from '@helpers/common';
 
 const props = withDefaults(defineProps<IRatingProps>(), {
   count: 5,
@@ -30,13 +30,7 @@ const onHoverIndex = ref();
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const offColor = computed(() => (props.offTheme ? convertThemeToColor(props.offTheme, props.darknessTheme) : null));
 const themeColorOnHover = computed(() => convertThemeToColor(props.offTheme ?? props.theme, '200'));
-const iconSize = computed(() => {
-  const size = props.size;
-  if (size === 'normal') return '20px';
-  if (size === 'large') return '30px';
-  if (size === 'huge') return '40px';
-  return '10px';
-});
+const iconSize = computed(() => getValueFromSize(props.size, ['10px', '20px', '30px', '40px']) as string);
 const onActiveClick = (index: number) => {
   if (value.value > index) {
     value.value = index;

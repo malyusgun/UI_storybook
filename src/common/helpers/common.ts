@@ -1,4 +1,4 @@
-import { EThemeColor, type TDarkness, type TThemeColor } from '@interfaces/common';
+import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '@interfaces/common';
 import {
   convert100ThemeToColor,
   convert200ThemeToColor,
@@ -57,4 +57,11 @@ export const convertThemeToSecondaryColor = (theme: TThemeColor, darkness: TDark
   return theme === 'white' || theme === 'black'
     ? convertWhiteOrBlackToColor(theme, darkness as TDarkness)
     : convertThemeToColor(theme, String(100 + ((+darkness + 600) % 900)));
+};
+
+export const getValueFromSize = <T>(size: TSize, options: T[]): T => {
+  if (size === 'normal') return options[1];
+  if (size === 'large') return options[2];
+  if (size === 'huge') return options[3];
+  return options[0];
 };

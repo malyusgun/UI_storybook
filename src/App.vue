@@ -41,7 +41,7 @@ import CompassIcon from '@icons/Mono/CompassIcon.vue';
 import ConstructionWorkerIcon from '@icons/Mono/ConstructionWorkerIcon.vue';
 import ContactsIcon from '@icons/Mono/ContactsIcon.vue';
 import CropIcon from '@icons/Mono/CropIcon.vue';
-import CrossCircleIcon from '@icons/Mono/CrossCircleIcon.vue';
+import CrossRoundFilledIcon from '@icons/Mono/CrossRoundFilledIcon.vue';
 import CrossIcon from '@icons/Mono/CrossIcon.vue';
 import CubeIcon from '@icons/Mono/CubeIcon.vue';
 import CupIcon from '@icons/Mono/CupIcon.vue';
@@ -115,6 +115,13 @@ import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowDoubleLeftShortIcon from '@icons/Mono/ArrowDoubleLeftShortIcon.vue';
 import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
 import ArrowDoubleRightShortIcon from '@icons/Mono/ArrowDoubleRightShortIcon.vue';
+import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
+import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
+import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
+import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
+import InfoIcon from '@icons/Mono/InfoIcon.vue';
+import WarningIcon from '@icons/Mono/WarningIcon.vue';
+import CrossRoundIcon from '@icons/Mono/CrossRoundIcon.vue';
 
 const gentleIcons = {
   Age18Icon,
@@ -164,9 +171,14 @@ const gentleIcons = {
   CompassIcon,
   ConstructionWorkerIcon,
   ContactsIcon,
+  CornerLeftBottomIcon,
+  CornerLeftTopIcon,
+  CornerRightBottomIcon,
+  CornerRightTopIcon,
   CropIcon,
   CrossIcon,
-  CrossCircleIcon,
+  CrossRoundIcon,
+  CrossRoundFilledIcon,
   CubeIcon,
   CupIcon,
   CursorIcon,
@@ -209,6 +221,7 @@ const gentleIcons = {
   HomeIcon,
   ImageIcon,
   ImageEditIcon,
+  InfoIcon,
   LineIcon,
   LineDashedIcon,
   LineDottedIcon,
@@ -232,6 +245,7 @@ const gentleIcons = {
   TrashIcon,
   TriangleIcon,
   UserIcon,
+  WarningIcon,
 };
 </script>
 

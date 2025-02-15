@@ -1,5 +1,5 @@
 {
-  "name": "@feather_ui",
+  "name": "featherui",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -16,7 +16,7 @@
     "build-storybook": "storybook build"
   },
   "publishConfig": {
-    "@feather_ui": "https://gl.iqdev.team/api/v4/projects/634/packages/npm"
+    "featherui": "https://gl.iqdev.team/api/v4/projects/634/packages/npm"
   },
   "files": [
     "src/",

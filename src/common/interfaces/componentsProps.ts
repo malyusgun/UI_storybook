@@ -227,9 +227,12 @@ export interface ISelectProps {
 export interface IInputDivProps {
   scheme?: TInputDivScheme;
   size?: TSize;
+  gap?: string;
+  inputsGap?: string;
   secret?: boolean;
   dashed?: boolean;
   numbersOnly?: boolean;
+  regex?: RegExp;
   bottomOnly?: boolean;
   theme?: TThemeColor;
   darknessTheme?: TDarkness;

@@ -23,6 +23,7 @@ import HomeIcon from '@icons/Mono/HomeIcon.vue';
 import ProgressBar from '@components/ProgressBar/ProgressBar.vue';
 import Carousel from '@components/Carousel/Carousel.vue';
 import Toast from '@components/Toast/Toast.vue';
+import InputDiv from '@components/InputDiv/InputDiv.vue';
 
 const visibleDrawer = ref(false);
 const sliderOptions: ISliderOptions[] = [
@@ -184,7 +185,6 @@ const openDrawer = () => (visibleDrawer.value = true);
 
 <template>
   <h2 class="title gradient-text">Playground</h2>
-  <input type="text" style="border: 1px solid black" />
   <Button
     theme="black"
     label="Open all toasts"
@@ -197,6 +197,7 @@ const openDrawer = () => (visibleDrawer.value = true);
       }
     "
   />
+  <InputDiv :regex="/^[0-9-+=]+$/" />
   <Button label="Open toast" @click="toast2 = true" />
   <Toast v-model="toast" static :duration="60" type="success" position="topLeft" width="500px" />
   <Toast v-model="toast4" :duration="2" type="info" position="topLeft" width="500px" />

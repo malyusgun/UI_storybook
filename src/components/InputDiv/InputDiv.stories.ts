@@ -20,6 +20,9 @@ const meta: Meta = {
     numbersOnly: { control: 'boolean' },
     bottomOnly: { control: 'boolean' },
     scheme: { control: 'text' },
+    regex: { control: 'text' },
+    gap: { control: 'text' },
+    inputsGap: { control: 'text' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: {
       control: 'select',
@@ -75,4 +78,29 @@ type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {
   args: {},
+};
+
+export const Full: Story = {
+  args: {
+    secret: true,
+    dashed: true,
+    numbersOnly: true,
+    bottomOnly: false,
+    scheme: '2-4-3-1',
+    size: 'large',
+    theme: 'sky',
+  },
+};
+
+export const Full2: Story = {
+  args: {
+    secret: false,
+    dashed: true,
+    numbersOnly: false,
+    bottomOnly: true,
+    scheme: '4by3',
+    size: 'large',
+    theme: 'white',
+    textColor: 'blue',
+  },
 };

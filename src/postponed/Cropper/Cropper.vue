@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { ICropperProps } from '@interfaces/componentsProps';
+import type { ICropperProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, watch } from 'vue';
 import Button from '../../components/Button/Button.vue';
 import { convertThemeToTextColor } from '../../common/helpers/common';
 import SaveIcon from '../../icons/Mono/SaveIcon.vue';
-import { calcContainerRect } from '@/postponed/Cropper/helpers';
-import CropperSelectedArea from '@/postponed/Cropper/CropperSelectedArea.vue';
+import { calcContainerRect } from './helpers';
+import CropperSelectedArea from './CropperSelectedArea.vue';
 
 const props = withDefaults(defineProps<ICropperProps>(), {
   width: 300,

@@ -1,6 +1,6 @@
 import { convertThemeToColor } from '../../common/helpers/common';
-import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '@interfaces/common';
-import type { IColorGap } from '@interfaces/componentsProp';
+import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '../../common/interfaces/common';
+import type { IColorGap } from '../../common/interfaces/componentsProp';
 
 export const calcNewValue = (
   event: MouseEvent,

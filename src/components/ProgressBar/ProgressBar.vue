@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IProgressBarProps } from '@interfaces/componentsProps';
+import type { IProgressBarProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
 

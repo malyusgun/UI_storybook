@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type Ref } from 'vue';
-import type { ITSProps } from '@interfaces/componentsProps';
+import type { ITSProps } from '../../common/interfaces/componentsProps';
 import { convertThemeToColor } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<ITSProps>(), {

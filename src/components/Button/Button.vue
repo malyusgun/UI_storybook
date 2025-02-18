@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { IButtonProps } from '@interfaces/componentsProps';
+import type { IButtonProps } from '../../common/interfaces/componentsProps';
 import {
   convertThemeToSecondaryColor,
   convertThemeToColor,

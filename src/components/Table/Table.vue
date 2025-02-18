@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITableProps } from '@interfaces/componentsProps';
+import type { ITableProps } from '../../common/interfaces/componentsProps';
 import { computed, type Ref, ref } from 'vue';
 import {
   convertThemeToColor,

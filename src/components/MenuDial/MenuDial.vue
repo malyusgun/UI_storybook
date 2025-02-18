@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { IMDProps } from '@interfaces/componentsProps';
+import type { IMDProps } from '../../common/interfaces/componentsProps';
 import PlusIcon from '../../icons/Mono/PlusIcon.vue';
 import {
   convertThemeToSecondaryColor,
   convertThemeToColor,
   convertThemeToTextColor,
 } from '../../common/helpers/common';
-import type { IMDItemProps } from '@interfaces/componentsProp';
+import type { IMDItemProps } from '../../common/interfaces/componentsProp';
 
 const props = withDefaults(defineProps<IMDProps>(), {
   theme: 'white',

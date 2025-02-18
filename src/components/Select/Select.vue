@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ISelectProps } from '@interfaces/componentsProps';
+import type { ISelectProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor } from '../../common/helpers/common';
-import { iconsSet } from '@/common/constants/icons';
-import type { TThemeColor } from '@interfaces/common';
+import { iconsSet } from '../../common/constants/icons';
+import type { TThemeColor } from '../../common/interfaces/common';
 import SelectItem from './SelectItem.vue';
 import SearchIcon from '../../icons/Mono/SearchIcon.vue';
 import { calcFontSize, calcPadding, getOptionsGroups } from './helpers';

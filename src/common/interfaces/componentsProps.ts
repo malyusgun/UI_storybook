@@ -9,7 +9,7 @@ import type {
   TTextStyle,
   TThemeColor,
   TThemeColorNoWhite,
-} from '@interfaces/common';
+} from '../interfaces/common';
 import type {
   IColorGap,
   IMDItemProps,
@@ -21,7 +21,7 @@ import type {
   ITreeItem,
   TInputDivScheme,
   TToastType,
-} from '@interfaces/componentsProp';
+} from '../interfaces/componentsProp';
 
 export interface ITableProps {
   data?: unknown[][];

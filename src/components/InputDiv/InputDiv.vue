@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IInputDivProps } from '@interfaces/componentsProps';
+import type { IInputDivProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
 import { calcIndexesToValueindex, calcPartsBy, calcPartsDash, changeInputHandler, moveFocus } from './helpers';

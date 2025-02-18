@@ -1,4 +1,4 @@
-import type { TInputDivScheme } from '@interfaces/componentsProp';
+import type { TInputDivScheme } from '../../common/interfaces/componentsProp';
 
 export const changeInputHandler = (
   target: any,

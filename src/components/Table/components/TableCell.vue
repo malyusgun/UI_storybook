@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { filterCheckboxProps, filterSelectProps } from '../helpers';
-import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
+import type { ITableColumn, TTableColumnType } from '../../../common/interfaces/componentsProp';
 import Checkbox from '../../Checkbox/Checkbox.vue';
 import Select from '../../Select/Select.vue';
 import Rating from '../../Rating/Rating.vue';
 import ProgressBar from '../../ProgressBar/ProgressBar.vue';
 import Knob from '../../Knob/Knob.vue';
-import type { TThemeColor } from '@interfaces/common';
+import type { TThemeColor } from '../../../common/interfaces/common';
 
 interface IProps {
   item: unknown;

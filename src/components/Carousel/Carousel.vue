@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ICarouselProps } from '@interfaces/componentsProps';
+import type { ICarouselProps } from '../../common/interfaces/componentsProps';
 import CarouselButtonContainer from './CarouselButtonContainer.vue';
 import { computed, ref } from 'vue';
 import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';

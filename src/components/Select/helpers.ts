@@ -1,5 +1,5 @@
-import type { TSize } from '@interfaces/common';
-import type { ISelectGroup, ISelectOption } from '@interfaces/componentsProp';
+import type { TSize } from '../../common/interfaces/common';
+import type { ISelectGroup, ISelectOption } from '../../common/interfaces/componentsProp';
 
 export const getOptionsGroups = (options: ISelectOption[], groups: ISelectGroup[] | undefined, filter: string) => {
   if (!groups?.length) return [];

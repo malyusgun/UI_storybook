@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { IDividerProps } from '@interfaces/componentsProps';
+import type { IDividerProps } from '../../common/interfaces/componentsProps';
 import { convertThemeToColor } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IDividerProps>(), {

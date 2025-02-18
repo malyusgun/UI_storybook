@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { iconsSet } from '@/common/constants/icons';
-import type { ISelectOption } from '@interfaces/componentsProp';
-import type { TThemeColor } from '@interfaces/common';
+import { iconsSet } from '../../common/constants/icons';
+import type { ISelectOption } from '../../common/interfaces/componentsProp';
+import type { TThemeColor } from '../../common/interfaces/common';
 import { convertThemeToColor } from '../../common/helpers/common';
 interface IProps {
   option: ISelectOption | undefined;

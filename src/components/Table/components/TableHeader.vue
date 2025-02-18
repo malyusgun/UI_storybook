@@ -8,8 +8,8 @@ import Popup from '../../Popup/Popup.vue';
 import Button from '../../Button/Button.vue';
 import CheckMarkIcon from '../../../icons/Mono/CheckMarkIcon.vue';
 import CrossIcon from '../../../icons/Mono/CrossIcon.vue';
-import type { TThemeColor } from '@interfaces/common';
-import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
+import type { TThemeColor } from '../../../common/interfaces/common';
+import type { ITableColumn, TTableColumnType } from '../../../common/interfaces/componentsProp';
 import { computed } from 'vue';
 
 interface Props {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { IRatingProps } from '@interfaces/componentsProps';
+import type { IRatingProps } from '../../common/interfaces/componentsProps';
 import { computed, type Ref, ref, watch } from 'vue';
-import { iconsSet } from '@/common/constants/icons';
+import { iconsSet } from '../../common/constants/icons';
 import StarFilledIcon from '../../icons/Mono/StarFilledIcon.vue';
 import { convertThemeToColor, getValueFromSize } from '../../common/helpers/common';
 

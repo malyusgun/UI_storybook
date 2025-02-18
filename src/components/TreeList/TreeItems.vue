@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { iconsSet } from '@/common/constants/icons';
+import { iconsSet } from '../../common/constants/icons';
 import TriangleIcon from '../../icons/Mono/TriangleIcon.vue';
-import type { ITIProps } from '@interfaces/componentsProps';
+import type { ITIProps } from '../../common/interfaces/componentsProps';
 import { convertThemeToColor } from '../../common/helpers/common';
 
 defineProps<ITIProps>();

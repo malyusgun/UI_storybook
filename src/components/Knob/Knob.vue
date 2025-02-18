@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IKnobProps } from '@interfaces/componentsProps';
+import type { IKnobProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
 import { convertThemeToColor } from '../../common/helpers/common';
 import { calcCenter, calcStart, calcNewValue, calcThemeColor, calcContainerSize } from './helpers';

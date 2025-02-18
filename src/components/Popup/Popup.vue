@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IPopupProps } from '@interfaces/componentsProps';
+import type { IPopupProps } from '../../common/interfaces/componentsProps';
 import { computed, type Ref, ref, watch } from 'vue';
 import { convertThemeToColor, convertThemeToSecondaryColor } from '../../common/helpers/common';
-import type { CustomWindow } from '@interfaces/common';
+import type { CustomWindow } from '../../common/interfaces/common';
 
 const props = withDefaults(defineProps<IPopupProps>(), {
   parentSelector: 'body',

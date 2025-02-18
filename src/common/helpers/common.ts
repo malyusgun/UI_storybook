@@ -1,4 +1,4 @@
-import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '@interfaces/common';
+import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '../interfaces/common';
 import {
   convert100ThemeToColor,
   convert200ThemeToColor,

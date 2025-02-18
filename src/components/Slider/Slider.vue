@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 import type { ISliderProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<ISliderProps>(), {
   width: '100',

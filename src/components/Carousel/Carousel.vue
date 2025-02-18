@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { ICarouselProps } from '@interfaces/componentsProps';
-import CarouselButtonContainer from '@components/Carousel/CarouselButtonContainer.vue';
+import CarouselButtonContainer from './CarouselButtonContainer.vue';
 import { computed, ref } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
-import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
-import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
+import ArrowLeftShortIcon from '../../icons/Mono/ArrowLeftShortIcon.vue';
+import ArrowRightShortIcon from '../../icons/Mono/ArrowRightShortIcon.vue';
 import { defaultProps, getNewValue } from './helpers';
 
 const props = withDefaults(defineProps<ICarouselProps>(), {

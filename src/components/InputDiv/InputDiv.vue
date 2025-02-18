@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import type { IInputDivProps } from '@interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
-import {
-  calcIndexesToValueindex,
-  calcPartsBy,
-  calcPartsDash,
-  changeInputHandler,
-  moveFocus,
-} from '@components/InputDiv/helpers';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
+import { calcIndexesToValueindex, calcPartsBy, calcPartsDash, changeInputHandler, moveFocus } from './helpers';
 
 const props = withDefaults(defineProps<IInputDivProps>(), {
   scheme: '4by1',

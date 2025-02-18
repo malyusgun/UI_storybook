@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IProgressBarProps } from '@interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IProgressBarProps>(), {
   value: 0,

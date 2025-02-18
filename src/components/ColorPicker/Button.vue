@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IButtonProps } from '@interfaces/componentsProps';
-import { convertThemeToSecondaryColor, convertThemeToColor } from '@helpers/common';
+import { convertThemeToSecondaryColor, convertThemeToColor } from '../../common/helpers/common';
 
 interface Props extends IButtonProps {
   disabled?: boolean;

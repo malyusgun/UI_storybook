@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import FilterIcon from '@icons/Mono/FilterIcon.vue';
-import SortDownIcon from '@icons/Mono/SortDownIcon.vue';
-import SortUpIcon from '@icons/Mono/SortUpIcon.vue';
-import SortVerticalIcon from '@icons/Mono/SortVerticalIcon.vue';
-import { calcColumnPadding } from '@components/Table/helpers';
-import Popup from '@components/Popup/Popup.vue';
-import Button from '@components/Button/Button.vue';
-import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
-import CrossIcon from '@icons/Mono/CrossIcon.vue';
+import FilterIcon from '../../../icons/Mono/FilterIcon.vue';
+import SortDownIcon from '../../../icons/Mono/SortDownIcon.vue';
+import SortUpIcon from '../../../icons/Mono/SortUpIcon.vue';
+import SortVerticalIcon from '../../../icons/Mono/SortVerticalIcon.vue';
+import { calcColumnPadding } from '../helpers';
+import Popup from '../../Popup/Popup.vue';
+import Button from '../../Button/Button.vue';
+import CheckMarkIcon from '../../../icons/Mono/CheckMarkIcon.vue';
+import CrossIcon from '../../../icons/Mono/CrossIcon.vue';
 import type { TThemeColor } from '@interfaces/common';
 import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
 import { computed } from 'vue';

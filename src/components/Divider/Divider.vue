@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IDividerProps } from '@interfaces/componentsProps';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IDividerProps>(), {
   height: 1,

@@ -1,6 +1,6 @@
 {
   "name": "@d.malygin/UI_storybook",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -201,8 +201,5 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  },
-  "volta": {
-    "node": "22.0.0"
   }
 }

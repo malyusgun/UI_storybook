@@ -2,7 +2,7 @@
 import { iconsSet } from '@/common/constants/icons';
 import type { ISelectOption } from '@interfaces/componentsProp';
 import type { TThemeColor } from '@interfaces/common';
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor } from '../../common/helpers/common';
 interface IProps {
   option: ISelectOption | undefined;
   fontSizeNumber: string;

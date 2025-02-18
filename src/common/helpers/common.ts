@@ -9,7 +9,7 @@ import {
   convert700ThemeToColor,
   convert800ThemeToColor,
   convert900ThemeToColor,
-} from '@helpers/colors';
+} from './colors';
 
 /**
  * Convert color of type TThemeColor to hex

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import ArrowDoubleLeftShortIcon from '@icons/Mono/ArrowDoubleLeftShortIcon.vue';
-import ArrowDoubleRightShortIcon from '@icons/Mono/ArrowDoubleRightShortIcon.vue';
-import ArrowLeftShortIcon from '@icons/Mono/ArrowLeftShortIcon.vue';
-import ArrowRightShortIcon from '@icons/Mono/ArrowRightShortIcon.vue';
+import ArrowDoubleLeftShortIcon from '../../icons/Mono/ArrowDoubleLeftShortIcon.vue';
+import ArrowDoubleRightShortIcon from '../../icons/Mono/ArrowDoubleRightShortIcon.vue';
+import ArrowLeftShortIcon from '../../icons/Mono/ArrowLeftShortIcon.vue';
+import ArrowRightShortIcon from '../../icons/Mono/ArrowRightShortIcon.vue';
 import type { IPaginatorProps } from '@interfaces/componentsProps';
-import PaginatorItem from '@components/Paginator/PaginatorItem.vue';
+import PaginatorItem from './PaginatorItem.vue';
 import { computed, type Ref, watch } from 'vue';
-import Select from '@components/Select/Select.vue';
+import Select from '../Select/Select.vue';
 import type { ISelectOption } from '@interfaces/componentsProp';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IPaginatorProps>(), {
   total: 10,

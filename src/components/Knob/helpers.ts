@@ -1,4 +1,4 @@
-import { convertThemeToColor } from '@helpers/common';
+import { convertThemeToColor } from '../../common/helpers/common';
 import { EThemeColor, type TDarkness, type TSize, type TThemeColor } from '@interfaces/common';
 import type { IColorGap } from '@interfaces/componentsProp';
 

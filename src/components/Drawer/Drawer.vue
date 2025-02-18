@@ -2,7 +2,11 @@
 import { computed, type Ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
 import type { IDrawerProps } from '@interfaces/componentsProps';
-import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
+import {
+  convertThemeToColor,
+  convertThemeToSecondaryColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
 import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IDrawerProps>(), {

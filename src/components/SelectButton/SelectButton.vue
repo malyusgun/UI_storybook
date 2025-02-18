@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { computed, type Ref } from 'vue';
 import type { ISBProps } from '@interfaces/componentsProps';
-import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import {
+  convertThemeToSecondaryColor,
+  convertThemeToColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
 import type { ISBOption } from '@interfaces/componentsProp';
 
 const props = withDefaults(defineProps<ISBProps>(), {

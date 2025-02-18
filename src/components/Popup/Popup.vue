@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IPopupProps } from '@interfaces/componentsProps';
 import { computed, type Ref, ref, watch } from 'vue';
-import { convertThemeToColor, convertThemeToSecondaryColor } from '@helpers/common';
+import { convertThemeToColor, convertThemeToSecondaryColor } from '../../common/helpers/common';
 import type { CustomWindow } from '@interfaces/common';
 
 const props = withDefaults(defineProps<IPopupProps>(), {

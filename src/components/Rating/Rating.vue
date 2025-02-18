@@ -2,8 +2,8 @@
 import type { IRatingProps } from '@interfaces/componentsProps';
 import { computed, type Ref, ref, watch } from 'vue';
 import { iconsSet } from '@/common/constants/icons';
-import StarFilledIcon from '@icons/Mono/StarFilledIcon.vue';
-import { convertThemeToColor, getValueFromSize } from '@helpers/common';
+import StarFilledIcon from '../../icons/Mono/StarFilledIcon.vue';
+import { convertThemeToColor, getValueFromSize } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IRatingProps>(), {
   count: 5,

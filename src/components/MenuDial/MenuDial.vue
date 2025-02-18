@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { IMDProps } from '@interfaces/componentsProps';
-import PlusIcon from '@icons/Mono/PlusIcon.vue';
-import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import PlusIcon from '../../icons/Mono/PlusIcon.vue';
+import {
+  convertThemeToSecondaryColor,
+  convertThemeToColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
 import type { IMDItemProps } from '@interfaces/componentsProp';
 
 const props = withDefaults(defineProps<IMDProps>(), {

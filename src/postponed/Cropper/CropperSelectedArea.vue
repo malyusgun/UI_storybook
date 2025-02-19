@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import CornerRightBottomIcon from '@icons/Mono/CornerRightBottomIcon.vue';
-import CornerRightTopIcon from '@icons/Mono/CornerRightTopIcon.vue';
-import CornerLeftTopIcon from '@icons/Mono/CornerLeftTopIcon.vue';
-import CornerLeftBottomIcon from '@icons/Mono/CornerLeftBottomIcon.vue';
+import CornerRightBottomIcon from '../../icons/Mono/CornerRightBottomIcon.vue';
+import CornerRightTopIcon from '../../icons/Mono/CornerRightTopIcon.vue';
+import CornerLeftTopIcon from '../../icons/Mono/CornerLeftTopIcon.vue';
+import CornerLeftBottomIcon from '../../icons/Mono/CornerLeftBottomIcon.vue';
 import { computed } from 'vue';
 
 interface IProps {

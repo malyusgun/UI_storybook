@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import type { IModalProps } from '@interfaces/componentsProps';
-import { iconsSet } from '@/common/constants/icons';
-import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
-import type { CustomWindow } from '@interfaces/common';
+import type { IModalProps } from '../../common/interfaces/componentsProps';
+import { iconsSet } from '../../common/constants/icons';
+import {
+  convertThemeToColor,
+  convertThemeToSecondaryColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
+import type { CustomWindow } from '../../common/interfaces/common';
 
 const props = withDefaults(defineProps<IModalProps>(), {
   visible: false,

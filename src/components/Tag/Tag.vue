@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ITagProps } from '@interfaces/componentsProps';
+import type { ITagProps } from '../../common/interfaces/componentsProps';
 import { computed } from 'vue';
-import { convertThemeToColor, getValueFromSize } from '@helpers/common';
-import { iconsSet } from '@/common/constants/icons';
+import { convertThemeToColor, getValueFromSize } from '../../common/helpers/common';
+import { iconsSet } from '../../common/constants/icons';
 
 const props = withDefaults(defineProps<ITagProps>(), {
   value: 'Tag',

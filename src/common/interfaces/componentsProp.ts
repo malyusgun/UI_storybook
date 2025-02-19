@@ -1,11 +1,11 @@
-import type { TDarkness, TIcon, TPosition, TTextStyle, TThemeColor } from '@interfaces/common';
+import type { TDarkness, TIcon, TPosition, TTextStyle, TThemeColor } from '../interfaces/common';
 import type {
   ICheckboxProps,
   IKnobProps,
   IProgressBarProps,
   IRatingProps,
   ISelectProps,
-} from '@interfaces/componentsProps';
+} from '../interfaces/componentsProps';
 
 export interface ITableColumn {
   name: string;

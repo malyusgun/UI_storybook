@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IColorPickerProps } from '@interfaces/componentsProps';
+import type { IColorPickerProps } from '../../common/interfaces/componentsProps';
 import { computed, type Ref } from 'vue';
 import Button from './Button.vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
 
 const props = withDefaults(defineProps<IColorPickerProps>(), {
   size: 'normal',

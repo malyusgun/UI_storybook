@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { ITreeItem } from '@interfaces/componentsProp';
-import TreeItems from '@components/TreeList/TreeItems.vue';
-import type { ITLProps } from '@interfaces/componentsProps';
-import { convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
+import type { ITreeItem } from '../../common/interfaces/componentsProp';
+import TreeItems from './TreeItems.vue';
+import type { ITLProps } from '../../common/interfaces/componentsProps';
+import { convertThemeToColor, convertThemeToTextColor } from '../../common/helpers/common';
 
 interface IStateItem {
   isOpen: boolean;

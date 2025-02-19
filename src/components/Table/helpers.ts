@@ -1,6 +1,6 @@
-import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
-import type { TSize } from '@interfaces/common';
-import type { ICheckboxProps, ISelectProps } from '@interfaces/componentsProps';
+import type { ITableColumn, TTableColumnType } from '../../common/interfaces/componentsProp';
+import type { TSize } from '../../common/interfaces/common';
+import type { ICheckboxProps, ISelectProps } from '../../common/interfaces/componentsProps';
 
 export const calcRows = (
   initRows: unknown[][] | undefined,

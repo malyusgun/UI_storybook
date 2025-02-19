@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ICheckboxProps } from '@interfaces/componentsProps';
+import type { ICheckboxProps } from '../../common/interfaces/componentsProps';
 import { computed, watch } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
-import CheckMarkIcon from '@icons/Mono/CheckMarkIcon.vue';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
+import CheckMarkIcon from '../../icons/Mono/CheckMarkIcon.vue';
 
 const props = withDefaults(defineProps<ICheckboxProps>(), {
   label: '',

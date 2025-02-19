@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { IToastProps } from '@interfaces/componentsProps';
+import type { IToastProps } from '../../common/interfaces/componentsProps';
 import { computed, ref, type Ref, watch } from 'vue';
-import { convertThemeToColor, getValueFromSize } from '@helpers/common';
-import type { TToastType } from '@interfaces/componentsProp';
-import { iconsSet } from '@/common/constants/icons';
-import CrossIcon from '@icons/Mono/CrossIcon.vue';
-import type { TThemeColor } from '@interfaces/common';
+import { convertThemeToColor, getValueFromSize } from '../../common/helpers/common';
+import type { TToastType } from '../../common/interfaces/componentsProp';
+import { iconsSet } from '../../common/constants/icons';
+import CrossIcon from '../../icons/Mono/CrossIcon.vue';
+import type { TThemeColor } from '../../common/interfaces/common';
 
 const props = withDefaults(defineProps<IToastProps>(), {
   type: 'success',

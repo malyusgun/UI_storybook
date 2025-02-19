@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, type Ref, watch } from 'vue';
-import { iconsSet } from '@/common/constants/icons';
-import type { IDrawerProps } from '@interfaces/componentsProps';
-import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
-import type { CustomWindow } from '@interfaces/common';
+import { iconsSet } from '../../common/constants/icons';
+import type { IDrawerProps } from '../../common/interfaces/componentsProps';
+import {
+  convertThemeToColor,
+  convertThemeToSecondaryColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
+import type { CustomWindow } from '../../common/interfaces/common';
 
 const props = withDefaults(defineProps<IDrawerProps>(), {
   position: 'left',

@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { ITableProps } from '@interfaces/componentsProps';
+import type { ITableProps } from '../../common/interfaces/componentsProps';
 import { computed, type Ref, ref } from 'vue';
-import { convertThemeToColor, convertThemeToSecondaryColor, convertThemeToTextColor } from '@helpers/common';
-import { calcAdditionalHeight, calcGap, calcRows } from '@components/Table/helpers';
-import TableHeader from '@components/Table/components/TableHeader.vue';
-import TableCell from '@components/Table/components/TableCell.vue';
-import Paginator from '@components/Paginator/Paginator.vue';
-import ToggleSwitch from '@components/ToggleSwitch/ToggleSwitch.vue';
+import {
+  convertThemeToColor,
+  convertThemeToSecondaryColor,
+  convertThemeToTextColor,
+} from '../../common/helpers/common';
+import { calcAdditionalHeight, calcGap, calcRows } from './helpers';
+import TableHeader from './components/TableHeader.vue';
+import TableCell from './components/TableCell.vue';
+import Paginator from '../Paginator/Paginator.vue';
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.vue';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',

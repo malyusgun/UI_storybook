@@ -1,4 +1,4 @@
-import type { TThemeColor } from '@interfaces/common';
+import type { TThemeColor } from '../interfaces/common';
 
 export const convert100ThemeToColor = (theme: TThemeColor) => {
   switch (theme) {

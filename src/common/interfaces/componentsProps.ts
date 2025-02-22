@@ -155,6 +155,8 @@ export interface IDrawerProps {
   closeIcon?: TIcon;
   headerDivider?: boolean;
   footerDivider?: boolean;
+  headerHeight?: string;
+  paddingRightOnActive?: string;
 }
 
 export interface IModalProps {

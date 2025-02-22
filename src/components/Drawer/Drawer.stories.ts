@@ -26,6 +26,8 @@ const meta: Meta = {
     closeIcon: { control: 'select', options: Object.keys(iconsSet) },
     headerDivider: { control: 'boolean' },
     footerDivider: { control: 'boolean' },
+    headerHeight: { control: 'text' },
+    paddingRightOnActive: { control: 'text' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessTextColor: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {

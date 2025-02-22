@@ -15,8 +15,10 @@ const props = withDefaults(defineProps<IDrawerProps>(), {
   modal: true,
   dismissible: true,
   theme: 'white',
+  headerHeight: '37px',
   darknessTheme: '500',
   closeIcon: 'Cross',
+  paddingRightOnActive: '14px',
   headerDivider: false,
   footerDivider: false,
 });
@@ -28,6 +30,7 @@ const visible = defineModel<boolean>('visible', {
       (window as CustomWindow).blockPopupActions = false;
       body.style.overflow = 'auto';
       body.style.paddingRight = '0';
+      body.style.marginRight = '0';
       emit('onClose');
     }
     return value;
@@ -37,9 +40,11 @@ watch(visible, () => {
   if (visible.value) {
     (window as CustomWindow).blockPopupActions = true;
     body.style.overflow = 'hidden';
-    body.style.paddingRight = '14px';
+    body.style.paddingRight = props.paddingRightOnActive;
+    body.style.marginRight = `-${props.paddingRightOnActive}`;
   }
 });
+const dividerHeaderTop = computed(() => `calc(${props.headerHeight} + 20px + 8px`);
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -158,8 +163,8 @@ const drawerWidth = computed(() => {
   font-size: 32px;
   width: calc(100% - 30px);
   margin-bottom: 10px;
-  min-height: 37px;
-  height: 37px;
+  min-height: v-bind(headerHeight);
+  height: v-bind(headerHeight);
   overflow: auto;
 }
 .main {
@@ -179,7 +184,7 @@ const drawerWidth = computed(() => {
 .divider-header {
   position: absolute;
   left: 20px;
-  top: 65px;
+  top: v-bind(dividerHeaderTop);
   width: calc(100% - 40px);
 }
 .buttonClose {

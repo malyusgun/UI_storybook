@@ -1,6 +1,6 @@
 {
   "name": "@d.malygin/UI_storybook",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -106,8 +106,8 @@
     "./icons/Mono/Dislike": "./src/icons/Mono/DislikeIcon.vue",
     "./icons/Mono/Display": "./src/icons/Mono/DisplayIcon.vue",
     "./icons/Mono/DocumentAdd": "./src/icons/Mono/DocumentAddIcon.vue",
-    "./icons/Mono/DocumentВудуеу": "./src/icons/Mono/DocumentВудуеуIcon.vue",
-    "./icons/Mono/DocumentУвше": "./src/icons/Mono/DocumentУвшеIcon.vue",
+    "./icons/Mono/DocumentDelete": "./src/icons/Mono/DocumentDeleteIcon.vue",
+    "./icons/Mono/DocumentEdit": "./src/icons/Mono/DocumentEditIcon.vue",
     "./icons/Mono/Document": "./src/icons/Mono/DocumentIcon.vue",
     "./icons/Mono/Dollar": "./src/icons/Mono/DollarIcon.vue",
     "./icons/Mono/DotsHorizontal": "./src/icons/Mono/DotsHorizontalIcon.vue",

@@ -1,6 +1,6 @@
 {
   "name": "@d.malygin/UI_storybook",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",

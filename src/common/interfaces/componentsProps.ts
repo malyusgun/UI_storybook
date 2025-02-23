@@ -170,6 +170,9 @@ export interface IModalProps {
   dismissible?: boolean;
   closeIcon?: TIcon;
   headerDivider?: boolean;
+  headerHeight?: string;
+  headerAllowWrap?: boolean;
+  paddingRightOnActive?: string;
 }
 
 export interface IPopupProps {
@@ -300,6 +303,7 @@ export interface IRatingProps {
 }
 
 export interface ITSProps {
+  active?: boolean;
   size?: TSize;
   theme?: TThemeColorNoWhite;
   negativeTheme?: TThemeColor;

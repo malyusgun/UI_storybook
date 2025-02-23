@@ -79,7 +79,7 @@ const calcItemColor = (item: ISBOption) => {
   }
 };
 const calcBGColorItem = (item: ISBOption) => {
-  return (value.value && value.value === item.value) || String(value.value) === item.label
+  return ((value.value ?? false) && value.value === item.value) || String(value.value) === item.label
     ? activeBGColorComputed.value
     : item.backgroundColor
       ? convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? '500')

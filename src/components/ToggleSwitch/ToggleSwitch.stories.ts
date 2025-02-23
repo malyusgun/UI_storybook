@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    active: { control: 'boolean' },
     size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
     negativeTheme: {
       control: 'select',

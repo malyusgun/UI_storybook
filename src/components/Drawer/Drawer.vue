@@ -24,24 +24,17 @@ const props = withDefaults(defineProps<IDrawerProps>(), {
 });
 const body = document.querySelector('body')!;
 const emit = defineEmits(['onClose']);
-const visible = defineModel<boolean>('visible', {
-  set(value) {
-    if (!value) {
-      (window as CustomWindow).blockPopupActions = false;
-      body.style.overflow = 'auto';
-      body.style.paddingRight = '0';
-      body.style.marginRight = '0';
-      emit('onClose');
-    }
-    return value;
-  },
-}) as Ref<boolean>;
+const visible = defineModel<boolean>('visible') as Ref<boolean>;
 watch(visible, () => {
   if (visible.value) {
     (window as CustomWindow).blockPopupActions = true;
-    body.style.overflow = 'hidden';
+    body.style.overflowY = 'hidden';
     body.style.paddingRight = props.paddingRightOnActive;
-    body.style.marginRight = `-${props.paddingRightOnActive}`;
+  } else {
+    (window as CustomWindow).blockPopupActions = false;
+    body.style.overflowY = 'auto';
+    body.style.paddingRight = '0';
+    emit('onClose');
   }
 });
 const dividerHeaderTop = computed(() => `calc(${props.headerHeight} + 20px + 8px`);

@@ -16,30 +16,28 @@ const props = withDefaults(defineProps<IModalProps>(), {
   darknessTheme: '500',
   darknessTextColor: '500',
   width: '30%',
-  height: '30%',
+  height: 'max-content',
+  headerHeight: 'max-content',
+  paddingRightOnActive: '14px',
   headerDivider: false,
   closeIcon: 'Cross',
 });
 const body = document.querySelector('body')!;
 const emit = defineEmits(['onClose']);
-const visible = defineModel('visible', {
-  set(value) {
-    if (!value) {
-      (window as CustomWindow).blockPopupActions = false;
-      body.style.overflow = 'auto';
-      body.style.paddingRight = '0';
-      emit('onClose');
-    }
-    return value;
-  },
-});
+const visible = defineModel('visible');
 watch(visible, () => {
   if (visible.value) {
     (window as CustomWindow).blockPopupActions = true;
     body.style.overflow = 'hidden';
-    body.style.paddingRight = '14px';
+    body.style.paddingRight = props.paddingRightOnActive;
+  } else {
+    (window as CustomWindow).blockPopupActions = false;
+    body.style.overflow = 'auto';
+    body.style.paddingRight = '0';
+    emit('onClose');
   }
 });
+const headerWhiteSpace = computed(() => (props.headerAllowWrap ? 'normal' : 'nowrap'));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const secondaryColor = computed(() => convertThemeToSecondaryColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -83,7 +81,7 @@ document.addEventListener('keydown', onKeydown);
       ]"
     >
       <header class="modalHeader">
-        <div class="headerContent">
+        <div class="headerContent" :style="`height: ${headerHeight}`">
           <slot name="header" />
         </div>
         <button class="buttonClose" @click.prevent="visible = false">
@@ -147,7 +145,7 @@ document.addEventListener('keydown', onKeydown);
 .headerContent {
   font-weight: bold;
   overflow: auto;
-  white-space: nowrap;
+  white-space: v-bind(headerWhiteSpace);
 }
 .main {
   padding-right: 5px;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type Ref } from 'vue';
+import { computed, type Ref, watch } from 'vue';
 import type { ITSProps } from '../../common/interfaces/componentsProps';
 import { convertThemeToColor } from '../../common/helpers/common';
 
@@ -11,6 +11,14 @@ const props = withDefaults(defineProps<ITSProps>(), {
   darknessNegativeTheme: '500',
 });
 const active = defineModel() as Ref<boolean>;
+const emit = defineEmits(['update']);
+
+if (props.active) {
+  active.value = props.active;
+}
+const propActive = computed(() => props.active);
+watch(propActive, () => (active.value = propActive.value));
+watch(active, () => emit('update', active));
 
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const inactiveColor = computed(() => convertThemeToColor(props.negativeTheme, props.darknessNegativeTheme));

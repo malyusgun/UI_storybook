@@ -72,7 +72,7 @@ const toggleIsOpen = (item: ITreeItem) => {
       :color="color"
       :themeColor="themeColor"
       @toggleIsOpen="toggleIsOpen"
-      @onClick="$emit('onClick')"
+      @onClick="$emit('onClick', $event)"
     />
   </div>
 </template>

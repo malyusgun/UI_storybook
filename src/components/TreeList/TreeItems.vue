@@ -62,9 +62,9 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
               () => {
                 item.isLinkClicked = true;
                 if (!item.link) {
-                  emit('toggleIsOpen', item);
+                  $emit('toggleIsOpen', item);
                 }
-                emit('onClick', item);
+                $emit('onClick', item);
               }
             "
             ><component

@@ -62,7 +62,7 @@ const buttonHeight = computed(() => {
   return '40px';
 });
 const calcItemColor = (item: ISBOption) => {
-  if ((item.value && value.value === item.value) || String(value.value) === item.label) {
+  if (((item.value ?? null) && value.value === item.value) || String(value.value) === item.label) {
     const activeColor = item.activeColor;
     if (!activeColor) {
       return color.value;

@@ -89,6 +89,7 @@ defineEmits(['toggleIsOpen', 'onClick']);
             :color="color"
             :themeColor="themeColor"
             @toggleIsOpen="$emit('toggleIsOpen', $event)"
+            @onClick="$emit('onClick', $event)"
           />
         </section>
       </article>

@@ -109,6 +109,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
   padding: 4px 5px;
   background-color: v-bind(themeColor);
   word-break: break-word;
+  transition: filter 0.3s ease;
 }
 .openButton {
   margin-right: 10px;

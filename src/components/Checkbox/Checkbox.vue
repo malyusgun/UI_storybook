@@ -101,6 +101,7 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
   gap: v-bind(gap);
   box-sizing: content-box;
   width: max-content;
+  height: max-content;
 }
 .main {
   position: relative;

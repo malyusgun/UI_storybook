@@ -49,41 +49,43 @@ const buttonPadding = computed(() => {
 </script>
 
 <template>
-  <button
-    :class="[
-      'button',
-      {
-        'flex-column': iconPos === 'top' || iconPos === 'bottom',
-        border: borderColor,
-      },
-    ]"
-    :style="`padding: ${buttonPadding}; width: ${width}`"
-  >
-    <span :style="`background-color: ${themeColor}`" class="background"></span>
-    <span
-      v-if="label || !iconOnly"
-      :style="`color: ${color}; font-size: ${textSize}`"
+  <div>
+    <button
       :class="[
-        'text',
+        'button',
         {
-          bold: textStyle === 'bold',
-          italic: textStyle === 'italic',
+          'flex-column': iconPos === 'top' || iconPos === 'bottom',
+          border: borderColor,
         },
       ]"
-      >{{ label ? label : !iconOnly ? 'Button' : '' }}</span
+      :style="`padding: ${buttonPadding}; width: ${width}`"
     >
-    <span
-      v-if="$slots.default"
-      :class="[
-        'icon',
-        {
-          'order-1': iconPos === 'left' || iconPos === 'top',
-        },
-      ]"
-    >
-      <slot />
-    </span>
-  </button>
+      <span :style="`background-color: ${themeColor}`" class="background"></span>
+      <span
+        v-if="label || !iconOnly"
+        :style="`color: ${color}; font-size: ${textSize}`"
+        :class="[
+          'text',
+          {
+            bold: textStyle === 'bold',
+            italic: textStyle === 'italic',
+          },
+        ]"
+        >{{ label ? label : !iconOnly ? 'Button' : '' }}</span
+      >
+      <span
+        v-if="$slots.default"
+        :class="[
+          'icon',
+          {
+            'order-1': iconPos === 'left' || iconPos === 'top',
+          },
+        ]"
+      >
+        <slot />
+      </span>
+    </button>
+  </div>
 </template>
 
 <style scoped>

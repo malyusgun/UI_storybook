@@ -62,7 +62,10 @@ const buttonHeight = computed(() => {
   return '40px';
 });
 const calcItemColor = (item: ISBOption) => {
-  if (((item.value ?? null) && value.value === item.value) || String(value.value) === item.label) {
+  if (
+    (item.value !== null && item.value !== undefined && value.value === item.value) ||
+    String(value.value) === item.label
+  ) {
     const activeColor = item.activeColor;
     if (!activeColor) {
       return color.value;
@@ -79,7 +82,8 @@ const calcItemColor = (item: ISBOption) => {
   }
 };
 const calcBGColorItem = (item: ISBOption) => {
-  return ((value.value ?? false) && value.value === item.value) || String(value.value) === item.label
+  return (value.value !== null && value.value !== undefined && value.value === item.value) ||
+    String(value.value) === item.label
     ? activeBGColorComputed.value
     : item.backgroundColor
       ? convertThemeToColor(item.backgroundColor, item.darknessBackgroundColor ?? '500')

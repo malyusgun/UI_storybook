@@ -64,7 +64,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
                 if (!item.link) {
                   emit('toggleIsOpen', item);
                 }
-                emit('onClick', item.link);
+                emit('onClick', item);
               }
             "
             ><component

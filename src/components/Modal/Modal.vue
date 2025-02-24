@@ -28,11 +28,11 @@ const visible = defineModel('visible');
 watch(visible, () => {
   if (visible.value) {
     (window as CustomWindow).blockPopupActions = true;
-    body.style.overflow = 'hidden';
+    body.style.overflowY = 'hidden';
     body.style.paddingRight = props.paddingRightOnActive;
   } else {
     (window as CustomWindow).blockPopupActions = false;
-    body.style.overflow = 'auto';
+    body.style.overflowY = 'auto';
     body.style.paddingRight = '0';
     emit('onClose');
   }

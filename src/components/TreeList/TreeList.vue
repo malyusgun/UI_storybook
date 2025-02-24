@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<ITLProps>(), {
   darknessTheme: '500',
   expand: false,
 });
-const emit = defineEmits(['onClick']);
+defineEmits(['onClick']);
 const items = computed(() => props.items);
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -72,7 +72,7 @@ const toggleIsOpen = (item: ITreeItem) => {
       :color="color"
       :themeColor="themeColor"
       @toggleIsOpen="toggleIsOpen"
-      @onClick="emit('onClick')"
+      @onClick="$emit('onClick')"
     />
   </div>
 </template>

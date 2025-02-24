@@ -5,7 +5,7 @@ import type { ITIProps } from '../../common/interfaces/componentsProps';
 import { convertThemeToColor } from '../../common/helpers/common';
 
 defineProps<ITIProps>();
-const emit = defineEmits(['toggleIsOpen', 'onClick']);
+defineEmits(['toggleIsOpen', 'onClick']);
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
               pointer: item.children,
             },
           ]"
-          @click="emit('toggleIsOpen', item)"
+          @click="$emit('toggleIsOpen', item)"
         >
           <TriangleIcon
             v-if="item.children"
@@ -88,7 +88,7 @@ const emit = defineEmits(['toggleIsOpen', 'onClick']);
             :state="state"
             :color="color"
             :themeColor="themeColor"
-            @toggleIsOpen="emit('toggleIsOpen', $event)"
+            @toggleIsOpen="$emit('toggleIsOpen', $event)"
           />
         </section>
       </article>

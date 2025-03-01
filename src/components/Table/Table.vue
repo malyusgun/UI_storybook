@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ITableProps } from '../../common/interfaces/componentsProps';
-import { computed, type Ref, ref } from 'vue';
+import { computed, type Ref, ref, watchEffect } from 'vue';
 import {
   convertThemeToColor,
   convertThemeToSecondaryColor,
@@ -11,6 +11,7 @@ import TableHeader from './components/TableHeader.vue';
 import TableCell from './components/TableCell.vue';
 import Paginator from '../Paginator/Paginator.vue';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.vue';
+import type { ITableColumn } from '@interfaces/componentsProp';
 
 const props = withDefaults(defineProps<ITableProps>(), {
   size: 'normal',
@@ -24,10 +25,9 @@ const emit = defineEmits(['updateData']);
 
 const table = ref();
 const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(10);
+const itemsPerPage = ref<number>(9999);
 const isEditMode = ref<boolean>(props.editable);
 
-const columns = ref(props.columns);
 const sortStateActive = ref<[number, string] | []>([]);
 const indexColumnToFilter = ref<number>(0);
 const isFilterPopup = ref<boolean>(false);
@@ -37,12 +37,11 @@ const isRegisterSensitive = ref<boolean>(false);
 if (props.data) {
   data.value = props.data;
 }
-if (props.columns) {
-  columns.value = props.columns;
-}
 
-const columnToSortIndex = props.columns.findIndex((column) => column.initSort && column.initSort !== 'none');
-if (~columnToSortIndex) sortStateActive.value = [columnToSortIndex, props.columns[columnToSortIndex].initSort!];
+const columns = computed(() => props.columns);
+
+const columnToSortIndex = columns.value.findIndex((column) => column.initSort && column.initSort !== 'none');
+if (~columnToSortIndex) sortStateActive.value = [columnToSortIndex, columns.value[columnToSortIndex].initSort!];
 
 const initGap = computed(() => calcGap(props.gap ?? '5px', props.fontSize));
 const additionalHeightFromSize = computed(() => calcAdditionalHeight(props.size, props.fontSize));
@@ -62,12 +61,12 @@ const rows = computed<unknown[][]>(() =>
     sortStateActive.value,
     props.multipleSort,
     indexColumnToFilter.value,
-    props.columns[sortStateActive.value?.[0] ?? -1]?.type ?? 'text',
+    columns.value[sortStateActive.value?.[0] ?? -1]?.type ?? 'text',
     filterValue.value,
     isRegisterSensitive.value,
   ),
 );
-const types = computed(() => props.columns.map((column) => column.type));
+const types = computed(() => columns.value.map((column: ITableColumn) => column.type));
 const paginatorContainerHeight = computed(() => (props.paginator || props.editable ? '50px' : '0'));
 const themeColor = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const color = computed(() =>
@@ -114,6 +113,12 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
     emit('updateData', data.value);
   }
 };
+
+watchEffect(() => {
+  if (!props.paginator) {
+    itemsPerPage.value = 9999;
+  }
+});
 </script>
 
 <template>
@@ -181,7 +186,7 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
               :item="item"
               :types="types"
               :column="columns[columnIndex]"
-              :rowIndex="rowIndex"
+              :rowIndex="itemsPerPage * (currentPage - 1) + rowIndex"
               :columnIndex="columnIndex"
               :center="center"
               :isEditMode="isEditMode"
@@ -199,13 +204,13 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
         </tr>
       </tbody>
     </table>
-    <div class="paginatorContainer">
+    <div v-if="editable || paginator" class="paginatorContainer">
       <section v-if="editable" class="editMenu">
         <p class="editText">Edit mode:</p>
         <ToggleSwitch v-model="isEditMode" negativeTheme="red" />
       </section>
       <Paginator
-        v-show="paginator"
+        v-if="paginator"
         v-model:current="currentPage"
         v-model:itemsPerPage="itemsPerPage"
         :theme="theme"

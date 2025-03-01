@@ -2,6 +2,7 @@
 import { filterCheckboxProps, filterSelectProps } from '../helpers';
 import type { ITableColumn, TTableColumnType } from '../../../common/interfaces/componentsProp';
 import Checkbox from '../../Checkbox/Checkbox.vue';
+import Tag from '../../Tag/Tag.vue';
 import Select from '../../Select/Select.vue';
 import Rating from '../../Rating/Rating.vue';
 import ProgressBar from '../../ProgressBar/ProgressBar.vue';
@@ -29,7 +30,7 @@ defineEmits(['updateData']);
 
 <template>
   <div
-    :style="`width: calc(${column.width ?? 'auto'} - 2 * ${initGap})`"
+    :style="`width: calc(${column?.width ?? 'auto'} - 2 * ${initGap})`"
     :class="[
       'cell',
       {
@@ -55,6 +56,12 @@ defineEmits(['updateData']);
         v-if="types[columnIndex] === 'checkbox'"
         v-bind="filterCheckboxProps(column.options)"
         :active="item as boolean"
+        @update="$emit('updateData', $event, rowIndex, columnIndex)"
+      />
+      <Tag
+        v-if="types[columnIndex] === 'tag'"
+        v-bind="column.options"
+        :value="item as string"
         @update="$emit('updateData', $event, rowIndex, columnIndex)"
       />
       <Select
@@ -94,6 +101,7 @@ defineEmits(['updateData']);
         v-bind="filterCheckboxProps(column.options)"
         :active="item as boolean"
       />
+      <Tag v-if="types[columnIndex] === 'tag'" v-bind="column.options" :value="item as string" />
       <Select
         v-else-if="types[columnIndex] === 'select'"
         noBorder

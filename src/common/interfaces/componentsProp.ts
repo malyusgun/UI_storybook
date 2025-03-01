@@ -5,6 +5,7 @@ import type {
   IProgressBarProps,
   IRatingProps,
   ISelectProps,
+  ITagProps,
 } from '../interfaces/componentsProps';
 
 export interface ITableColumn {
@@ -21,6 +22,7 @@ export interface ITableColumn {
 
 export interface ITableColumnOptions
   extends ICheckboxProps,
+    ITagProps,
     ISelectProps,
     IRatingProps,
     IProgressBarProps,
@@ -30,6 +32,7 @@ export type TTableColumnType =
   | 'checkbox'
   | 'number'
   | 'text'
+  | 'tag'
   | 'date'
   | 'select'
   | 'rating'

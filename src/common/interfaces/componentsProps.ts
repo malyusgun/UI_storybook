@@ -211,6 +211,7 @@ export interface ISelectProps {
   groups?: ISelectGroup[];
   selected?: string;
   width?: string;
+  listHeight?: string;
   placeholder?: string;
   openIcon?: TIcon;
   size?: TSize;

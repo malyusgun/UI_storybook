@@ -117,7 +117,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
           }; font-weight: 600`"
         >
           <slot :name="`icon-left-${selectedOption?.value}`"></slot>
-          <span class="text" :style="`font-size: ${fontSize}; width: ${selectedTextWidth}`">{{
+          <span class="text" :style="`font-size: ${fontSize}; color: inherit; width: ${selectedTextWidth}`">{{
             selected ?? placeholder
           }}</span>
           <slot :name="`icon-right-${selectedOption?.value}`"></slot>
@@ -137,7 +137,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
           },
         ]"
       >
-        <div style="overflow: hidden">
+        <div :style="`overflow: auto; height: ${listHeight ?? 'auto'}`">
           <div class="flex filter" v-if="filtered" @click="isOpen = true">
             <input v-model="filter" type="text" /><SearchIcon :size="fontSizeNumber" color="#62708c" />
           </div>
@@ -234,6 +234,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
   gap: 5px;
 }
 .options {
+  pointer-events: none;
   position: absolute;
   z-index: 1;
   top: 101%;
@@ -248,6 +249,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
     opacity 0.1s ease-in-out;
 }
 .optionsOpened {
+  pointer-events: auto;
   grid-template-rows: 1fr;
   opacity: 1;
   z-index: 5000;

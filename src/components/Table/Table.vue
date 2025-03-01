@@ -117,101 +117,105 @@ const updateData = (newValue: Ref<unknown>, rowIndex: number, columnIndex: numbe
 </script>
 
 <template>
-  <table
-    :class="{
-      tableLines: showAllLines,
-    }"
-    :style="`background-color: ${themeColor}; color: ${color}`"
-    class="table"
-    ref="table"
-  >
-    <thead>
-      <TableHeader
-        v-model:filterValue="filterValue"
-        v-model:isFilterPopup="isFilterPopup"
-        v-model:isRegisterSensitive="isRegisterSensitive"
-        :table="table"
-        :columns="columns"
-        :sortState="sortState"
-        :indexColumnToFilter="indexColumnToFilter"
-        :types="types"
-        :initGap="initGap"
-        :additionalHeightFromSize="additionalHeightFromSize"
-        :theme="theme"
-        :themeColor="themeColor"
-        :secondaryColor="secondaryColor"
-        :color="color"
-        :showAllLines="!!showAllLines"
-        :center="!!center"
-        :fontSize="fontSize"
-        :isEditMode="isEditMode"
-        @changeColumnSortMode="changeColumnSortMode"
-        @setFilter="setFilter"
-        @cancelFilter="cancelFilter"
-      />
-    </thead>
-    <tbody>
-      <tr
-        v-for="(row, rowIndex) of rows"
-        :key="rowIndex"
-        :class="{
-          noEdit:
-            !isEditMode ||
-            (noEditingSettings?.rows && noEditingSettings?.rows.find((i) => data?.[i]?.join('') === row.join(''))),
-        }"
-      >
-        <td
-          v-for="(item, columnIndex) of row"
-          :key="columnIndex"
-          @click="
-            handlers ? handlers.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler?.() : null
-          "
+  <section>
+    <table
+      :class="{
+        tableLines: showAllLines,
+      }"
+      :style="`background-color: ${themeColor}; color: ${color}`"
+      class="table"
+      ref="table"
+    >
+      <thead>
+        <TableHeader
+          v-model:filterValue="filterValue"
+          v-model:isFilterPopup="isFilterPopup"
+          v-model:isRegisterSensitive="isRegisterSensitive"
+          :table="table"
+          :columns="columns"
+          :sortState="sortState"
+          :indexColumnToFilter="indexColumnToFilter"
+          :types="types"
+          :initGap="initGap"
+          :additionalHeightFromSize="additionalHeightFromSize"
+          :theme="theme"
+          :themeColor="themeColor"
+          :secondaryColor="secondaryColor"
+          :color="color"
+          :showAllLines="!!showAllLines"
+          :center="!!center"
+          :fontSize="fontSize"
+          :isEditMode="isEditMode"
+          @changeColumnSortMode="changeColumnSortMode"
+          @setFilter="setFilter"
+          @cancelFilter="cancelFilter"
+        />
+      </thead>
+      <tbody>
+        <tr
+          v-for="(row, rowIndex) of rows"
+          :key="rowIndex"
           :class="{
-            leftBorder: showAllLines,
-            darkRow: stripedRows && !(rowIndex % 2),
-            noEdit: !isEditMode || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
-            pointer: handlers && handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex),
+            noEdit:
+              !isEditMode ||
+              (noEditingSettings?.rows && noEditingSettings?.rows.find((i) => data?.[i]?.join('') === row.join(''))),
           }"
-          :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
         >
-          <TableCell
-            :item="item"
-            :types="types"
-            :column="columns[columnIndex]"
-            :rowIndex="rowIndex"
-            :columnIndex="columnIndex"
-            :center="center"
-            :isEditMode="isEditMode"
-            :noEditingSettings="noEditingSettings?.cells"
-            :fontSize="fontSize"
-            :initGap="initGap"
-            :knobWidth="knobWidth"
-            :noEdit="
-              handlers ? !!handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex) : false
+          <td
+            v-for="(item, columnIndex) of row"
+            :key="columnIndex"
+            @click="
+              handlers
+                ? handlers.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex)?.handler?.()
+                : null
             "
-            :theme="theme"
-            @updateData="updateData"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="paginatorContainer">
-    <section v-if="editable" class="editMenu">
-      <p class="editText">Edit mode:</p>
-      <ToggleSwitch v-model="isEditMode" negativeTheme="red" />
-    </section>
-    <Paginator
-      v-show="paginator"
-      v-model:current="currentPage"
-      v-model:itemsPerPage="itemsPerPage"
-      :theme="theme"
-      :total="data.length"
-      :itemsPerPageOptions="[2, 5]"
-      v-bind="paginatorOptions"
-      class="paginator"
-    />
-  </div>
+            :class="{
+              leftBorder: showAllLines,
+              darkRow: stripedRows && !(rowIndex % 2),
+              noEdit: !isEditMode || (noEditingSettings?.columns && ~noEditingSettings.columns?.indexOf(columnIndex)),
+              pointer: handlers && handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex),
+            }"
+            :style="`padding: calc(${initGap} / 2 + ${additionalHeightFromSize}) ${initGap}`"
+          >
+            <TableCell
+              :item="item"
+              :types="types"
+              :column="columns[columnIndex]"
+              :rowIndex="rowIndex"
+              :columnIndex="columnIndex"
+              :center="center"
+              :isEditMode="isEditMode"
+              :noEditingSettings="noEditingSettings?.cells"
+              :fontSize="fontSize"
+              :initGap="initGap"
+              :knobWidth="knobWidth"
+              :noEdit="
+                handlers ? !!handlers?.find((i) => i.cell?.[0] === rowIndex && i.cell?.[1] === columnIndex) : false
+              "
+              :theme="theme"
+              @updateData="updateData"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="paginatorContainer">
+      <section v-if="editable" class="editMenu">
+        <p class="editText">Edit mode:</p>
+        <ToggleSwitch v-model="isEditMode" negativeTheme="red" />
+      </section>
+      <Paginator
+        v-show="paginator"
+        v-model:current="currentPage"
+        v-model:itemsPerPage="itemsPerPage"
+        :theme="theme"
+        :total="data.length"
+        :itemsPerPageOptions="[2, 5]"
+        v-bind="paginatorOptions"
+        class="paginator"
+      />
+    </div>
+  </section>
 </template>
 
 <style scoped>

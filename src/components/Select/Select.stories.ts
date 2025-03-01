@@ -16,6 +16,7 @@ const meta: Meta = {
   },
   argTypes: {
     width: { control: 'text' },
+    listHeight: { control: 'text' },
     filtered: { control: 'boolean' },
     disabled: { control: 'boolean' },
     noHighlight: { control: 'boolean' },
@@ -28,6 +29,26 @@ const meta: Meta = {
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessOpenIcon: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     theme: {
+      control: 'select',
+      options: [
+        'white',
+        'blue',
+        'sky',
+        'cyan',
+        'teal',
+        'green',
+        'yellow',
+        'orange',
+        'pink',
+        'fuchsia',
+        'purple',
+        'indigo',
+        'rose',
+        'red',
+        'black',
+      ],
+    },
+    color: {
       control: 'select',
       options: [
         'white',

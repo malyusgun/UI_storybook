@@ -213,6 +213,7 @@ export interface ISelectProps {
   width?: string;
   listHeight?: string;
   placeholder?: string;
+  color?: TThemeColor;
   openIcon?: TIcon;
   size?: TSize;
   fontSize?: string;

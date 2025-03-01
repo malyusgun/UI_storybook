@@ -55,7 +55,11 @@ const selectedTextWidth = computed(() => {
 });
 const fontSizeNumber = computed(() => fontSize.value.slice(0, -2));
 const textColor = computed(() =>
-  props.disabled ? '#62708c' : convertThemeToTextColor(props.theme, props.darknessTheme ?? '700'),
+  props.disabled
+    ? '#62708c'
+    : props.color
+      ? convertThemeToColor(props.color, props.darknessTheme ?? '700')
+      : convertThemeToTextColor(props.theme, props.darknessTheme ?? '700'),
 );
 const borderColor = computed(() => (props.noBorder ? 'transparent' : textColor.value));
 const backgroundColor = computed(() =>
@@ -137,7 +141,7 @@ document.querySelector('body')!.addEventListener('pointerup', (e: MouseEvent) =>
           },
         ]"
       >
-        <div :style="`overflow: auto; height: ${listHeight ?? 'auto'}`">
+        <div :style="`overflow: auto; max-height: ${listHeight ?? 'auto'}`">
           <div class="flex filter" v-if="filtered" @click="isOpen = true">
             <input v-model="filter" type="text" /><SearchIcon :size="fontSizeNumber" color="#62708c" />
           </div>

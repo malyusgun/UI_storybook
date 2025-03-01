@@ -27,15 +27,17 @@ const padding = computed(() => getValueFromSize(props.size, ['3px 7px', '5px 11p
 </script>
 
 <template>
-  <div
-    class="container"
-    :style="`border-radius: ${rounded ? fontSize : `calc(${fontSize} / 2)`}; gap: calc(${fontSize} / 2.5); border: ${['normal', 'small'].includes(size) ? '1px' : '2px'} solid ${borderColor}`"
-  >
-    <slot name="icon-left"></slot>
-    <component v-show="iconLeft" :is="iconsSet[iconLeft ?? 0]" :color="textColor" :size="fontSize.slice(0, -2)" />
-    <span class="text">{{ value }}</span>
-    <component v-show="iconRight" :is="iconsSet[iconRight ?? 0]" :color="textColor" :size="fontSize.slice(0, -2)" />
-    <slot name="icon-right"></slot>
+  <div>
+    <section
+      class="container"
+      :style="`border-radius: ${rounded ? fontSize : `calc(${fontSize} / 2)`}; gap: calc(${fontSize} / 2.5); border: ${['normal', 'small'].includes(size) ? '1px' : '2px'} solid ${borderColor}`"
+    >
+      <slot name="icon-left"></slot>
+      <component v-show="iconLeft" :is="iconsSet[iconLeft ?? 0]" :color="textColor" :size="fontSize.slice(0, -2)" />
+      <span class="text">{{ value }}</span>
+      <component v-show="iconRight" :is="iconsSet[iconRight ?? 0]" :color="textColor" :size="fontSize.slice(0, -2)" />
+      <slot name="icon-right"></slot>
+    </section>
   </div>
 </template>
 

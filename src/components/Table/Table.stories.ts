@@ -167,11 +167,13 @@ export const Full: Story = {
       ['Ксюша', '32', 'Frontend', 'Russia', false, 'Married', 0, 30, 2],
       ['Ксюша', '32', 'Backend', 'Russia', false, 'Married', 0, 30, 2],
     ],
+
     noEditingSettings: {
       columns: [2],
       rows: [3],
       cells: [[0, 6]],
     },
+
     fontSize: '24px',
     showAllLines: true,
     border: 'fuchsia',
@@ -181,5 +183,10 @@ export const Full: Story = {
     center: true,
     size: 'large',
     editable: true,
+    paginator: true,
+
+    paginatorOptions: {
+      itemsPerPageOptions: [5, 10, 20, 40],
+    },
   },
 };

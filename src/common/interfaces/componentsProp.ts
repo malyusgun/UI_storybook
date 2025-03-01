@@ -22,7 +22,7 @@ export interface ITableColumn {
 
 export interface ITableColumnOptions
   extends ICheckboxProps,
-    ITagProps,
+    Omit<ITagProps, 'background' | 'value'>,
     ISelectProps,
     IRatingProps,
     IProgressBarProps,

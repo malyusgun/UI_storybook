@@ -1,5 +1,5 @@
 import type { ITableColumn, TTableColumnType } from '../../common/interfaces/componentsProp';
-import type { TSize } from '../../common/interfaces/common';
+import type { TSize, TThemeColor } from '../../common/interfaces/common';
 import type { ICheckboxProps, ISelectProps } from '../../common/interfaces/componentsProps';
 
 export const calcRows = (
@@ -90,10 +90,11 @@ export const filterCheckboxProps = (props: ICheckboxProps | undefined) => {
   return res;
 };
 
-export const filterSelectProps = (props: ISelectProps | undefined) => {
-  if (!props || !props.options)
+export const filterSelectProps = (props: ISelectProps | undefined, theme: TThemeColor) => {
+  if (!props || !props.options || !props.theme)
     return {
-      options: [{ value: 'One' }, { value: 'Two' }],
+      options: props?.options ?? [{ value: 'One' }, { value: 'Two' }],
+      theme: props?.theme ?? theme,
     };
   return props;
 };

@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { IButtonProps } from '../../common/interfaces/componentsProps';
-import {
-  convertThemeToSecondaryColor,
-  convertThemeToColor,
-  convertThemeToTextColor,
-} from '../../common/helpers/common';
+import type { IButtonProps } from '@interfaces/componentsProps';
+import { convertThemeToSecondaryColor, convertThemeToColor, convertThemeToTextColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IButtonProps>(), {
   size: 'normal',

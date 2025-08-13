@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { filterCheckboxProps, filterSelectProps } from '../helpers';
-import type { ITableColumn, TTableColumnType } from '../../../common/interfaces/componentsProp';
+import type { ITableColumn, TTableColumnType } from '@interfaces/componentsProp';
 import Checkbox from '../../Checkbox/Checkbox.vue';
 import Tag from '../../Tag/Tag.vue';
 import Select from '../../Select/Select.vue';
 import Rating from '../../Rating/Rating.vue';
 import ProgressBar from '../../ProgressBar/ProgressBar.vue';
 import Knob from '../../Knob/Knob.vue';
-import type { TThemeColor } from '../../../common/interfaces/common';
+import type { TThemeColor } from '@interfaces/common';
 import type { ITagProps } from '@interfaces/componentsProps';
 
 interface IProps {
@@ -101,14 +101,13 @@ defineEmits(['updateData']);
         v-bind="filterCheckboxProps(column.options)"
         :active="item as boolean"
       />
-      <Tag v-if="types[columnIndex] === 'tag'" v-bind="column.options" :value="item as string" />
+      <Tag v-if="types[columnIndex] === 'tag'" v-bind="column.options as ITagProps" :value="item as string" />
       <Select
         v-else-if="types[columnIndex] === 'select'"
         noBorder
         noSelectedBackground
-        v-bind="filterSelectProps(column.options)"
+        v-bind="filterSelectProps(column.options, theme)"
         width="150px"
-        :theme="theme"
         :selected="item as string"
       />
       <Rating v-else-if="types[columnIndex] === 'rating'" v-bind="column.options" :value="item as number" />

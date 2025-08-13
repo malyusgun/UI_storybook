@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { IDividerProps } from '../../common/interfaces/componentsProps';
-import { convertThemeToColor } from '../../common/helpers/common';
+import type { IDividerProps } from '@interfaces/componentsProps';
+import { convertThemeToColor } from '@helpers/common';
 
 const props = withDefaults(defineProps<IDividerProps>(), {
   height: 1,
@@ -13,7 +13,7 @@ const colorConverted = computed(() => convertThemeToColor(props.color, props.dar
 </script>
 
 <template>
-  <div :style="`border-bottom: ${height}px ${type} ${colorConverted}`"></div>
+  <div :style="`border-bottom: ${height}px ${type} ${colorConverted}; width: 100%;`"></div>
 </template>
 
 <style scoped></style>

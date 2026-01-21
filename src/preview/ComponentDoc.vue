@@ -9,7 +9,10 @@ defineProps<IProps>();
 
 <template>
   <div class="container">
-    <h3 class="title">{{ name }}</h3>
+    <h3 class="title" :id="name">
+      <span class="title__hash">#</span>
+      <a :href="'#' + name">{{ name }}</a>
+    </h3>
     <div :class="['states', { horizontal: isHorizontalStates }]">
       <slot />
     </div>
@@ -25,12 +28,28 @@ defineProps<IProps>();
 
 <style scoped>
 .container {
-  margin-bottom: 20px;
+  padding: 20px 0;
 }
 .title {
   font-size: 2rem;
   margin: 0 auto;
   width: max-content;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    .title__hash {
+      opacity: 1;
+    }
+  }
+
+  .title__hash {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    transition: opacity 0.2s;
+    opacity: 0;
+  }
 }
 .states {
   margin: 10px auto;
@@ -60,5 +79,8 @@ defineProps<IProps>();
   .states {
     gap: 15px;
   }
+}
+a {
+  all: unset;
 }
 </style>

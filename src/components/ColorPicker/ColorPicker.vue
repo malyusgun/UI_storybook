@@ -97,6 +97,7 @@ const buttonPadding = computed(() => {
 
 <style scoped>
 .container {
+  width: fit-content;
   position: relative;
 }
 .noVisible {
@@ -120,8 +121,6 @@ const buttonPadding = computed(() => {
   cursor: auto;
 }
 input {
-  position: absolute;
-  z-index: -1;
   -webkit-appearance: none;
   appearance: none;
   border: v-bind(borderWidth) solid black;

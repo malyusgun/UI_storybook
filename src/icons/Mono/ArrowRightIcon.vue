@@ -9,7 +9,7 @@ defineProps<Props>();
 <template>
   <svg
     id="right-arrow"
-    :fill="color ?? '#000000'"
+    :fill="color ?? 'currentColor'"
     :width="size ?? '40px'"
     :height="size ?? '40px'"
     viewBox="0 0 24 24"
@@ -19,18 +19,18 @@ defineProps<Props>();
   >
     <line
       id="primary"
-      x1="3"
+      x1="1"
       y1="12"
-      x2="21"
+      x2="23"
       y2="12"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2"
     ></line>
     <polyline
       id="primary-2"
       data-name="primary"
-      points="18 15 21 12 18 9"
-      :stroke="color ?? '#000000'"
+      points="18 17 23 12 18 7"
+      :stroke="color ?? 'currentColor'"
       style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2"
     ></polyline>
   </svg>

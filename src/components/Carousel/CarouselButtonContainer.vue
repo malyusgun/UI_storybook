@@ -16,6 +16,7 @@ defineProps<{
         disable,
       },
     ]"
+    :style="`width: ${width}; background-color: ${color}; border-radius: ${borderRadius};`"
   >
     <div
       :class="[
@@ -24,8 +25,9 @@ defineProps<{
           disableBg: disable,
         },
       ]"
+      :style="`border-radius: ${borderRadius}`"
     ></div>
-    <div class="icon">
+    <div class="icon" :style="`color: ${textColor};`">
       <slot />
     </div>
   </div>
@@ -34,20 +36,16 @@ defineProps<{
 <style scoped>
 .arrowContainer {
   position: relative;
-  width: v-bind(width);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: v-bind(color);
-  border-radius: v-bind(borderRadius);
 }
 .icon {
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 1.2;
-  color: v-bind(textColor);
 }
 .arrowContainer:hover > .bg {
   opacity: 0.1;
@@ -60,7 +58,6 @@ defineProps<{
   height: 100%;
   position: absolute;
   opacity: 0;
-  border-radius: v-bind(borderRadius);
   background-color: black;
   transition: all 0.2s ease;
 }

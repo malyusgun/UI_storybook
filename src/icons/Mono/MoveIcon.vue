@@ -16,7 +16,7 @@ defineProps<Props>();
   >
     <path
       d="M12 3V21M12 3L9 6M12 3L15 6M12 21L15 18M12 21L9 18M3 12H21M3 12L6 15M3 12L6 9M21 12L18 9M21 12L18 15"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"

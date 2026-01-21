@@ -10,8 +10,10 @@ import AnchorIcon from '../../icons/Mono/AnchorIcon.vue';
 import AnchorLinkIcon from '../../icons/Mono/AnchorLinkIcon.vue';
 import ArchiveIcon from '../../icons/Mono/ArchiveIcon.vue';
 import ArrowForwardIcon from '../../icons/Mono/ArrowForwardIcon.vue';
+import ArrowDownIcon from '../../icons/Mono/ArrowDownIcon.vue';
 import ArrowLeftIcon from '../../icons/Mono/ArrowLeftIcon.vue';
 import ArrowRightIcon from '../../icons/Mono/ArrowRightIcon.vue';
+import ArrowUpIcon from '../../icons/Mono/ArrowUpIcon.vue';
 import ArrowsVerticalIcon from '../../icons/Mono/ArrowsVerticalIcon.vue';
 import AtIcon from '../../icons/Mono/AtIcon.vue';
 import AwardIcon from '../../icons/Mono/AwardIcon.vue';
@@ -130,8 +132,10 @@ export const iconsSet: Record<string, Component> = {
   AnchorLink: AnchorLinkIcon,
   Archive: ArchiveIcon,
   ArrowForward: ArrowForwardIcon,
+  ArrowDown: ArrowDownIcon,
   ArrowLeft: ArrowLeftIcon,
   ArrowRight: ArrowRightIcon,
+  ArrowUpIcon: ArrowUpIcon,
   ArrowShortDown: ArrowShortDownIcon,
   ArrowsVertical: ArrowsVerticalIcon,
   At: AtIcon,

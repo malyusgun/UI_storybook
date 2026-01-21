@@ -8,7 +8,7 @@ defineProps<Props>();
 
 <template>
   <svg
-    :fill="color ?? '#000000'"
+    :fill="color ?? 'currentColor'"
     :width="`${size ?? 40}px`"
     :height="`${size ?? 40}px`"
     viewBox="0 0 1024 1024"

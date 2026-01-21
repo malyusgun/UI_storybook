@@ -63,7 +63,7 @@ document.addEventListener('keydown', onKeydown);
       @pointerdown="() => (dismissible ? (visible = false) : false)"
     ></section>
     <section
-      :style="`color: ${color}; background-color: ${themeColor}; width: ${width}; height: ${height}`"
+      :style="`color: ${color}; background-color: ${themeColor}; width: ${width}; height: ${height}; border: 2px solid ${secondaryColor};`"
       :class="[
         'modal',
         {
@@ -81,13 +81,13 @@ document.addEventListener('keydown', onKeydown);
       ]"
     >
       <header class="modalHeader">
-        <div class="headerContent" :style="`height: ${headerHeight}`">
+        <div class="headerContent" :style="`height: ${headerHeight}; white-space: ${headerWhiteSpace};`">
           <slot name="header" />
         </div>
         <button class="buttonClose" @click.prevent="visible = false">
-          <component :is="iconsSet[closeIcon]" :color="color" />
+          <component :is="iconsSet[closeIcon]" />
         </button>
-        <div v-if="headerDivider" class="divider"></div>
+        <div v-if="headerDivider" class="divider" :style="`background-color: ${secondaryColor};`"></div>
       </header>
       <div class="main">
         <slot />
@@ -98,6 +98,7 @@ document.addEventListener('keydown', onKeydown);
 
 <style scoped>
 .modalBackground {
+  display: none;
   position: fixed;
   top: -100%;
   left: -100%;
@@ -108,7 +109,8 @@ document.addEventListener('keydown', onKeydown);
   opacity: 0;
 }
 .openedModalBackground {
-  z-index: 60;
+  display: block;
+  z-index: 9999;
   opacity: 1;
 }
 .modal {
@@ -117,7 +119,6 @@ document.addEventListener('keydown', onKeydown);
   min-width: 250px;
   min-height: 100px;
   padding: 20px;
-  border: 2px solid v-bind(secondaryColor);
   border-radius: 15px;
   opacity: 0;
   transform: scale(0.5);
@@ -145,7 +146,6 @@ document.addEventListener('keydown', onKeydown);
 .headerContent {
   font-weight: bold;
   overflow: auto;
-  white-space: v-bind(headerWhiteSpace);
 }
 .main {
   padding-right: 5px;
@@ -161,7 +161,6 @@ document.addEventListener('keydown', onKeydown);
 }
 .divider {
   height: 2px;
-  background-color: v-bind(secondaryColor);
   position: absolute;
   left: 20px;
   top: 60px;

@@ -22,8 +22,11 @@ const backgroundLeft = computed(() => 1 - +props.left.slice(0, -2) + 'px');
 </script>
 
 <template>
-  <div class="selected-area" :style="`width: ${selectedWidth}; height: ${selectedHeight}`">
-    <div class="selected-background"></div>
+  <div class="selected-area" :style="`width: ${selectedWidth}; height: ${selectedHeight}; top: ${top}; left: ${left};`">
+    <div
+      class="selected-background"
+      :style="`top: ${backgroundTop}; left: ${backgroundLeft}; width: ${backgroundWidth}; height: ${backgroundHeight}; background-image: ${url}; background-size: ${backgroundWidth} ${backgroundHeight};`"
+    ></div>
     <button
       @pointerdown="emit('onPointerDown', $event, ['left', 'top'])"
       class="crop-border left top"
@@ -86,8 +89,6 @@ const backgroundLeft = computed(() => 1 - +props.left.slice(0, -2) + 'px');
 <style scoped>
 .selected-area {
   position: absolute;
-  top: v-bind(top);
-  left: v-bind(left);
   z-index: 5;
   filter: brightness(145%);
   background-repeat: no-repeat;
@@ -96,13 +97,7 @@ const backgroundLeft = computed(() => 1 - +props.left.slice(0, -2) + 'px');
 }
 .selected-background {
   position: absolute;
-  top: v-bind(backgroundTop);
-  left: v-bind(backgroundLeft);
-  width: v-bind(backgroundWidth);
-  height: v-bind(backgroundHeight);
-  background-image: v-bind(url);
   background-repeat: no-repeat;
-  background-size: v-bind(backgroundWidth) v-bind(backgroundHeight);
   overflow: hidden;
 }
 .crop-border {

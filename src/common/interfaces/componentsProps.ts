@@ -82,9 +82,10 @@ export interface IPaginatorProps {
 }
 
 export interface ICarouselProps {
-  itemsProps: any[];
+  items?: any[];
   innerWidth?: string;
   size?: TSize;
+  padding?: string;
   perView?: number;
   perScroll?: number;
   circular?: boolean;
@@ -184,7 +185,7 @@ export interface IPopupProps {
   maxWidth?: string;
   maxHeight?: string;
   padding?: string;
-  buttonMenu?: boolean;
+  buttonMenuPosition?: 'top' | 'bottom' | 'left' | 'right';
   top?: number;
   left?: number;
 }
@@ -292,6 +293,7 @@ export interface IProgressBarProps {
   labelBefore?: string;
   labelAfter?: string;
   noBorder?: boolean;
+  disabled?: boolean;
 }
 
 export interface IRatingProps {

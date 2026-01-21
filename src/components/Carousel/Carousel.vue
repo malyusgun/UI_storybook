@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ICarouselProps } from '../../common/interfaces/componentsProps';
+import type { ICarouselProps } from '@interfaces/componentsProps';
 import CarouselButtonContainer from './CarouselButtonContainer.vue';
 import { computed, ref } from 'vue';
-import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '../../common/helpers/common';
+import { convertThemeToColor, convertThemeToTextColor, getValueFromSize } from '@helpers/common';
 import ArrowLeftShortIcon from '../../icons/Mono/ArrowLeftShortIcon.vue';
 import ArrowRightShortIcon from '../../icons/Mono/ArrowRightShortIcon.vue';
 import { defaultProps, getNewValue } from './helpers';
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<ICarouselProps>(), {
 
 const current = ref(1);
 
-const itemsLength = computed(() => props.itemsProps?.length ?? 3);
+const itemsLength = computed(() => props.items?.length ?? 3);
 const color = computed(() => convertThemeToColor(props.theme, props.darknessTheme));
 const textColor = computed(() => convertThemeToTextColor(props.theme, props.darknessTheme));
 const isStartDisabled = computed(() => (props.circular ? false : current.value === 1 || itemsLength.value <= 1));
@@ -51,22 +51,38 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
     >
       <ArrowLeftShortIcon :size="iconSize" />
     </CarouselButtonContainer>
-    <div class="content">
-      <ul class="list">
-        <li v-for="item of Array(itemsLength).keys()" :key="item" class="item">
-          <slot v-bind="itemsProps?.[item]" :key="current - 1" />
-          <div v-if="!$slots.default && !itemsProps">
-            <h2 style="text-align: center; margin-bottom: 10px">{{ defaultProps[item].header }}</h2>
-            <p>
-              {{ defaultProps[item].text }}
-            </p>
-          </div>
-          <div v-else-if="!$slots.default">
-            <h2 style="text-align: center; margin-bottom: 10px">{{ itemsProps[item].header }}</h2>
-            <p>
-              {{ itemsProps[item].text }}
-            </p>
-          </div>
+    <div class="content" :style="`max-width: ${innerWidth}`">
+      <ul v-if="$slots.default && items" class="list" :style="`transform: ${translate};`">
+        <li
+          v-for="(item, index) of items"
+          :key="index"
+          class="item"
+          :style="`padding: ${padding ?? 0}; min-width: ${itemWidth}`"
+        >
+          <slot v-bind="item" :key="current - 1" />
+        </li>
+      </ul>
+      <ul v-if="!$slots.default && !items" class="list" :style="`transform: ${translate};`">
+        <li
+          v-for="itemIndex of Array(itemsLength).keys()"
+          :key="itemIndex"
+          class="item"
+          :style="`padding: ${padding ?? 0}; min-width: ${itemWidth}`"
+        >
+          <h2 style="text-align: center; margin-bottom: 10px">{{ defaultProps[itemIndex].header }}</h2>
+          <p>
+            {{ defaultProps[itemIndex].text }}
+          </p>
+        </li>
+      </ul>
+      <ul v-if="!$slots.default && items" class="list" :style="`transform: ${translate};`">
+        <li
+          v-for="(item, index) of items"
+          :key="index"
+          class="item"
+          :style="`padding: ${padding ?? 0}; min-width: ${itemWidth}`"
+        >
+          {{ item }}
         </li>
       </ul>
     </div>
@@ -82,14 +98,17 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
     </CarouselButtonContainer>
     <div class="buttons" v-if="buttonsBelow">
       <CarouselButtonContainer
-        v-for="item of Array(itemsLength - 1).keys()"
-        :key="item"
+        v-for="itemIndex of Array(itemsLength - 1).keys()"
+        :key="itemIndex"
         :width="buttonSize"
         borderRadius="50%"
         :textColor="textColor"
         :color="color"
-        @click="current = item + 1"
-        ><div class="button" :style="`border-width: ${size === 'large' || size === 'huge' ? '2px' : '1px'}`"></div
+        @click="current = itemIndex + 1"
+        ><div
+          class="button"
+          :style="`border-width: ${size === 'large' || size === 'huge' ? '2px' : '1px'}; width: ${buttonSize}; height: ${buttonSize};background-color: ${color};`"
+        ></div
       ></CarouselButtonContainer>
     </div>
   </section>
@@ -103,16 +122,11 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
   position: relative;
 }
 .content {
-  max-width: v-bind(innerWidth);
   overflow: hidden;
 }
 .list {
   display: flex;
-  transform: v-bind(translate);
   transition: transform 0.3s ease-out;
-}
-.item {
-  min-width: v-bind(itemWidth);
 }
 .buttons {
   position: absolute;
@@ -123,12 +137,9 @@ const translate = computed(() => `translateX(calc(-${props.innerWidth} / ${props
   gap: 10px;
 }
 .button {
-  background-color: v-bind(color);
   border: solid black;
   border-radius: 50%;
   cursor: pointer;
-  width: v-bind(buttonSize);
-  height: v-bind(buttonSize);
   :hover {
     filter: brightness(50%);
   }

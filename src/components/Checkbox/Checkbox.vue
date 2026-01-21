@@ -54,6 +54,7 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
         flexColumn: ['top', 'bottom'].includes(labelPos),
       },
     ]"
+    :style="`gap: ${gap}`"
     @click.prevent="!disabled ? (active = !active) : ''"
   >
     <div class="main" :style="`width: ${elSize}px; height: ${elSize}px; border: ${borderWidth}px solid ${borderColor}`">
@@ -73,6 +74,12 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
             disabled: disabled,
           },
         ]"
+        :style="`border-radius: ${borderRadius}; background-color: ${themeColor}; ${
+          active
+            ? `border-radius: ${borderRadius};
+          background-color: ${activeThemeColor};`
+            : ''
+        }`"
       >
         <CheckMarkIcon
           :style="`transition: all 0.3s ease-in-out; opacity: ${active ? 1 : 0}; position: absolute; top: 0; left: 0`"
@@ -97,8 +104,7 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
 <style scoped>
 .container {
   position: relative;
-  display: flex;
-  gap: v-bind(gap);
+  display: inline-flex;
   box-sizing: content-box;
   width: max-content;
   height: max-content;
@@ -109,16 +115,11 @@ const borderRadius = computed(() => `${elSize.value / 7 - borderWidth.value}px`)
 }
 .inactive {
   height: 100%;
-  border-radius: v-bind(borderRadius);
-
-  background-color: v-bind(themeColor);
   transition: all 0.2s ease-in-out;
 }
 .active {
   width: 100%;
   height: 100%;
-  border-radius: v-bind(borderRadius);
-  background-color: v-bind(activeThemeColor);
   transition: all 0.2s ease-in-out;
 }
 .disabled {

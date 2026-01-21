@@ -7,18 +7,9 @@ defineProps<Props>();
 </script>
 
 <template>
-  <svg
-    :width="`${size ?? 40}px`"
-    :height="`${size ?? 40}px`"
-    viewBox="0 -0.5 21 21"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg :width="`${size ?? 40}px`" :height="`${size ?? 40}px`" viewBox="0 -0.5 21 21" xmlns="http://www.w3.org/2000/svg">
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g
-        id="Dribbble-Light-Preview"
-        transform="translate(-419.000000, -640.000000)"
-        :fill="color ?? '#000000'"
-      >
+      <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -640.000000)" :fill="color ?? 'currentColor'">
         <g id="icons" transform="translate(56.000000, 160.000000)">
           <path
             id="save_item-[#1411]"

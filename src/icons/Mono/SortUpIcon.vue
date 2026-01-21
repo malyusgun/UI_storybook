@@ -13,12 +13,12 @@ defineProps<Props>();
     viewBox="0 0 24.00 24.00"
     xmlns="http://www.w3.org/2000/svg"
     aria-labelledby="sortUpIconTitle"
-    :stroke="color ?? '#000000'"
+    :stroke="color ?? 'currentColor'"
     stroke-width="2.4"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
-    :color="color ?? '#000000'"
+    :color="color ?? 'currentColor'"
   >
     <g id="SVGRepo_bgCarrier" stroke-width="0" />
 

@@ -21,6 +21,9 @@
       "@helpers/*": ["src/common/helpers/*"],
       "@interfaces/*": ["src/common/interfaces/*"],
       "@components/*": ["./src/components/*"]
-    }
+    },
+    "rootDir": "src",
+    "outDir": "dist",
+    "moduleResolution": "node"
   }
 }

@@ -15,21 +15,30 @@ const props = withDefaults(defineProps<IDrawerProps>(), {
   modal: true,
   dismissible: true,
   theme: 'white',
-  headerHeight: '37px',
+  headerHeight: '40px',
   darknessTheme: '500',
   closeIcon: 'Cross',
-  paddingRightOnActive: '14px',
   headerDivider: false,
   footerDivider: false,
 });
 const body = document.querySelector('body')!;
+const div = document.createElement('div');
+
+div.style.overflowY = 'scroll';
+div.style.width = '50px';
+div.style.height = '50px';
+document.body.append(div);
+const scrollWidth = div.offsetWidth - div.clientWidth;
+
+div.remove();
+
 const emit = defineEmits(['onClose']);
 const visible = defineModel<boolean>('visible') as Ref<boolean>;
 watch(visible, () => {
   if (visible.value) {
     (window as CustomWindow).blockPopupActions = true;
     body.style.overflowY = 'hidden';
-    body.style.paddingRight = props.paddingRightOnActive;
+    body.style.paddingRight = props.paddingRightOnActive || scrollWidth + 'px';
   } else {
     (window as CustomWindow).blockPopupActions = false;
     body.style.overflowY = 'auto';
@@ -63,7 +72,7 @@ const drawerWidth = computed(() => {
       @pointerdown="() => (dismissible ? (visible = false) : '')"
     ></section>
     <section
-      :style="`color: ${color}; background-color: ${themeColor}`"
+      :style="`color: ${color}; background-color: ${themeColor};  width: ${drawerWidth}; ${position === 'top' || position === 'bottom' ? `height: ${drawerWidth} !important;` : ''} ${position === 'left' ? `border-right: 2px solid ${secondaryColor};` : position === 'right' ? `border-left: 2px solid ${secondaryColor};` : position === 'top' ? `border-bottom: 2px solid ${secondaryColor};` : `border-top: 2px solid ${secondaryColor};`}`"
       :class="[
         'drawer',
         {
@@ -76,18 +85,22 @@ const drawerWidth = computed(() => {
         },
       ]"
     >
-      <header class="drawerHeader">
+      <header class="drawerHeader" :style="`min-height: ${headerHeight}; height: ${headerHeight}`">
         <slot name="header" />
         <button class="buttonClose" @click.prevent="visible = false">
           <component :is="iconsSet[closeIcon]" :color="color" />
         </button>
       </header>
-      <div v-if="headerDivider" class="divider divider-header"></div>
+      <div
+        v-if="headerDivider"
+        class="divider divider-header"
+        :style="`background-color: ${secondaryColor}; top: ${dividerHeaderTop}`"
+      ></div>
       <div class="main">
         <slot />
       </div>
       <div v-if="$slots.footer">
-        <div v-if="footerDivider" class="divider"></div>
+        <div v-if="footerDivider" class="divider" :style="`background-color: ${secondaryColor}`"></div>
         <footer class="drawerFooter">
           <slot name="footer" />
         </footer>
@@ -113,7 +126,6 @@ const drawerWidth = computed(() => {
   opacity: 1;
 }
 .drawer {
-  width: v-bind(drawerWidth);
   position: fixed;
   z-index: 201;
   height: 100vh;
@@ -122,11 +134,9 @@ const drawerWidth = computed(() => {
   justify-content: space-between;
   padding: 20px;
   transition: transform ease-out 0.2s;
-  border-right: 2px solid v-bind(secondaryColor);
 }
 .drawerVertical {
   width: 100vw !important;
-  height: v-bind(drawerWidth) !important;
 }
 .drawerOpened {
   transform: translateX(0) !important;
@@ -156,8 +166,6 @@ const drawerWidth = computed(() => {
   font-size: 32px;
   width: calc(100% - 30px);
   margin-bottom: 10px;
-  min-height: v-bind(headerHeight);
-  height: v-bind(headerHeight);
   overflow: auto;
 }
 .main {
@@ -172,12 +180,10 @@ const drawerWidth = computed(() => {
 }
 .divider {
   height: 2px;
-  background-color: v-bind(secondaryColor);
 }
 .divider-header {
   position: absolute;
   left: 20px;
-  top: v-bind(dividerHeaderTop);
   width: calc(100% - 40px);
 }
 .buttonClose {

@@ -45,15 +45,17 @@ function adjustWidth(input: HTMLInputElement) {
   <div>
     <section
       class="container"
-      :style="`border-radius: ${rounded ? fontSize : `calc(${fontSize} / 2)`}; gap: calc(${fontSize} / 2.5); border: ${['normal', 'small'].includes(size) ? '1px' : '2px'} solid ${borderColor}`"
+      :style="`border-radius: ${rounded ? fontSize : `calc(${fontSize} / 2)`}; gap: calc(${fontSize} / 2.5); border: ${['normal', 'small'].includes(size) ? '1px' : '2px'} solid ${borderColor}; background-color: ${backgroundColor}; padding: ${padding}`"
     >
       <slot name="icon-left"></slot>
       <component v-show="iconLeft" :is="iconsSet[iconLeft ?? 0]" :color="textColor" :size="fontSize.slice(0, -2)" />
-      <span v-show="!changed" class="text">{{ value }}</span>
+      <span v-show="!changed" :style="`font-weight: bold; font-size: ${fontSize}; color: ${textColor}`">{{
+        value
+      }}</span>
       <input
         v-show="changed"
         type="text"
-        class="text"
+        :style="`font-weight: bold; font-size: ${fontSize}; color: ${textColor}`"
         v-model="value"
         @loadstart="adjustWidth($event.target as HTMLInputElement)"
         @input="adjustWidth($event.target as HTMLInputElement)"
@@ -68,13 +70,6 @@ function adjustWidth(input: HTMLInputElement) {
 .container {
   display: inline-flex;
   width: max-content;
-  padding: v-bind(padding);
   align-items: center;
-  background-color: v-bind(backgroundColor);
-}
-.text {
-  font-weight: bold;
-  font-size: v-bind(fontSize);
-  color: v-bind(textColor);
 }
 </style>

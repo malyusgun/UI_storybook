@@ -16,19 +16,12 @@ defineProps<Props>();
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
   >
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-      sketch:type="MSPage"
-    >
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
       <g
         id="Icon-Set-Filled"
         sketch:type="MSLayerGroup"
         transform="translate(-212.000000, -888.000000)"
-        :fill="color ?? '#000000'"
+        :fill="color ?? 'currentColor'"
       >
         <path
           id="hamburger"

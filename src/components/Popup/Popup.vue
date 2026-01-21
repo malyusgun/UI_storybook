@@ -21,6 +21,7 @@ const top = ref();
 const left = ref();
 const isOnContainerClick = ref();
 
+const popup = ref();
 const parent = computed(() => props.parentSelector);
 const container: Ref = ref(document.querySelector(props.parentSelector));
 if (!container.value) {
@@ -33,21 +34,35 @@ watch(
   container,
   () => {
     if (container.value) {
-      if (props.buttonMenu) {
+      if (props.buttonMenuPosition) {
         const clientRect = container.value?.getBoundingClientRect();
-        top.value = props.top ?? clientRect.top;
-        left.value = props.left ?? clientRect.left;
+        const position = props.buttonMenuPosition;
+        const scrollY = window.scrollY;
+
+        if (!position) {
+          top.value = scrollY + (props.top || clientRect.top);
+          left.value = scrollY + (props.left || clientRect.left);
+        } else {
+          top.value =
+            position && position === 'bottom'
+              ? scrollY + clientRect.top - popup.value.clientHeight - 5
+              : scrollY + clientRect.top + clientRect.height + 5;
+          left.value = props.left || clientRect.left;
+        }
       }
 
       container.value.addEventListener('pointerdown', (event: MouseEvent) => {
         const e = event as PointerEvent;
-        if (e.button === 2 || (props.buttonMenu && e.button === 0)) {
+        if (e.button === 2 || (props.buttonMenuPosition && e.button === 0)) {
           isOnContainerClick.value = true;
-          if (!props.buttonMenu) {
+
+          if (!props.buttonMenuPosition) {
             top.value = e.pageY;
             left.value = e.pageX;
           }
-          if (!active.value && !props.buttonMenu && !(window as CustomWindow).blockPopupActions) active.value = true;
+
+          if (!active.value && !props.buttonMenuPosition && !(window as CustomWindow).blockPopupActions)
+            active.value = true;
           e.stopPropagation();
         }
       });
@@ -57,7 +72,8 @@ watch(
     }
 
     document.addEventListener('pointerdown', (e: MouseEvent) => {
-      if (!props.buttonMenu && e.button === 0 && !(window as CustomWindow).blockPopupActions) active.value = false;
+      if (!props.buttonMenuPosition && e.button === 0 && !(window as CustomWindow).blockPopupActions)
+        active.value = false;
     });
   },
   { immediate: true },
@@ -66,10 +82,12 @@ watch(
 
 <template>
   <section
+    ref="popup"
     oncontextmenu="return false"
     id="popup"
     @pointerdown.stop=""
-    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}`"
+    :style="`top: ${top}px; left: ${left}px; opacity: ${active ? 1 : 0}; pointer-events: ${active ? 'auto' : 'none'}; padding: ${padding}; background-color: ${themeColor};
+  border: 1px solid ${secondaryColor};`"
   >
     <div :style="`max-width: ${maxWidth}; max-height: ${maxHeight}; overflow: auto`">
       <slot />
@@ -83,8 +101,6 @@ watch(
   position: absolute;
   z-index: 9999;
   transition: opacity 0.2s ease-in-out;
-  background-color: v-bind(themeColor);
-  border: 1px solid v-bind(secondaryColor);
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb {

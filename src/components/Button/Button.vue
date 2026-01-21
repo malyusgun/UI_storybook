@@ -45,7 +45,7 @@ const buttonPadding = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div style="width: max-content">
     <button
       :class="[
         'button',
@@ -54,7 +54,7 @@ const buttonPadding = computed(() => {
           border: borderColor,
         },
       ]"
-      :style="`padding: ${buttonPadding}; width: ${width}`"
+      :style="`padding: ${buttonPadding}; width: ${width}; ${borderColor ? `border: 2px solid ${borderColor}` : ''}`"
     >
       <span :style="`background-color: ${themeColor}`" class="background"></span>
       <span
@@ -123,8 +123,5 @@ const buttonPadding = computed(() => {
 }
 .order-1 {
   order: -1;
-}
-.border {
-  border: 2px solid v-bind(borderColor);
 }
 </style>

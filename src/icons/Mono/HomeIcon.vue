@@ -18,7 +18,7 @@ defineProps<Props>();
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M8 0L0 6V8H1V15H4V10H7V15H15V8H16V6L14 4.5V1H11V2.25L8 0ZM9 10H12V13H9V10Z"
-      :fill="color ?? '#000000'"
+      :fill="color ?? 'currentColor'"
     />
   </svg>
 </template>

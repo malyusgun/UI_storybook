@@ -13,12 +13,12 @@ defineProps<Props>();
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
     aria-labelledby="sortDownIconTitle"
-    :stroke="color ?? '#000000'"
+    :stroke="color ?? 'currentColor'"
     stroke-width="2.4"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
-    :color="color ?? '#000000'"
+    :color="color ?? 'currentColor'"
   >
     <path d="M11 14H16" />
     <path d="M11 9H19" />

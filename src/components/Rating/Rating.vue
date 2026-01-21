@@ -42,8 +42,17 @@ const onActiveClick = (index: number) => {
 
 <template>
   <ul class="list" :style="`gap: ${gap}`">
-    <li v-for="index of Array(count).keys()" :key="index" class="item iconSize">
-      <div v-show="value < index + 1 && !$slots.offIcon" class="iconSize iconContainer">
+    <li
+      v-for="index of Array(count).keys()"
+      :key="index"
+      class="item"
+      :style="`width: ${iconSize}; height: ${iconSize}`"
+    >
+      <div
+        v-show="value < index + 1 && !$slots.offIcon"
+        class="iconContainer"
+        :style="`width: ${iconSize}; height: ${iconSize}`"
+      >
         <component
           class="icon absoluteIcon"
           :is="iconsSet['Star']"
@@ -75,7 +84,11 @@ const onActiveClick = (index: number) => {
         class="absoluteIcon"
         @click="onActiveClick(index + 1)"
       />
-      <div class="iconSize" v-show="value >= index + 1" @click="onActiveClick(index + 1)">
+      <div
+        :style="`width: ${iconSize}; height: ${iconSize}`"
+        v-show="value >= index + 1"
+        @click="onActiveClick(index + 1)"
+      >
         <slot name="onIcon" :size="iconSize"></slot>
       </div>
     </li>
@@ -101,10 +114,6 @@ const onActiveClick = (index: number) => {
   position: absolute;
   top: 0;
   left: 0;
-}
-.iconSize {
-  width: v-bind(iconSize);
-  height: v-bind(iconSize);
 }
 .v-enter-active,
 .v-leave-active {

@@ -22,7 +22,7 @@ defineProps<Props>();
       y2="43.107899"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="30"
       stroke-linecap="round"
     />
@@ -33,7 +33,7 @@ defineProps<Props>();
       y2="43.107899"
       transform="matrix(-1.068571 0 0 1.167066 217.02704 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="30"
       stroke-linecap="round"
     />

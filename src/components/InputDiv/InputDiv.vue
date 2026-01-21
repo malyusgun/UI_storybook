@@ -22,8 +22,7 @@ watch(
   },
   { deep: true },
 );
-let container: HTMLElement | null;
-setTimeout(() => (container = document.querySelector('#inputDiv-container')), 0);
+const container = ref<HTMLElement | null>(null);
 
 const inputPartsBy = computed(() => calcPartsBy(props.scheme));
 const isInputPartsBy = computed(() => !!inputPartsBy.value);
@@ -46,7 +45,7 @@ const borderWidth = computed(() => (props.size === 'small' || props.size === 'no
 const toggleInput = (target: any, itemIndex: number, inputIndex: number, backspace?: boolean) =>
   (valueParts.value = changeInputHandler(
     target,
-    container!,
+    container.value!,
     isInputPartsBy.value,
     valueParts.value,
     indexesToValueIndex.value,
@@ -59,70 +58,76 @@ const toggleInput = (target: any, itemIndex: number, inputIndex: number, backspa
 </script>
 
 <template>
-  <section id="inputDiv-container">
-    <div v-show="inputPartsBy" class="list">
-      <div
-        v-for="(item, itemIndex) of inputPartsBy"
-        :key="itemIndex"
-        :class="[
-          `item ${itemIndex}`,
-          {
-            dashed: dashed && (inputPartsBy?.length ?? -1) - 1 !== itemIndex,
-          },
-        ]"
-      >
-        <input
-          v-for="(_, inputIndex) of item"
-          :key="inputIndex"
-          @input="toggleInput($event.target, itemIndex, +inputIndex)"
-          @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
-          @keydown.left="moveFocus('left', container!, isInputPartsBy, itemIndex, inputIndex)"
-          @keydown.right="moveFocus('right', container!, isInputPartsBy, itemIndex, inputIndex)"
-          :type="secret ? 'password' : 'text'"
+  <div>
+    <section ref="container">
+      <div v-show="inputPartsBy" class="list">
+        <div
+          v-for="(item, itemIndex) of inputPartsBy"
+          :key="itemIndex"
           :class="[
-            `input ${inputIndex}`,
+            `item ${itemIndex}`,
             {
-              firstInput: !bottomOnly && inputIndex === 0,
-              lastInput: !bottomOnly && inputPartsBy && inputIndex === inputPartsBy[itemIndex].length - 1,
-              bottomOnly,
+              dashed: dashed && (inputPartsBy?.length ?? -1) - 1 !== itemIndex,
             },
           ]"
-          maxlength="2"
-        />
+          :style="`gap: ${inputsGap};`"
+        >
+          <input
+            v-for="(_, inputIndex) of item"
+            :key="inputIndex"
+            @input="toggleInput($event.target, itemIndex, +inputIndex)"
+            @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
+            @keydown.left="moveFocus('left', container!, isInputPartsBy, itemIndex, inputIndex)"
+            @keydown.right="moveFocus('right', container!, isInputPartsBy, itemIndex, inputIndex)"
+            :type="secret ? 'password' : 'text'"
+            :class="[
+              `input ${inputIndex}`,
+              {
+                firstInput: !bottomOnly && inputIndex === 0,
+                lastInput: !bottomOnly && inputPartsBy && inputIndex === inputPartsBy[itemIndex].length - 1,
+                bottomOnly,
+              },
+            ]"
+            maxlength="2"
+            :style="`width: ${inputWidth};height: ${inputHeight};font-size: ${fontSize};background-color: ${themeColor};color: ${color};border-top: ${borderWidth} solid ${color};border-bottom: ${borderWidth} solid ${color};border-right: ${borderWidth} solid ${color}; ${bottomOnly ? `border-bottom: ${borderWidth} solid ${color};` : ''}; ${!bottomOnly && inputIndex === 0 ? `border-left: ${borderWidth} solid ${color};` : ''}`"
+          />
+        </div>
       </div>
-    </div>
-    <div v-show="inputPartsDash" class="list">
-      <div
-        v-for="(item, itemIndex) of inputPartsDash"
-        :key="itemIndex"
-        :class="[
-          `item ${itemIndex}`,
-          {
-            dashed: dashed && (inputPartsDash?.length ?? -1) - 1 !== itemIndex,
-          },
-        ]"
-      >
-        <input
-          v-for="(_, inputIndex) of item"
-          :key="inputIndex"
-          @input="toggleInput($event.target, itemIndex, +inputIndex)"
-          @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
-          @keydown.left="moveFocus('left', container!, isInputPartsBy, itemIndex, inputIndex)"
-          @keydown.right="moveFocus('right', container!, isInputPartsBy, itemIndex, inputIndex)"
-          :type="secret ? 'password' : 'text'"
+      <div v-show="inputPartsDash" class="list">
+        <div
+          v-for="(item, itemIndex) of inputPartsDash"
+          :key="itemIndex"
           :class="[
-            `input ${inputIndex}`,
+            `item ${itemIndex}`,
             {
-              firstInput: !bottomOnly && inputIndex === 0,
-              lastInput: !bottomOnly && inputPartsDash && inputIndex === inputPartsDash[itemIndex].length - 1,
-              bottomOnly,
+              dashed: dashed && (inputPartsDash?.length ?? -1) - 1 !== itemIndex,
             },
           ]"
-          maxlength="2"
-        />
+          :style="`gap: ${inputsGap};`"
+        >
+          <input
+            v-for="(_, inputIndex) of item"
+            :key="inputIndex"
+            @input="toggleInput($event.target, itemIndex, +inputIndex)"
+            @keydown.delete="toggleInput($event.target, itemIndex, +inputIndex, true)"
+            @keydown.left="moveFocus('left', container!, isInputPartsBy, itemIndex, inputIndex)"
+            @keydown.right="moveFocus('right', container!, isInputPartsBy, itemIndex, inputIndex)"
+            :type="secret ? 'password' : 'text'"
+            :class="[
+              `input ${inputIndex}`,
+              {
+                firstInput: !bottomOnly && inputIndex === 0,
+                lastInput: !bottomOnly && inputPartsDash && inputIndex === inputPartsDash[itemIndex].length - 1,
+                bottomOnly,
+              },
+            ]"
+            :style="`width: ${inputWidth};height: ${inputHeight};font-size: ${fontSize};background-color: ${themeColor};color: ${color};border-top: ${borderWidth} solid ${color};border-bottom: ${borderWidth} solid ${color};border-right: ${borderWidth} solid ${color}; ${bottomOnly ? `border-bottom: ${borderWidth} solid ${color};` : ''}; ${!bottomOnly && inputIndex === 0 ? `border-left: ${borderWidth} solid ${color};` : ''}`"
+            maxlength="2"
+          />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <style scoped>
@@ -132,40 +137,29 @@ const toggleInput = (target: any, itemIndex: number, inputIndex: number, backspa
 }
 .input {
   all: unset;
-  width: v-bind(inputWidth);
-  height: v-bind(inputHeight);
-  font-size: v-bind(fontSize);
   text-align: center;
-  background-color: v-bind(themeColor);
-  color: v-bind(color);
-  border-top: v-bind(borderWidth) solid v-bind(color);
-  border-bottom: v-bind(borderWidth) solid v-bind(color);
-  border-right: v-bind(borderWidth) solid v-bind(color);
 }
 .input.bottomOnly {
   border: none;
-  border-bottom: v-bind(borderWidth) solid v-bind(color);
 }
 .item {
   position: relative;
   display: flex;
-  gap: v-bind(inputsGap);
 }
 .item.dashed::after {
   position: absolute;
-  color: v-bind(color);
   z-index: 2;
   top: calc(50% - 2px);
+  color: v-bind(color);
+  font-size: v-bind(fontSize);
   right: v-bind(dashRight);
   content: '-';
   width: 10px;
   height: 4px;
   text-align: center;
   line-height: 0;
-  font-size: v-bind(fontSize);
 }
 .firstInput {
-  border-left: v-bind(borderWidth) solid v-bind(color);
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }

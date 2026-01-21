@@ -105,9 +105,13 @@ const onPointerDown = ($event: MouseEvent) => {
     @pointerup="isClickHold = false"
     @pointerleave="isClickHold = false"
     class="container containerSize"
+    :style="`width: ${containerSize}; height: ${containerSize};`"
     ref="container"
   >
-    <div class="background"></div>
+    <div
+      class="background"
+      :style="`width: ${backgroundSize}; height: ${backgroundSize}; background: ${background};`"
+    ></div>
     <span
       v-if="showLabel"
       class="count"
@@ -116,12 +120,18 @@ const onPointerDown = ($event: MouseEvent) => {
        font-size: ${textSize}`"
       >{{ textBefore ?? '' }}{{ value }}{{ textAfter ?? '' }}</span
     >
-    <div class="circle containerSize">
-      <div class="circle containerSize selected"></div>
+    <div
+      class="circle containerSize"
+      :style="`width: ${containerSize}; height: ${containerSize}; background: ${backgroundCircle}`"
+    >
+      <div
+        class="circle containerSize selected"
+        :style="`width: ${containerSize}; height: ${containerSize}; background: ${conicGradient}`"
+      ></div>
     </div>
     <div v-if="buttons" class="buttons" :style="`gap: ${+textSize.slice(0, -3) * 3}px`">
       <Button
-        @click="value++"
+        @click="value !== max ? value++ : null"
         :theme="negativeTheme"
         textColor="white"
         :size="buttonSize"
@@ -131,7 +141,7 @@ const onPointerDown = ($event: MouseEvent) => {
         :width="buttonWidth"
       ></Button>
       <Button
-        @click="value--"
+        @click="value !== min ? value-- : null"
         :theme="negativeTheme"
         textColor="white"
         :size="buttonSize"
@@ -148,14 +158,9 @@ const onPointerDown = ($event: MouseEvent) => {
 .container {
   position: relative;
 }
-.containerSize {
-  width: v-bind(containerSize);
-  height: v-bind(containerSize);
-}
 .circle {
   position: relative;
   border-radius: 50%;
-  background: v-bind(backgroundCircle);
   clip-path: polygon(0 0, 0 100%, 50% 50%, 50% 50%, 100% 100%, 100% 0);
   cursor: pointer;
 }
@@ -166,16 +171,12 @@ const onPointerDown = ($event: MouseEvent) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: v-bind(conicGradient);
 }
 .background {
-  width: v-bind(backgroundSize);
-  height: v-bind(backgroundSize);
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 4;
-  background: v-bind(background);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }

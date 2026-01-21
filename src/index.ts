@@ -1,3 +1,5 @@
+import '@/assets/main.css';
+
 // Mono icons
 import Age18Icon from './icons/Mono/Age18Icon.vue';
 import AlarmIcon from '@icons/Mono/AlarmIcon.vue';

@@ -72,11 +72,19 @@ const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.sl
         verticalSlider: orientation === 'vertical',
       },
     ]"
-    :style="`width: ${width}px; margin-bottom: ${orientation === 'vertical' ? +width / 2 + 'px' : 0}`"
+    :style="`width: ${width}px; margin-bottom: ${orientation === 'vertical' ? +width / 2 + 'px' : 0}; margin-top: ${widthHalf};`"
   >
-    <input v-model="optionValue" type="range" class="slider" :min="min ?? 0" :max="max ?? 100" :step="step ?? 1" />
+    <input
+      v-model="optionValue"
+      type="range"
+      class="slider"
+      :style="`height: ${sliderHeight}; background: ${themeBackground};  border-radius: ${sliderBorderRadius};`"
+      :min="min ?? 0"
+      :max="max ?? 100"
+      :step="step ?? 1"
+    />
     <div v-if="options?.length">
-      <ul class="marksList" :style="`width: ${width ?? 200}px`">
+      <ul class="marksList" :style="`width: ${width ?? 200}px; padding: 0 ${marksListPadding};`">
         <li
           v-for="option of options"
           :key="String(option.label)"
@@ -91,17 +99,11 @@ const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.sl
 </template>
 
 <style scoped>
-.sliderContainer {
-  width: v-bind(width);
-}
 .slider {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: v-bind(sliderHeight);
-  background: v-bind(themeBackground);
   outline: none;
-  border-radius: v-bind(sliderBorderRadius);
   filter: brightness(100%);
   -webkit-transition: 0.2s;
   transition: filter 0.2s;
@@ -130,7 +132,6 @@ const marksListPadding = computed(() => `${Math.floor(+sliderButtonSize.value.sl
   cursor: pointer;
 }
 .verticalSlider {
-  margin-top: v-bind(widthHalf);
   transform: rotate(270deg) translateY(-100%);
 }
 .verticalSlider .marksList {
@@ -152,7 +153,6 @@ option {
   justify-content: space-between;
   margin-bottom: 5px;
   font-size: 10px;
-  padding: 0 v-bind(marksListPadding);
   padding-bottom: 20px;
 }
 .mark {

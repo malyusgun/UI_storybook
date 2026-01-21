@@ -147,6 +147,7 @@ const calcItemColor = (item: IMDItemProps) => {
   pointer-events: none;
   gap: 10px;
   position: absolute;
+  z-index: 3;
   top: 50%;
   left: 0;
   opacity: 0;

@@ -21,7 +21,7 @@ defineProps<Props>();
       y2="100"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="50"
       stroke-linecap="round"
     />
@@ -32,7 +32,7 @@ defineProps<Props>();
       y2="300"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="50"
       stroke-linecap="round"
     />
@@ -43,7 +43,7 @@ defineProps<Props>();
       y2="100"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="50"
       stroke-linecap="round"
     />
@@ -54,7 +54,7 @@ defineProps<Props>();
       y2="300"
       transform="matrix(1.066014 0 0 1.167066 83.13335 150)"
       fill="none"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="50"
       stroke-linecap="round"
     />

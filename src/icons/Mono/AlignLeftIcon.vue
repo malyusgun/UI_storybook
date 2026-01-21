@@ -16,7 +16,7 @@ defineProps<Props>();
   >
     <path
       d="M3 10H16M3 14H21M3 18H16M3 6H21"
-      :stroke="color ?? '#000000'"
+      :stroke="color ?? 'currentColor'"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"

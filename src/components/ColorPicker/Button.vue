@@ -31,7 +31,7 @@ const width = computed(() => (props.width ? props.width : 'max-content'));
         border: borderColor,
       },
     ]"
-    :style="`width: ${width}`"
+    :style="`width: ${width}; ${borderColor ? `border: 2px solid ${borderColor};` : ''}`"
   >
     <span :style="`background-color: ${themeColor}`" class="background"></span>
     <span
@@ -87,8 +87,5 @@ const width = computed(() => (props.width ? props.width : 'max-content'));
 }
 .order-1 {
   order: -1;
-}
-.border {
-  border: 2px solid v-bind(borderColor);
 }
 </style>

@@ -2,7 +2,10 @@
 import Age18Icon from '@icons/Mono/Age18Icon.vue';
 import AlarmIcon from '@icons/Mono/AlarmIcon.vue';
 import AirplaneIcon from '@icons/Mono/AirplaneIcon.vue';
+import ArrowDownIcon from '@icons/Mono/ArrowDownIcon.vue';
 import ArrowLeftIcon from '@icons/Mono/ArrowLeftIcon.vue';
+import ArrowRightIcon from '@icons/Mono/ArrowRightIcon.vue';
+import ArrowUpIcon from '@icons/Mono/ArrowUpIcon.vue';
 import ArrowForwardIcon from '@icons/Mono/ArrowForwardIcon.vue';
 import ArchiveIcon from '@icons/Mono/ArchiveIcon.vue';
 import AnchorLinkIcon from '@icons/Mono/AnchorLinkIcon.vue';
@@ -10,7 +13,6 @@ import AnchorIcon from '@icons/Mono/AnchorIcon.vue';
 import AlignRightIcon from '@icons/Mono/AlignRightIcon.vue';
 import AlignLeftIcon from '@icons/Mono/AlignLeftIcon.vue';
 import AlignCenterIcon from '@icons/Mono/AlignCenterIcon.vue';
-import ArrowRightIcon from '@icons/Mono/ArrowRightIcon.vue';
 import AtIcon from '@icons/Mono/AtIcon.vue';
 import AwardIcon from '@icons/Mono/AwardIcon.vue';
 import BackspaceIcon from '@icons/Mono/BackspaceIcon.vue';
@@ -135,8 +137,10 @@ const gentleIcons = {
   ArrowLeftShortIcon,
   ArrowDoubleLeftShortIcon,
   ArrowForwardIcon,
+  ArrowDownIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  ArrowUpIcon,
   ArrowRightShortIcon,
   ArrowDoubleRightShortIcon,
   ArrowShortDownIcon,
@@ -272,13 +276,8 @@ const gentleIconsEntries = Object.entries(gentleIcons);
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 10px;
   margin-bottom: 20px;
-  @media screen and (width < 1200px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-  @media screen and (width < 1000px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-  @media screen and (width < 820px) {
+
+  @media screen and (width < 1400px) {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
   @media screen and (width < 750px) {
@@ -309,7 +308,12 @@ const gentleIconsEntries = Object.entries(gentleIcons);
   margin: 0 auto;
 }
 .mono {
-  color: green;
   font-style: italic;
+  &::first-letter {
+    color: red;
+  }
+}
+.mono::first-punctuation {
+  color: red !important;
 }
 </style>

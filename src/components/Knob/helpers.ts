@@ -53,9 +53,10 @@ export const calcThemeColor = (
     : current.color;
 };
 
-export const calcContainerSize = (size: TSize) => {
+export const calcContainerSize = (size: TSize | 'giant') => {
   if (size === 'normal') return '100px';
   if (size === 'large') return '150px';
   if (size === 'huge') return '200px';
+  if (size === 'giant') return '300px';
   return '70px';
 };

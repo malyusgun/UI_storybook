@@ -25,7 +25,7 @@ const meta: Meta = {
     textBefore: { control: 'text' },
     textAfter: { control: 'text' },
     colorGaps: { control: 'object' },
-    size: { control: 'select', options: ['small', 'normal', 'large', 'huge'] },
+    size: { control: 'select', options: ['small', 'normal', 'large', 'huge', 'giant'] },
     background: { control: 'color' },
     darknessTheme: { control: 'select', options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
     darknessNegativeTheme: {
@@ -162,5 +162,11 @@ export const Full: Story = {
     textBefore: '',
     textAfter: '%',
     buttons: true,
+  },
+};
+
+export const Giant: Story = {
+  args: {
+    size: 'giant',
   },
 };

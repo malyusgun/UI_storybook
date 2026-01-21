@@ -110,7 +110,7 @@ export interface IKnobProps {
   min?: number;
   max?: number;
   step?: number;
-  size?: TSize;
+  size?: TSize | 'giant';
   width?: string;
   theme?: TThemeColor;
   colorGaps?: IColorGap[];
@@ -127,6 +127,7 @@ export interface IKnobProps {
   textBold?: boolean;
   textBefore?: string;
   textAfter?: string;
+  disabled?: boolean;
 }
 
 export interface ISliderProps {

@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<IKnobProps>(), {
   showLabel: true,
   colorAsTheme: false,
   textBold: false,
+  disabled: false,
 });
 const value = defineModel<number>({
   default: 0,
@@ -49,7 +50,7 @@ const buttonSize = computed(() => {
 const textSize = computed(() => {
   if (props.fontSize) return props.fontSize;
   const size = props.size;
-  return size === 'normal' ? '1.7rem' : size === 'small' ? '1.3rem' : size === 'large' ? '2.5rem' : '3.5rem';
+  return size === 'normal' ? '1.7rem' : size === 'small' ? '1.3rem' : size === 'large' ? '2.5rem' : size === 'huge' ? '3.5rem' : '5.5rem';
 });
 const buttonPadding = computed(() => {
   const size = props.size;
@@ -100,7 +101,7 @@ const onPointerDown = ($event: MouseEvent) => {
 
 <template>
   <section
-    @pointerdown.prevent="!buttons && onPointerDown($event)"
+    @pointerdown.prevent="!buttons && !disabled && onPointerDown($event)"
     @pointermove="isClickHold ? setNewValue($event) : ''"
     @pointerup="isClickHold = false"
     @pointerleave="isClickHold = false"
@@ -122,11 +123,11 @@ const onPointerDown = ($event: MouseEvent) => {
     >
     <div
       class="circle containerSize"
-      :style="`width: ${containerSize}; height: ${containerSize}; background: ${backgroundCircle}`"
+      :style="`width: ${containerSize}; height: ${containerSize}; background: ${backgroundCircle}; cursor: ${!buttons && !disabled ? 'pointer' : 'auto'}`"
     >
       <div
         class="circle containerSize selected"
-        :style="`width: ${containerSize}; height: ${containerSize}; background: ${conicGradient}`"
+        :style="`width: ${containerSize}; height: ${containerSize}; background: ${conicGradient}; cursor: ${!buttons && !disabled ? 'pointer' : 'auto'}`"
       ></div>
     </div>
     <div v-if="buttons" class="buttons" :style="`gap: ${+textSize.slice(0, -3) * 3}px`">
@@ -162,7 +163,6 @@ const onPointerDown = ($event: MouseEvent) => {
   position: relative;
   border-radius: 50%;
   clip-path: polygon(0 0, 0 100%, 50% 50%, 50% 50%, 100% 100%, 100% 0);
-  cursor: pointer;
 }
 .selected {
   position: absolute;
